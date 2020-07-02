@@ -1,0 +1,229 @@
+<!doctype html>
+{% load static %}
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bazzaars - Unpaid Store</title>
+    <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="{% static 'adminpages/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.png' %}">
+
+
+    <link rel="stylesheet" href="{% static 'adminpages/vendors/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpages/vendors/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpages/vendors/themify-icons/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpages/vendors/flag-icon-css/css/flag-icon.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpages/vendors/selectFX/css/cs-skin-elastic.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpages/vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'adminpages/vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'adminpages/assets/css/style.css' %}">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <!-- Left Panel -->
+
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="./"><img style="width:200px;"src="{% static 'White Bazaarrs.png' %}" alt="Logo" style="width:100px;"></a>
+                <a class="navbar-brand hidden" href="./"><img style="width:200px;"src="{% static 'favicon.png' %}" alt="Logo"></a>
+            </div>
+
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="/adminindex/"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                    </li>
+                    <!-- /.menu-title -->
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>Stores</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-building"></i><a href="/adminstoreslist/">Stores List</a></li>
+                            <li><i class="fa fa-users"></i><a href="/adminpublishedstore/">Published Stores</a></li>
+                            <li><i class="fa fa-user-times"></i><a href="/adminunpublishedstore/">Unpublished Store</a></li>
+                            <li><i class="fa fa-minus-circle"></i><a href="/adminunverifiedstore/">Unverified Stores</a></li>
+                            <li><i class="fa fa-credit-card-alt"></i><a href="/adminpaidstores/">Paid Stores</a></li>
+                            <li><i class="fa fa-thumbs-o-down"></i><a href="/adminunpaidstores/">Unpaid Stores</a></li>
+                            <li><i class="fa fa-table"></i><a href="/adminstoremerchantdata/">Store merchent Data</a></li>
+                            <li><i class="fa fa-check-circle-o"></i><a href="/adminstoreactivationdata/">Store Activation Data</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-sort"></i>Stores Orders</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-bars"></i><a href="/adminorderlist/">Order List</a></li>
+                            <li><i class="fa fa-paypal"></i><a href="/adminonlinepaidorderlist/">Online Paid Order List</a></li>
+                            <li><i class="fa fa-money"></i><a href="/admincodorderlist/">COD Order List</a></li>
+                            <li><i class="fa fa-list"></i><a href="/admincompleteorderlist/">Complete Order List</a></li>
+                            <li><i class="fa fa-th-list"></i><a href="/adminincompleteorderlist/">Incomplete Order List</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-credit-card-alt"></i>Store Orders Payment</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-info-circle"></i><a href="/adminorderpaymentdata/">Order Payment Data</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Users</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-user"></i><a href="/adminactiveuser/">Active User</a></li>
+                            <li><i class="fa fa-user-times"></i><a href="/admindeactiveuser/">Deactive User</a></li>
+                            <li><i class="fa fa-address-card"></i><a href="/adminuseraddressdata/">User Address Data</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-basket"></i>Store Category</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-plus-circle"></i><a href="/adminaddcategory/">Add Category</a></li>
+                            <li><i class="fa fa-list-alt"></i><a href="/adminlistcategory/">List Category</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-basket"></i>Agents</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-plus-circle"></i><a href="/adminagentlist/">Agents List</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-basket"></i>Feedback</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-plus-circle"></i><a href="/adminfeedbacklist/">Feedback List</a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </aside><!-- /#left-panel -->
+
+    <!-- Left Panel -->
+
+    <!-- Right Panel -->
+
+    <div id="right-panel" class="right-panel">
+
+        <!-- Header-->
+        <header id="header" class="header">
+
+            <div class="header-menu">
+
+                <div class="col-sm-7">
+                    <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                </div>
+
+                <div class="header-menu">
+                    <a href="/adminlogout/" style="float:right;">Logout</a>
+                </div>
+                
+            </div>
+
+        </header><!-- /header -->
+        <!-- Header-->
+
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/adminindex/">Dashboard</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Unpaid Stores</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Store ID</th>
+                                            <th>Store Name</th>
+                                            <th>Store Owner Name</th>
+                                            <th>Email</th>
+                                            <th>Contact No.</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for x in data %}
+                                        <tr>
+                                            <td>{{ x.Store_ID|safe }}</td>
+                                            <td>{{ x.Store_Name|safe }}</td>
+                                            <td>{{ x.Store_Owner|safe }}</td>
+                                            <td>{{ x.Store_Email|safe }}</td>
+                                            <td>{{ x.Store_Phone|safe }}</td>
+                                            <td><a class="btn btn-success"href="/adminmakestorepaid/?sid={{ x.Store_ID|safe }}">Change to Paid</a></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+
+    </div><!-- /#right-panel -->
+
+    <!-- Right Panel -->
+
+
+    <script src="{% static 'adminpages/vendors/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/popper.js/dist/umd/popper.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'adminpages/assets/js/main.js' %}"></script>
+
+
+    <script src="{% static 'adminpages/vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/jszip/dist/jszip.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/pdfmake/build/vfs_fonts.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'adminpages/vendors/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+    <script src="{% static 'adminpages/assets/js/init-scripts/data-table/datatables-init.js' %}"></script>
+
+
+</body>
+
+</html>

@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{% static 'css/slick.css' %}">
     <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'w3.css' %}">
     <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
 </head>
 
@@ -104,7 +105,15 @@
                     </div>
                     <div class="col-xl-5 col-md-6">
                         <div class="phone_thumb wow fadeInDown" data-wow-duration="1.1s" data-wow-delay=".2s">
-                            <img src="{% static 'img/ilstrator/phone.png' %}" alt="">
+                            <div style="width:100%;height:100%;padding:30px;border-radius:20px;"class="w3-white">
+                                <h1>Send Your File Here</h1>
+                                <form class="w3-container">
+                                    <input class="w3-input" type="text" placeholder="Email">
+                                    <input class="w3-input" type="text" placeholder="Your Email">
+                                    <textarea style="height:150px;"class="w3-input" type="text" placeholder="Your Message"></textarea>
+                                    <input style="width:100%;padding:20px;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

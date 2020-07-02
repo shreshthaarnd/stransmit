@@ -15,3 +15,7 @@ def pricing(request):
 	return render(request,'pricing.html',{})
 def singleblog(request):
 	return render(request,'single-blog.html',{})
+def adminlogin(request):
+	return render(request,'adminpages/login.html',{})
+def adminindex(request):
+	return render(request,'adminpages/index.html',{})

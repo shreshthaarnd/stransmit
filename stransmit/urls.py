@@ -26,4 +26,6 @@ urlpatterns = [
     path('features/',features),
     path('pricing/',pricing),
     path('singleblog/',singleblog),
+    path('adminlogin/',adminlogin),
+    path('adminindex/',adminindex),
 ]
