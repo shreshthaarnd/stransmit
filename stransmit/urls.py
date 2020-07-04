@@ -29,4 +29,5 @@ urlpatterns = [
     path('adminlogin/',adminlogin),
     path('adminindex/',adminindex),
     path('registration/',registration),
+    path('userdashboard/',userdashboard),
 ]
