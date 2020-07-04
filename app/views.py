@@ -19,3 +19,5 @@ def adminlogin(request):
 	return render(request,'adminpages/login.html',{})
 def adminindex(request):
 	return render(request,'adminpages/index.html',{})
+def registration(request):
+	return render(request,'registration.html',{})

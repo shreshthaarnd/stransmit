@@ -89,6 +89,26 @@
     <!-- header-end -->
 
     <!-- slider_area_start -->
+    <div id="id01" class="w3-modal w3-animate-zoom">
+  <div style="width:400px;"class="w3-modal-content text-center">
+
+    <div style="width:100%;font-size:20px;padding:6px"class="w3-orange text-center">Store Login</div>
+    <button onclick="document.getElementById('id01').style.display='none'"
+      style="cursor:pointer;" class="w3-button w3-orange w3-hover-black w3-display-topright ">&times;</button>
+
+
+    <div style="padding:20px;"class="w3-container">
+      <form action="/checklogin/" method="POST">
+        <input style="margin-bottom:20px;"class="w3-input" name="email" type="email" placeholder="Email">
+        <input style="margin-bottom:20px;"class="w3-input" name="password" type="password" placeholder="Password">
+        <input style="margin-bottom:10px;" class="w3-input w3-button w3-black w3-hover-orange" type="submit" value="Login">
+      </form>
+      <a style="cursor:pointer;" onclick="document.getElementById('id04').style.display='block';document.getElementById('id01').style.display='none';" class="itemhover">Forgot Password?</a>
+      <button onclick="document.getElementById('id03').style.display='block';document.getElementById('id01').style.display='none';"style="width:100%;margin-top:20px;"class="w3-button w3-orange w3-hover-black">Create Store</button>
+    </div>
+  </div>
+</div>
+
     <div class="slider_area">
         <div class="single_slider  d-flex align-items-center slider_bg_1">
             <div class="container">
@@ -99,7 +119,8 @@
                                 with applab</h3>
                             <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">Get more users to promote your app with this template</p>
                             <div class="video_service_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">
-                                <a href="#" class="boxed-btn3">Get Start Now</a>
+                                <a href="#" onclick="document.getElementById('id01').style.display='block';"class="boxed-btn3">Signup Here</a>
+                                <a href="#" class="boxed-btn3">Login Here</a>
                             </div>
                         </div>
                     </div>
@@ -108,10 +129,12 @@
                             <div style="width:100%;height:100%;padding:30px;border-radius:20px;"class="w3-white">
                                 <h1>Send Your File Here</h1>
                                 <form class="w3-container">
-                                    <input class="w3-input" type="text" placeholder="Email">
-                                    <input class="w3-input" type="text" placeholder="Your Email">
-                                    <textarea style="height:150px;"class="w3-input" type="text" placeholder="Your Message"></textarea>
-                                    <input style="width:100%;padding:20px;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
+                                    <input style="margin-top:10px;"class="w3-input" type="text" placeholder="Email">
+                                    <input style="margin-top:10px;"class="w3-input" type="text" placeholder="Your Email">
+                                    <textarea style="height:150px;margin-top:10px;"class="w3-input" type="text" placeholder="Your Message"></textarea>
+                                    <label style="padding:10px;margin-top:10px;font-size:20px;">Add Your File</label>
+                                    <input style="margin-bottom:20px;"class="w3-input" type="file" placeholder="Your File">
+                                    <input style="margin-top:10px;width:100%;padding:20px;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
                                 </form>
                             </div>
                         </div>
