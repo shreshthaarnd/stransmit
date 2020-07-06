@@ -26,7 +26,13 @@
     <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'w3.css' %}">
-    <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
+    <style type="text/css">
+        [type="file"] {
+          height: 0;
+          overflow: hidden;
+          width: 0;
+        }
+    </style>    <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
 </head>
 
 <body>
@@ -137,7 +143,7 @@
                 <input style="border-radius:10px;margin-top:30px;width:100%;"class="w3-button w3-blue w3-hover-black w3-large" type="submit" value="Login">
             </form>
         </div>
-        <div style="padding:20px;width:700px;border-radius:30px;"class="column w3-blue">
+        <div style="padding:20px;width:600px;border-radius:30px;"class="column w3-blue">
             <div style="padding-left:30px;padding-right:30px;">
             <H1 style="color:white;margin:auto;">Login With</H1>
             <button style="padding:20px;width:100%;margin-top:20px;font-size:25px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Goolge <i class="fa fa-google"></i></button>
@@ -172,8 +178,10 @@
                                     <input style="margin-top:10px;"class="w3-input" type="text" placeholder="Email">
                                     <input style="margin-top:10px;"class="w3-input" type="text" placeholder="Your Email">
                                     <textarea style="height:150px;margin-top:10px;"class="w3-input" type="text" placeholder="Your Message"></textarea>
-                                    <label style="padding:10px;margin-top:10px;font-size:20px;">Add Your File</label>
-                                    <input style="margin-bottom:20px;"class="w3-input" type="file" placeholder="Your File">
+
+                                    <input type="file" id="file" onchange="GetPath()"/>
+                                    <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-blue w3-hover-black">Select File</label>
+                                    
                                     <input style="margin-top:10px;width:100%;padding:20px;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
                                 </form>
                             </div>
@@ -647,6 +655,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="{% static 'js/mail-script.js' %}"></script>
 
     <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+        function GetPath() { 
+            document.getElementById('myFile').innerHTML = document.getElementById("file").value;
+        }
+    </script>
 </body>
 
 </html>
