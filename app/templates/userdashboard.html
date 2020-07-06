@@ -104,16 +104,42 @@
     <!-- /bradcam_area  -->
     <div style="padding:30px;"class="w3-container">
        <div class="w3-bar">
-       <a style="width:33%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Send Bulk Email</a>
-       <a style="width:33%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Sent Email History</a>
-       <a style="width:33%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Account Setting</a>
-       </div> 
-       <div id="bulkmail" style="padding:30px;" class="w3-animate-top">
+       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Send Bulk Email</a>
+       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Send Email</a>
+       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Sent Email History</a>
+       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Account Setting</a>
+       </div>
+       <div id="bulkmail" style="display:none;padding:30px;" class="w3-animate-top">
         <div class="row">
-            <div class="column">
+            <div style="padding:20px;"class="column">
                 <form>
-                    
+                    <label>Upload Mail CSV</label>
+                    <input type="file" class="w3-input">
+                    <input class="w3-input" type="text" placeholder="subject" name="Subject">
+                    <textarea class="w3-input" type="text" placeholder="message" name="Message"></textarea>
+                    <label>Attach File</label>
+                    <input class="w3-input" type="file">
+                    <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
                 </form>
+            </div>
+            <div style="border-radius:10px;padding:30px;background-size:auto 100%;width:400px;background-image:url({% static 'wFBAnx.jpg' %})"class="column">
+                <h1 class="text-center"style="color:white;">Send Bulk Mail</h1>
+            </div>
+        </div>
+       </div>
+       <div id="sendmail" style="display:none;padding:30px;" class="w3-animate-top">
+        <div class="row">
+            <div style="padding:20px;"class="column">
+                <form>
+                    <input class="w3-input" type="text" placeholder="subject" name="Subject">
+                    <textarea class="w3-input" type="text" placeholder="message" name="Message"></textarea>
+                    <label>Attach File</label>
+                    <input class="w3-input" type="file">
+                    <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
+                </form>
+            </div>
+            <div style="border-radius:10px;padding:30px;background-size:auto 100%;width:400px;background-image:url({% static 'email-send-ss-1920.jpg' %})"class="column">
+                <h1 class="text-center"style="color:white;">Send Mail</h1>
             </div>
         </div>
        </div>
