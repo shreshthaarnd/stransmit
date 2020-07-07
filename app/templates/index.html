@@ -48,7 +48,7 @@
                     <div class="row align-items-center">
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
-                                <a href="index.html">
+                                <a href="/index/">
                                     <img src="{% static 'img/logo.png' %}" alt="">
                                 </a>
                             </div>
@@ -57,21 +57,10 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="index.html">home</a></li>
-                                        <li><a href="features.html">Features</a></li>
-                                        <li><a href="Pricing.html">Pricing</a></li>
-                                        <li><a href="#">blog <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="blog.html">blog</a></li>
-                                                <li><a href="single-blog.html">single-blog</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                 <li><a href="elements.html">elements</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a class="active" href="/index/">home</a></li>
+                                        <li><a href="/contact/">Contact</a></li>
+                                        <li><a href="#" onclick="document.getElementById('id02').style.display='block';">Login</a></li>
+                                        <li><a href="#" onclick="document.getElementById('id01').style.display='block';">Signup</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -79,7 +68,7 @@
                         <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div class="Appointment">
                                 <div class="book_btn d-none d-lg-block">
-                                    <a  href="#">Download</a>
+                                    <a  href="#" onclick="document.getElementById('id02').style.display='block';">Login</a>
                                 </div>
                             </div>
                         </div>
@@ -96,15 +85,15 @@
 
     <!-- slider_area_start -->
 <div id="id01" class="w3-modal" style="z-index:100;padding:0px;">
-  <div style="width:100%;height:auto;margin-top:100px;border-top-right-radius:30px;border-top-left-radius:30px;padding:50px;"class="w3-modal-content text-center w3-animate-bottom">
+  <div style="width:100%;height:auto;margin-top:55px;border-top-right-radius:30px;border-top-left-radius:30px;padding:50px;"class="w3-modal-content text-center w3-animate-bottom">
 
     <button onclick="document.getElementById('id01').style.display='none'"
       style="cursor:pointer;margin:30px;border-radius:50px;" class="w3-button w3-blue w3-hover-black w3-display-topright ">&times;</button>
 
 
-    <div style="padding:20px;"class="w3-container">
+    <div style="padding:10px;"class="w3-container">
       <div class="row">
-        <div style="padding:20px;width:500px;"class="column">
+        <div style="padding:20px;width:470px;"class="column">
             <h1>Signup Here</h1>
             <form>
                 <input style="margin-top:16px;" class="w3-input" type="text" placeholder="Username*">
@@ -115,11 +104,11 @@
                 <input style="border-radius:10px;margin-top:16px;width:100%;"class="w3-button w3-blue w3-hover-black w3-large" type="submit" value="Signup">
             </form>
         </div>
-        <div style="padding:20px;width:750px;border-radius:30px;"class="column w3-blue">
+        <div style="padding:20px;width:650px;border-radius:30px;"class="column w3-blue">
             <div style="padding-left:30px;padding-right:30px;">
             <H1 style="color:white;margin:auto;">Signup With</H1>
-            <button style="padding:20px;width:100%;margin-top:20px;font-size:25px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Goolge <i class="fa fa-google"></i></button>
-            <button style="padding:20px;width:100%;margin-top:20px;font-size:25px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Facebook <i class="fa fa-facebook"></i></button>
+            <button style="padding:15px;width:100%;margin-top:30px;font-size:20px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Goolge <i class="fa fa-google"></i></button>
+            <button style="padding:15px;width:100%;margin-top:30px;font-size:20px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Facebook <i class="fa fa-facebook"></i></button>
             </div>
         </div>
       </div>
@@ -127,27 +116,28 @@
   </div>
 </div>
 <div id="id02" class="w3-modal" style="z-index:100;padding:0px;">
-  <div style="width:100%;height:100%;margin-top:100px;border-radius:30px;padding:50px;"class="w3-modal-content text-center w3-animate-bottom">
+  <div style="width:100%;height:auto;margin-top:55px;border-top-right-radius:30px;border-top-left-radius:30px;padding:50px;"class="w3-modal-content text-center w3-animate-bottom">
 
-    <button onclick="document.getElementById('id01').style.display='none'"
+    <button onclick="document.getElementById('id02').style.display='none'"
       style="cursor:pointer;margin:30px;border-radius:50px;" class="w3-button w3-blue w3-hover-black w3-display-topright ">&times;</button>
 
 
-    <div style="padding:20px;"class="w3-container">
+    <div style="padding:10px;"class="w3-container">
       <div class="row">
-        <div style="padding:20px;width:500px;"class="column">
+        <div style="padding:20px;width:470px;"class="column">
             <h1>Login Here</h1>
             <form>
-                <input style="margin-top:60px;"class="w3-input" type="email" placeholder="Email*">
-                <input style="margin-top:60px;"class="w3-input" type="password" placeholder="Password*">
-                <input style="border-radius:10px;margin-top:30px;width:100%;"class="w3-button w3-blue w3-hover-black w3-large" type="submit" value="Login">
+                <input style="margin-top:66px;"class="w3-input" type="email" placeholder="Email*">
+                <input style="margin-top:66px;margin-bottom:33px;"class="w3-input" type="password" placeholder="Password*">
+                <a href="" style="">Forgot Password</a>
+                <input style="border-radius:10px;margin-top:33px;width:100%;"class="w3-button w3-blue w3-hover-black w3-large" type="submit" value="Login">
             </form>
         </div>
-        <div style="padding:20px;width:600px;border-radius:30px;"class="column w3-blue">
+        <div style="padding:20px;width:650px;border-radius:30px;"class="column w3-blue">
             <div style="padding-left:30px;padding-right:30px;">
             <H1 style="color:white;margin:auto;">Login With</H1>
-            <button style="padding:20px;width:100%;margin-top:20px;font-size:25px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Goolge <i class="fa fa-google"></i></button>
-            <button style="padding:20px;width:100%;margin-top:20px;font-size:25px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Facebook <i class="fa fa-facebook"></i></button>
+            <button style="padding:20px;width:100%;margin-top:30px;font-size:20px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Goolge <i class="fa fa-google"></i></button>
+            <button style="padding:20px;width:100%;margin-top:30px;font-size:20px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Facebook <i class="fa fa-facebook"></i></button>
             </div>
         </div>
       </div>
@@ -156,34 +146,45 @@
 </div>
 
     <div class="slider_area">
-        <div class="single_slider  d-flex align-items-center slider_bg_1">
+        <div class="single_slider align-items-center slider_bg_1">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-xl-7 col-md-6">
-                        <div class="slider_text ">
-                            <h3 class="wow fadeInDown" data-wow-duration="1s" data-wow-delay=".1s" >Promote your app <br>
-                                with applab</h3>
-                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">Get more users to promote your app with this template</p>
-                            <div class="video_service_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">
-                                <a href="#" onclick="document.getElementById('id01').style.display='block';"class="boxed-btn3">Signup Here</a>
-                                <a href="#" onclick="document.getElementById('id02').style.display='block';"class="boxed-btn3">Login Here</a>
+                    <div class="col-xl-5 col-md-6" style="margin-top:10px;">
+                        <div class="phone_thumb wow fadeInDown" data-wow-duration="1.1s" data-wow-delay=".2s">
+                            <div style="width:100%;height:100%;padding:30px;border-radius:20px;"class="w3-white">
+                                {% if verify == True %}
+                                <h1>Verify Your Email</h1>
+                                <form class="w3-container" action="/verify/" method="POST">
+                                    <label style="margin-top:10px;">Enter OTP sent on your mail.</label><br>
+                                    <label style="margin-top:10px;">{{ msg|safe }}</label>
+                                    <input style="margin-bottom:10px;" class="w3-input" type="text" name="otp" placeholder="One Time Password (OTP)">
+                                    <a href="/resendotp/">Didn't get? Resend OTP</a>
+                                    <input style="margin-top:10px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Verify">
+                                </form>
+                                {% else %}
+                                <h1>Send Your File Here</h1>
+                                <form class="w3-container" action="/sendmail/" method="POST" enctype="multipart/form-data">
+                                    <input style="margin-top:10px;"class="w3-input" type="email" name="toemail" placeholder="Email" required>
+                                    <input style="margin-top:10px;"class="w3-input" type="email" name="email" placeholder="Your Email" required>
+                                    <textarea style="height:100px;margin-top:10px;"class="w3-input" name="message" type="text" placeholder="Your Message" required></textarea>
+
+                                    <input type="file" id="file" name="media" onchange="GetPath()"/ required>
+                                    <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File</label>
+                                    
+                                    <input style="margin-top:10px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
+                                </form>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-5 col-md-6">
-                        <div class="phone_thumb wow fadeInDown" data-wow-duration="1.1s" data-wow-delay=".2s">
-                            <div style="width:100%;height:100%;padding:30px;border-radius:20px;"class="w3-white">
-                                <h1>Send Your File Here</h1>
-                                <form class="w3-container">
-                                    <input style="margin-top:10px;"class="w3-input" type="text" placeholder="Email">
-                                    <input style="margin-top:10px;"class="w3-input" type="text" placeholder="Your Email">
-                                    <textarea style="height:150px;margin-top:10px;"class="w3-input" type="text" placeholder="Your Message"></textarea>
-
-                                    <input type="file" id="file" onchange="GetPath()"/>
-                                    <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-blue w3-hover-black">Select File</label>
-                                    
-                                    <input style="margin-top:10px;width:100%;padding:20px;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
-                                </form>
+                    <div class="col-xl-7 col-md-6" style="padding-top:200px;">
+                        <div class="slider_text ">
+                            <h3 class="wow fadeInDown" data-wow-duration="1s" data-wow-delay=".1s" >Send Bulky Files <br>
+                                via Mail</h3>
+                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">Convert your bulky files to a link and directly send them to anyone in few seconds.</p>
+                            <div class="video_service_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">
+                                <a href="#" onclick="document.getElementById('id01').style.display='block';"class="boxed-btn3">Signup Here</a>
+                                <a href="#" onclick="document.getElementById('id02').style.display='block';"class="boxed-btn3">Login Here</a>
                             </div>
                         </div>
                     </div>
