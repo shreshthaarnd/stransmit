@@ -22,6 +22,7 @@ urlpatterns = [
     path('resendotp/',resendotp),
     path('downloadmedia/',downloadmedia),
     path('checkmediadel/',checkmediadel),
+    path('checklogin/',checklogin),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

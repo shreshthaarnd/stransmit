@@ -3,7 +3,7 @@ from django.views.decorators.csrf import *
 from app.models import *
 from django.core.paginator import *
 from django.core.mail import EmailMessage
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 import uuid
 from app.myutil import *
 import csv
@@ -207,5 +207,16 @@ def downloadmedia(request):
 		return HttpResponse("<script>alert('File Not Found'); window.location.replace('/index/')</script>")
 def checkmediadel(request):
 	return HttpResponse(checkmedia())
+@csrf_exempt
 def checklogin(request):
-	pass
+	if request.method=='POST':
+		email=request.POST.get('email')
+		password=request.POST.get('password')
+		if UserData.objects.filter(User_Email=email,User_Password=password).exists():
+			for x in UserData.objects.filter(User_Email=email):
+				request.session['userid'] = x.User_ID
+			return redirect('/userdashboard/')
+		else:
+			return HttpResponse("<script>alert('Incorrect Login Credentials'); window.location.replace('/index/')</script>")
+	else:
+		raise Http404
