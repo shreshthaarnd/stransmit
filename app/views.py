@@ -34,7 +34,87 @@ def adminindex(request):
 def registration(request):
 	return render(request,'registration.html',{})
 def userdashboard(request):
-	return render(request,'userdashboard.html',{})
+	try:
+		uid=request.session['userid']
+		userdata=UserData.objects.filter(User_ID=uid)
+		dic={'userdata':userdata}
+		return render(request,'userdashboard.html',dic)
+	except:
+		return Http404
+@csrf_exempt
+def edituserdata(request):
+	try:
+		uid=request.session['userid']
+		userdata=UserData.objects.filter(User_ID=uid)
+		userdata.update(
+			User_Name=request.POST.get('name'),
+			User_Phone=request.POST.get('phone'),
+			User_Password=request.POST.get('password')
+			)
+		return HttpResponse("<script>alert('Details Updated Successfully'); window.location.replace('/userdashboard/')</script>")
+	except:
+		return Http404
+import pandas as pd
+@csrf_exempt
+def sendbulkmails(request):
+	if request.method=='POST':
+		uid=request.session['userid']
+		subject=request.POST.get('subject')
+		message=request.POST.get('message')
+		media=request.FILES['media']
+		useremail=''
+		for x in UserData.objects.filter(User_ID=uid):
+			useremail=x.User_Email
+		df=pd.read_csv(request.FILES['emailcsv'])
+		for x in df['Email']:
+			sendmailutil(x, subject, message, media, uid, useremail)
+		return HttpResponse("<script>alert('Mails Sent Successfully'); window.location.replace('/userdashboard/')</script>")
+@csrf_exempt
+def usersendmail(request):
+	try:
+		uid=request.session['userid']
+		toemail=request.POST.get('toemail')
+		subject=request.POST.get('subject')
+		message=request.POST.get('message')
+		media=request.FILES['media']
+		userdata=UserData.objects.filter(User_ID=uid)
+		for i in userdata:
+			m="M00"
+			x=1
+			mid=m+str(x)
+			while MailData.objects.filter(Mail_ID=mid).exists():
+				x=x+1
+				mid=m+str(x)
+			x=int(x)
+			obj=MailData(
+				Mail_Date=str(datetime.date.today()),
+				Mail_ID=mid,
+				User_ID=uid,
+				User_Email=i.User_Email,
+				To_Email=toemail,
+				Message=message,
+				MediaFile=media
+				)
+			obj.save()
+			murl=''
+			for x in MailData.objects.filter(Mail_ID=mid):
+				murl=x.MediaFile
+			msg='''Hi there!
+A mail has been sent to you from '''+i.User_Email+''' with following message,
+
+Subject : '''+subject+'''
+Message : '''+message+'''
+
+Media Link : http://127.0.0.1:8000/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
+
+Thanks!,
+S|Transmit.com'''
+			sub='S|Transmit - New Mail Received'
+			email=EmailMessage(sub,msg,to=[toemail])
+			email.send()
+		return HttpResponse("<script>alert('Mail Sent Successfully'); window.location.replace('/userdashboard/')</script>")
+	except:
+		return Http404
 @csrf_exempt
 def sendmail(request):
 	if request.method=='POST':

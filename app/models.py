@@ -19,6 +19,7 @@ class MailData(models.Model):
 	User_ID=models.CharField(max_length=50)
 	User_Email=models.CharField(max_length=50)
 	To_Email=models.CharField(max_length=50)
+	Subject=models.CharField(max_length=200, default="no-subject")
 	Message=models.CharField(max_length=500)
 	MediaFile=models.FileField(upload_to='mediafiles/')
 	class Meta:

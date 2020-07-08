@@ -98,20 +98,20 @@
     <!-- /bradcam_area  -->
     <div style="padding:30px;width:"class="w3-container">
        <div class="w3-bar">
-       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="#bulkmail" onclick="document.getElementById('bulkmail').style.display='block'";>Send Bulk Email</a>
-       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Send Email</a>
-       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Sent Email History</a>
-       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Account Settings</a>
+       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="#bulkmail" onclick="OpenBulkMail()";>Send Bulk Email</a>
+       <a style="width:24%;border-radius:10px;"onclick="OpenSendMail()"class="w3-button  w3-blue w3-hover-black"href="#sendmail">Send Email</a>
+       <a style="width:24%;border-radius:10px;"onclick="OpenMailHistory()"class="w3-button  w3-blue w3-hover-black"href="#mailhistory">Sent Email History</a>
+       <a style="width:24%;border-radius:10px;"onclick="OpenAccountSettings()"class="w3-button  w3-blue w3-hover-black"href="#accountsetting">Account Settings</a>
        </div>
-       <div id="bulkmail" style="display:none;padding:30px;" class="w3-animate-top">
+       <div id="bulkmail" style="padding:30px;" class="w3-animate-top">
         <h1>Send Mail to Bulk Peoples in Just One Click</h1>
-        <form>
+        <form action="/sendbulkmails/" method="POST" enctype="multipart/form-data">
             <label style="margin-top:20px;">Upload Mail CSV <a href="">(Get Sample Here)</a></label>
-            <input type="file" id="file" name="media" onchange="GetPath()"/ required>
+            <input type="file" id="file" name="emailcsv" onchange="GetPath()"/ required>
             <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File Here
             </label>
-            <input style="margin-top:20px;" class="w3-input" type="text" placeholder="subject" name="Subject">
-            <textarea style="margin-top:20px;" class="w3-input" type="text" placeholder="message" name="Message"></textarea>
+            <input style="margin-top:20px;" class="w3-input" type="text" placeholder="Subject" name="subject">
+            <textarea style="margin-top:20px;" class="w3-input" type="text" placeholder="Message" name="message"></textarea>
             <label style="margin-top:20px;">Attach File</label>
             <input type="file" id="file2" name="media" onchange="GetPath2()" required>
             <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile2" for="file2" class="w3-button w3-black w3-hover-blue">Select Here
@@ -120,18 +120,20 @@
         </form>
        </div>
        <div id="sendmail" style="display:none;padding:30px;" class="w3-animate-top">
-                <form>
-                    <input style="margin-top:20px;" class="w3-input" type="text" placeholder="subject" name="Subject">
-                    <textarea class="w3-input" type="text" placeholder="message" name="Message"></textarea>
+                <h1>Send Media Mails</h1>
+                <form action="/usersendmail/" method="POST" enctype="multipart/form-data">
+                    <input style="margin-top:20px;margin-top:20px;" class="w3-input" type="text" placeholder="To" name="toemail">
+                    <input style="margin-top:20px;margin-top:20px;" class="w3-input" type="text" placeholder="Subject" name="subject">
+                    <textarea style="margin-top:20px;" class="w3-input" type="text" placeholder="Message" name="message"></textarea>
                     <label style="margin-top:20px;">Attach File</label>
                     <input style="margin-top:20px;" type="file" id="file3" name="media" onchange="GetPath3()" required>
-                    <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile3" for="file3" class="w3-button w3-black w3-hover-blue">Select Here
-                    </label>
+                    <label style="border-radius:10px;margin-top:20px;width:100%;" id="myFile3" for="file3" class="w3-button w3-black w3-hover-blue">Attach File Here</label>
                     <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
                 </form>
                 <h1 class="text-center"style="color:white;">Send Mail</h1>
        </div>
         <div id="mailhistory" style="display:none;padding:30px;"class="w3-animate-top">
+            <h1>Sent Mails History</h1>
           <table style="width:100%;">
           <tr>
             <th>Date</th>
@@ -150,13 +152,21 @@
           </table>  
         </div>
         <div id="accountsetting" style="display:none;padding:30px;" class="w3-animate-top">
-            <form>
-                <input class="w3-input" type="text" placeholder="username" name="UserName">
-                <input class="w3-input" type="email" placeholder="email" name="Email">
-                <input class="w3-input" type="password" placeholder="password" name="password">
-                <input style="width:100%;border-radius:10px;margin-top:20px;" type="submit" class="w3-button w3-blue w3-hover-black" value="Edit">
+            <h1>Account Settings</h1>
+            {% for x in userdata %}
+            <form action="/edituserdata/" method="POST">
+                <label style="margin-top:20px;">Name</label>
+                <input class="w3-input" id="name" type="text" value="{{ x.User_Name|safe }}" name="name" disabled>
+                <label style="margin-top:20px;">Email</label>
+                <input class="w3-input" id="email" type="email" value="{{ x.User_Email|safe }}" name="email" disabled>
+                <label style="margin-top:20px;">Phone</label>
+                <input class="w3-input" id="phone" type="number" value="{{ x.User_Phone|safe }}" name="phone" disabled>
+                <label style="margin-top:20px;">Password</label>
+                <input class="w3-input" id="password" type="password" value="{{ x.User_Password|safe }}" name="password" disabled>
+                <input style="width:100%;border-radius:10px;margin-top:20px;" type="reset" class="w3-button w3-black w3-hover-blue" onclick="EnableInput()" value="Edit">
                 <input style="width:100%;border-radius:10px;margin-top:20px;"type="submit" class="w3-button w3-blue w3-hover-black" value="Save">
             </form>
+            {% endfor %}
         </div>
     </div>
     
@@ -316,6 +326,35 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             }
             function GetPath3() { 
                 document.getElementById('myFile3').innerHTML = document.getElementById("file3").value;
+            }
+            function OpenBulkMail() { 
+                document.getElementById('bulkmail').style.display = 'block';
+                document.getElementById('sendmail').style.display = 'none';
+                document.getElementById('mailhistory').style.display = 'none';
+                document.getElementById('accountsetting').style.display = 'none';
+            }
+            function OpenSendMail() { 
+                document.getElementById('bulkmail').style.display = 'none';
+                document.getElementById('sendmail').style.display = 'block';
+                document.getElementById('mailhistory').style.display = 'none';
+                document.getElementById('accountsetting').style.display = 'none';
+            }
+            function OpenMailHistory() { 
+                document.getElementById('bulkmail').style.display = 'none';
+                document.getElementById('sendmail').style.display = 'none';
+                document.getElementById('mailhistory').style.display = 'block';
+                document.getElementById('accountsetting').style.display = 'none';
+            }
+            function OpenAccountSettings() { 
+                document.getElementById('bulkmail').style.display = 'none';
+                document.getElementById('sendmail').style.display = 'none';
+                document.getElementById('mailhistory').style.display = 'none';
+                document.getElementById('accountsetting').style.display = 'block';
+            }
+            function EnableInput() { 
+                document.getElementById('name').disabled = false;
+                document.getElementById('phone').disabled = false;
+                document.getElementById('password').disabled = false;
             }
     </script>
     </body>

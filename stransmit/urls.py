@@ -23,6 +23,9 @@ urlpatterns = [
     path('downloadmedia/',downloadmedia),
     path('checkmediadel/',checkmediadel),
     path('checklogin/',checklogin),
+    path('edituserdata/',edituserdata),
+    path('usersendmail/',usersendmail),
+    path('sendbulkmails/',sendbulkmails),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

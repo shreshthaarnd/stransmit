@@ -32,3 +32,36 @@ def checkmedia():
 				obj.save()
 				MailData.objects.filter(Mail_ID=x.Mail_ID).delete()
 	return 'Done'
+
+def sendmail(email, subject, message, media, userid, useremail):
+	mid=m+str(x)
+	while MailData.objects.filter(Mail_ID=mid).exists():
+		x=x+1
+		mid=m+str(x)
+	x=int(x)
+	obj=MailData(
+		Mail_Date=str(datetime.date.today()),
+		Mail_ID=mid,
+		User_ID=userid,
+		User_Email=useremail,
+		To_Email=email,
+		Message=message,
+		MediaFile=media
+		)
+	obj.save()
+	murl=''
+	for x in MailData.objects.filter(Mail_ID=mid):
+		murl=x.MediaFile
+	msg='''Hi there!
+A mail has been sent to you from '''+useremail+''' with following message,
+
+Subject : '''+subject+'''
+Message : '''+message+'''
+
+Media Link : http://127.0.0.1:8000/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
+
+Thanks!,
+S|Transmit.com'''
+	sub='S|Transmit - New Mail Received'
+	email=EmailMessage(sub,msg,to=[email])
+	email.send()
