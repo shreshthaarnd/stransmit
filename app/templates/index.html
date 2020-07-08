@@ -126,9 +126,9 @@
       <div class="row">
         <div style="padding:20px;width:470px;"class="column">
             <h1>Login Here</h1>
-            <form>
-                <input style="margin-top:66px;"class="w3-input" type="email" placeholder="Email*">
-                <input style="margin-top:66px;margin-bottom:33px;"class="w3-input" type="password" placeholder="Password*">
+            <form action="/checklogin/" method="POST">
+                <input style="margin-top:66px;"class="w3-input" type="email" placeholder="Email *" name="email">
+                <input style="margin-top:66px;margin-bottom:33px;"class="w3-input" type="password" placeholder="Password *" name="password">
                 <a href="" style="">Forgot Password</a>
                 <input style="border-radius:10px;margin-top:33px;width:100%;"class="w3-button w3-blue w3-hover-black w3-large" type="submit" value="Login">
             </form>

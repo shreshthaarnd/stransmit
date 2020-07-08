@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>AppLab</title>
+    <title>S|Transmit - User Dashboard</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -25,7 +25,13 @@
     <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'w3.css' %}">
-    
+    <style type="text/css">
+        [type="file"] {
+          height: 0;
+          overflow: hidden;
+          width: 0;
+        }
+    </style>
     <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
 </head>
 
@@ -52,21 +58,9 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="index.html">home</a></li>
-                                        <li><a href="features.html">Features</a></li>
-                                        <li><a href="Pricing.html">Pricing</a></li>
-                                        <li><a href="#">blog <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">    
-                                                <li><a href="blog.html">blog</a></li>
-                                                <li><a href="single-blog.html">single-blog</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                 <li><a href="elements.html">elements</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a class="active" href="/index/">home</a></li>
+                                        <li><a href="/contact/">Contact</a></li>
+                                        <li><a href="/logout/">Logout</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -74,7 +68,7 @@
                         <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div class="Appointment">
                                 <div class="book_btn d-none d-lg-block">
-                                    <a  href="#">Download</a>
+                                    <a  href="/logout/">Logout</a>
                                 </div>
                             </div>
                         </div>
@@ -102,30 +96,28 @@
         </div>
     </div>
     <!-- /bradcam_area  -->
-    <div style="padding:30px;"class="w3-container">
+    <div style="padding:30px;width:"class="w3-container">
        <div class="w3-bar">
-       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Send Bulk Email</a>
+       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="#bulkmail" onclick="document.getElementById('bulkmail').style.display='block'";>Send Bulk Email</a>
        <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Send Email</a>
        <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Sent Email History</a>
-       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Account Setting</a>
+       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Account Settings</a>
        </div>
-       <div id="bulkmail" style="display:none;padding:30px;" class="w3-animate-top">
-        <div class="row">
-            <div style="padding:20px;"class="column">
-                <form>
-                    <label>Upload Mail CSV</label>
-                    <input type="file" class="w3-input">
-                    <input class="w3-input" type="text" placeholder="subject" name="Subject">
-                    <textarea class="w3-input" type="text" placeholder="message" name="Message"></textarea>
-                    <label>Attach File</label>
-                    <input class="w3-input" type="file">
-                    <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
-                </form>
-            </div>
-            <div style="border-radius:10px;padding:30px;background-size:auto 100%;width:400px;background-image:url({% static 'wFBAnx.jpg' %})"class="column">
-                <h1 class="text-center"style="color:white;">Send Bulk Mail</h1>
-            </div>
-        </div>
+       <div id="bulkmail" style="padding:30px;" class="w3-animate-top">
+        <h1>Send Mail to Bulk Peoples in Just One Click</h1>
+        <form>
+            <label style="margin-top:20px;">Upload Mail CSV <a href="">(Get Sample Here)</a></label>
+            <input type="file" id="file" name="media" onchange="GetPath()"/ required>
+            <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File Here
+            </label>
+            <input style="margin-top:20px;" class="w3-input" type="text" placeholder="subject" name="Subject">
+            <textarea style="margin-top:20px;" class="w3-input" type="text" placeholder="message" name="Message"></textarea>
+            <label style="margin-top:20px;">Attach File</label>
+            <input type="file" id="file2" name="media" onchange="GetPath2()" required>
+            <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile2" for="file2" class="w3-button w3-black w3-hover-blue">Select Here
+            </label>
+            <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
+        </form>
        </div>
        <div id="sendmail" style="display:none;padding:30px;" class="w3-animate-top">
         <div class="row">
@@ -292,6 +284,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     
             });
         </script>
+        <script type="text/javascript">
+            function GetPath() { 
+                document.getElementById('myFile').innerHTML = document.getElementById("file").value;
+            }
+            function GetPath2() { 
+                document.getElementById('myFile2').innerHTML = document.getElementById("file2").value;
+            }
+    </script>
     </body>
     
     </html>
