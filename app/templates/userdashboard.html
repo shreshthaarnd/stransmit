@@ -103,7 +103,7 @@
        <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Sent Email History</a>
        <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="">Account Settings</a>
        </div>
-       <div id="bulkmail" style="padding:30px;" class="w3-animate-top">
+       <div id="bulkmail" style="display:none;padding:30px;" class="w3-animate-top">
         <h1>Send Mail to Bulk Peoples in Just One Click</h1>
         <form>
             <label style="margin-top:20px;">Upload Mail CSV <a href="">(Get Sample Here)</a></label>
@@ -120,21 +120,44 @@
         </form>
        </div>
        <div id="sendmail" style="display:none;padding:30px;" class="w3-animate-top">
-        <div class="row">
-            <div style="padding:20px;"class="column">
                 <form>
-                    <input class="w3-input" type="text" placeholder="subject" name="Subject">
+                    <input style="margin-top:20px;" class="w3-input" type="text" placeholder="subject" name="Subject">
                     <textarea class="w3-input" type="text" placeholder="message" name="Message"></textarea>
-                    <label>Attach File</label>
-                    <input class="w3-input" type="file">
+                    <label style="margin-top:20px;">Attach File</label>
+                    <input style="margin-top:20px;" type="file" id="file3" name="media" onchange="GetPath3()" required>
+                    <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile3" for="file3" class="w3-button w3-black w3-hover-blue">Select Here
+                    </label>
                     <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
                 </form>
-            </div>
-            <div style="border-radius:10px;padding:30px;background-size:auto 100%;width:400px;background-image:url({% static 'email-send-ss-1920.jpg' %})"class="column">
                 <h1 class="text-center"style="color:white;">Send Mail</h1>
-            </div>
-        </div>
        </div>
+        <div id="mailhistory" style="display:none;padding:30px;"class="w3-animate-top">
+          <table style="width:100%;">
+          <tr>
+            <th>Date</th>
+            <th>To</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Media</th>
+          </tr>
+            <tr>
+                <td>04/05/2020</td>
+                <td>sonali23@gmail.com</td>
+                <td>ABC</td>
+                <td>ABVFGH</td>
+                <td><a style="border-radius:10px;"class="w3-button w3-blue w3-hover-black"href="">Download Here</a></td>
+            </tr>
+          </table>  
+        </div>
+        <div id="accountsetting" style="display:none;padding:30px;" class="w3-animate-top">
+            <form>
+                <input class="w3-input" type="text" placeholder="username" name="UserName">
+                <input class="w3-input" type="email" placeholder="email" name="Email">
+                <input class="w3-input" type="password" placeholder="password" name="password">
+                <input style="width:100%;border-radius:10px;margin-top:20px;" type="submit" class="w3-button w3-blue w3-hover-black" value="Edit">
+                <input style="width:100%;border-radius:10px;margin-top:20px;"type="submit" class="w3-button w3-blue w3-hover-black" value="Save">
+            </form>
+        </div>
     </div>
     
     <!-- footer start -->
@@ -290,6 +313,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             }
             function GetPath2() { 
                 document.getElementById('myFile2').innerHTML = document.getElementById("file2").value;
+            }
+            function GetPath3() { 
+                document.getElementById('myFile3').innerHTML = document.getElementById("file3").value;
             }
     </script>
     </body>
