@@ -18,7 +18,27 @@ def index(request):
 def blog(request):
 	return render(request,'blog.html',{})
 def contact(request):
-	return render(request,'contact.html',{})
+	dic={'checksession':checksession(request)}
+	return render(request,'contact.html',dic)
+def sendquery(request):
+	name=request.POST.get('name')
+	email=request.POST.get('email')
+	subject=request.POST.get('subject')
+	message=request.POST.get('message')
+	msg='''Hi there!
+New Query Message,
+
+Name : '''+name+'''
+Email : '''+email+'''
+Subject : '''+subject+'''
+Message : '''+message+'''
+
+Thanks!,
+Stransmit.com'''
+	sub='Stransmit - New Query Received'
+	email=EmailMessage(sub,msg,to=['stransmitdotcom@gmail.com'])
+	email.send()
+	return HttpResponse("<script>alert('Thanks for contacting us!'); window.location.replace('/contact/')</script>")
 def elements(request):
 	return render(request,'elements.html',{})
 def features(request):
@@ -27,10 +47,6 @@ def pricing(request):
 	return render(request,'pricing.html',{})
 def singleblog(request):
 	return render(request,'single-blog.html',{})
-def adminlogin(request):
-	return render(request,'adminpages/login.html',{})
-def adminindex(request):
-	return render(request,'adminpages/index.html',{})
 def registration(request):
 	return render(request,'registration.html',{})
 def logout(request):
@@ -129,8 +145,8 @@ Message : '''+message+'''
 Media Link : http://127.0.0.1:8000/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
 
 Thanks!,
-S|Transmit.com'''
-			sub='S|Transmit - New Mail Received'
+Stransmit.com'''
+			sub='Stransmit - New Mail Received'
 			email=EmailMessage(sub,msg,to=[toemail])
 			email.send()
 		return HttpResponse("<script>alert('Mail Sent Successfully'); window.location.replace('/userdashboard/')</script>")
@@ -181,9 +197,11 @@ Message : '''+message+'''
 
 Media Link : http://127.0.0.1:8000/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
 
+This media is only availiable for 10 Days.
+
 Thanks!,
-S|Transmit.com'''
-			sub='S|Transmit - New Mail Received'
+Stransmit.com'''
+			sub='Stransmit - New Mail Received'
 			email=EmailMessage(sub,msg,to=[toemail])
 			email.send()
 			return HttpResponse("<script>alert('Your mail has been sent successfully.'); window.location.replace('/index/')</script>")
@@ -225,8 +243,8 @@ Your One Time Password (OTP) is,
 '''+otp+'''
 
 Thanks!,
-S|Transmit.com'''
-			sub='S|Transmit - One Time Password (OTP)'
+Stransmit.com'''
+			sub='Stransmit - One Time Password (OTP)'
 			email=EmailMessage(sub,msg,to=[email])
 			email.send()
 			dic={'verify':True}
@@ -248,22 +266,24 @@ Message : '''+x.Message+'''
 
 Media Link : http://127.0.0.1:8000/downloadmedia/?mid='''+mid+'''&mpath='''+str(x.MediaFile)+'''
 
+This media is only availiable for 10 Days.
+
 Thanks!,
-S|Transmit.com'''
-				sub='S|Transmit - New Mail Received'
+Stransmit.com'''
+				sub='Stransmit - New Mail Received'
 				email=EmailMessage(sub,msg,to=[x.To_Email])
 				email.send()
 				break
 			for x in UserData.objects.filter(User_ID=uid):
 				msg='''Hi there!
-Your S|Transmit Account has been successfully created,
+Your Stransmit Account has been successfully created,
 
 Login Email : '''+x.User_Email+'''
 Login Password : '''+x.User_Password+'''
 
 Thanks for being with us!,
-S|Transmit.com'''
-				sub='S|Transmit - Account Created!'
+Stransmit.com'''
+				sub='Stransmit - Account Created!'
 				email=EmailMessage(sub,msg,to=[x.User_Email])
 				email.send()
 				break
@@ -282,8 +302,8 @@ Your One Time Password (OTP) is,
 '''+otp+'''
 
 Thanks!,
-S|Transmit.com'''
-			sub='S|Transmit - One Time Password (OTP)'
+Stransmit.com'''
+			sub='Stransmit - One Time Password (OTP)'
 			email=EmailMessage(sub,msg,to=[x.User_Email])
 			email.send()
 			break
@@ -306,8 +326,6 @@ def downloadmedia(request):
 			raise Http404
 	else:
 		return HttpResponse("<script>alert('File Not Found'); window.location.replace('/index/')</script>")
-def checkmediadel(request):
-	return HttpResponse(checkmedia())
 @csrf_exempt
 def checklogin(request):
 	if request.method=='POST':
@@ -321,3 +339,36 @@ def checklogin(request):
 			return HttpResponse("<script>alert('Incorrect Login Credentials'); window.location.replace('/index/')</script>")
 	else:
 		raise Http404
+def adminlogin(request):
+	return render(request,'adminpages/login.html',{})
+@csrf_exempt
+def adminchecklogin(request):
+	email=request.POST.get('email')
+	password=request.POST.get('password')
+	if email=='admin@stransmit.com' and password=='2Baramttpochna@Stransmit':
+		request.session['adminid'] = email
+		return redirect('/adminindex/')
+	else:
+		return HttpResponse("<script>alert('Incorrect Login Credentials'); window.location.replace('/adminlogin/')</script>")
+def adminindex(request):
+	try:
+		adminid=request.session['adminid']
+		users=len(UserData.objects.all())
+		mails=len(MailData.objects.all())+len(SentData.objects.all())
+		return render(request,'adminpages/index.html',{'users':users,'mails':mails})
+	except:
+		raise Http404
+def checkmediadel(request):
+	try:
+		adminid=request.session['adminid']
+		checkmedia()
+		return HttpResponse("<script>alert('Deleted Successfully'); window.location.replace('/adminindex/')</script>")
+	except:
+		raise Http404
+def adminlogut(request):
+	try:
+		del request.session['adminid']
+		request.session.flush()
+		return redirect('/adminlogin/')
+	except:
+		return redirect('/index/')

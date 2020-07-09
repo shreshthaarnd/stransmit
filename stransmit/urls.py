@@ -28,6 +28,9 @@ urlpatterns = [
     path('sendbulkmails/',sendbulkmails),
     path('downloadmailcsv/',downloadmailcsv),
     path('logout/',logout),
+    path('sendquery/',sendquery),
+    path('adminchecklogin/',adminchecklogin),
+    path('adminlogout/',adminlogut),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

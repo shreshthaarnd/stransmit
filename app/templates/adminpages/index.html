@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bazzaars - Admin Panel</title>
+    <title>Stransmit - Admin Panel</title>
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -43,8 +43,8 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="./"><img style="width:200px;"src="{% static 'White Bazaarrs.png' %}" alt="Logo" style="width:100px;"></a>
-                <a class="navbar-brand hidden" href="./"><img style="width:200px;"src="{% static 'favicon.png' %}" alt="Logo"></a>
+                <a class="navbar-brand" href="./"><img style="width:200px;"src="{% static 'Stransmit.png' %}" alt="Logo" style="width:100px;"></a>
+                <a class="navbar-brand hidden" href="./"><img style="width:200px;"src="{% static 'Stransmitfavicon.png' %}" alt="Logo"></a>
             </div>
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
@@ -54,62 +54,19 @@
                     </li>
                     <!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>Stores</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>Users</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-building"></i><a href="/adminstoreslist/">Stores List</a></li>
-                            <li><i class="fa fa-users"></i><a href="/adminpublishedstore/">Published Stores</a></li>
-                            <li><i class="fa fa-user-times"></i><a href="/adminunpublishedstore/">Unpublished Store</a></li>
-                            <li><i class="fa fa-minus-circle"></i><a href="/adminunverifiedstore/">Unverified Stores</a></li>
-                            <li><i class="fa fa-credit-card-alt"></i><a href="/adminpaidstores/">Paid Stores</a></li>
-                            <li><i class="fa fa-thumbs-o-down"></i><a href="/adminunpaidstores/">Unpaid Stores</a></li>
-                            <li><i class="fa fa-table"></i><a href="/adminstoremerchantdata/">Store merchent Data</a></li>
-                            <li><i class="fa fa-check-circle-o"></i><a href="/adminstoreactivationdata/">Store Activation Data</a></li>
+                            <li><i class="fa fa-building"></i><a href="/adminstoreslist/">Users List</a></li>
+                            <li><i class="fa fa-users"></i><a href="/adminpublishedstore/">Blocked Users</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-sort"></i>Stores Orders</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>Mails</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-bars"></i><a href="/adminorderlist/">Order List</a></li>
-                            <li><i class="fa fa-paypal"></i><a href="/adminonlinepaidorderlist/">Online Paid Order List</a></li>
-                            <li><i class="fa fa-money"></i><a href="/admincodorderlist/">COD Order List</a></li>
-                            <li><i class="fa fa-list"></i><a href="/admincompleteorderlist/">Complete Order List</a></li>
-                            <li><i class="fa fa-th-list"></i><a href="/adminincompleteorderlist/">Incomplete Order List</a></li>
+                            <li><i class="fa fa-building"></i><a href="/adminstoreslist/">Sent Mails List</a></li>
+                            <li><i class="fa fa-users"></i><a href="/checkmediadel/">Delete Media</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-credit-card-alt"></i>Store Orders Payment</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-info-circle"></i><a href="/adminorderpaymentdata/">Order Payment Data</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Users</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-user"></i><a href="/adminactiveuser/">Active User</a></li>
-                            <li><i class="fa fa-user-times"></i><a href="/admindeactiveuser/">Deactive User</a></li>
-                            <li><i class="fa fa-address-card"></i><a href="/adminuseraddressdata/">User Address Data</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-basket"></i>Store Category</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-plus-circle"></i><a href="/adminaddcategory/">Add Category</a></li>
-                            <li><i class="fa fa-list-alt"></i><a href="/adminlistcategory/">List Category</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-basket"></i>Agents</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-plus-circle"></i><a href="/adminagentlist/">Agents List</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-basket"></i>Feedback</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-plus-circle"></i><a href="/adminfeedbacklist/">Feedback List</a></li>
-                        </ul>
-                    </li>
-                    
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -162,7 +119,13 @@
 
             <div class="col-sm-12">
                 <div class="alert  alert-success alert-dismissible fade show" role="alert">
-                    <span class="badge badge-pill badge-success">Success</span> You successfully read this important alert message.
+                    <span class="badge badge-pill badge-success">{{  users|safe }}</span> Users Joined Stransmit.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                    <span class="badge badge-pill badge-success">{{  mails|safe }}</span> Message Sent.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
