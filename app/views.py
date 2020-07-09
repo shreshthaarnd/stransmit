@@ -142,7 +142,7 @@ A mail has been sent to you from '''+i.User_Email+''' with following message,
 Subject : '''+subject+'''
 Message : '''+message+'''
 
-Media Link : http://127.0.0.1:8000/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
+Media Link : https://stransmit.com/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
 
 Thanks!,
 Stransmit.com'''
@@ -195,7 +195,7 @@ A mail has been sent to you from '''+email+''' with following message,
 
 Message : '''+message+'''
 
-Media Link : http://127.0.0.1:8000/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
+Media Link : https://stransmit.com/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
 
 This media is only availiable for 10 Days.
 
@@ -264,7 +264,7 @@ A mail has been sent to you from '''+x.User_Email+''' with following message,
 
 Message : '''+x.Message+'''
 
-Media Link : http://127.0.0.1:8000/downloadmedia/?mid='''+mid+'''&mpath='''+str(x.MediaFile)+'''
+Media Link : https://stransmit.com/downloadmedia/?mid='''+mid+'''&mpath='''+str(x.MediaFile)+'''
 
 This media is only availiable for 10 Days.
 
