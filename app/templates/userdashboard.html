@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>S|Transmit - User Dashboard</title>
+    <title>Stransmit - User Dashboard</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -59,7 +59,6 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a class="active" href="/index/">home</a></li>
-                                        <li><a href="/contact/">Contact</a></li>
                                         <li><a href="/logout/">Logout</a></li>
                                     </ul>
                                 </nav>
@@ -67,9 +66,8 @@
                         </div>
                         <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div class="Appointment">
-                                <div class="book_btn d-none d-lg-block">
-                                    <a  href="/logout/">Logout</a>
-                                </div>
+                                <span style="color:white;">Made In India</span>
+                                <img style="margin-left:10px;width:50px;"src="{% static 'images.png' %}">
                             </div>
                         </div>
                         <div class="col-12">
@@ -106,17 +104,17 @@
        <div id="bulkmail" style="padding:30px;" class="w3-animate-top">
         <h1>Send Mail to Bulk Peoples in Just One Click</h1>
         <form action="/sendbulkmails/" method="POST" enctype="multipart/form-data">
-            <label style="margin-top:20px;">Upload Mail CSV <a href="">(Get Sample Here)</a></label>
+            <label style="margin-top:20px;">Upload Mail CSV <a href="/downloadmailcsv/">(Get Sample Here)</a></label>
             <input type="file" id="file" name="emailcsv" onchange="GetPath()"/ required>
             <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File Here
             </label>
             <input style="margin-top:20px;" class="w3-input" type="text" placeholder="Subject" name="subject">
             <textarea style="margin-top:20px;" class="w3-input" type="text" placeholder="Message" name="message"></textarea>
             <label style="margin-top:20px;">Attach File</label>
-            <input type="file" id="file2" name="media" onchange="GetPath2()" required>
+            <input type="file" id="file2" name="media" onchange="GetPath2();FileValidation2();" required>
             <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile2" for="file2" class="w3-button w3-black w3-hover-blue">Select Here
             </label>
-            <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
+            <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" id="send2" disabled type="submit" value="Send">
         </form>
        </div>
        <div id="sendmail" style="display:none;padding:30px;" class="w3-animate-top">
@@ -126,9 +124,9 @@
                     <input style="margin-top:20px;margin-top:20px;" class="w3-input" type="text" placeholder="Subject" name="subject">
                     <textarea style="margin-top:20px;" class="w3-input" type="text" placeholder="Message" name="message"></textarea>
                     <label style="margin-top:20px;">Attach File</label>
-                    <input style="margin-top:20px;" type="file" id="file3" name="media" onchange="GetPath3()" required>
+                    <input style="margin-top:20px;" type="file" id="file3" name="media" onchange="GetPath3();FileValidation3();" required>
                     <label style="border-radius:10px;margin-top:20px;width:100%;" id="myFile3" for="file3" class="w3-button w3-black w3-hover-blue">Attach File Here</label>
-                    <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
+                    <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" id="send3" disabled type="submit" value="Send">
                 </form>
                 <h1 class="text-center"style="color:white;">Send Mail</h1>
        </div>
@@ -142,13 +140,24 @@
             <th>Message</th>
             <th>Media</th>
           </tr>
+          {% for x in mails %}
             <tr>
-                <td>04/05/2020</td>
-                <td>sonali23@gmail.com</td>
-                <td>ABC</td>
-                <td>ABVFGH</td>
-                <td><a style="border-radius:10px;"class="w3-button w3-blue w3-hover-black"href="">Download Here</a></td>
+                <td>{{ x.Mail_Date|safe }}</td>
+                <td>{{ x.To_Email|safe }}</td>
+                <td>{{ x.Subject|safe }}</td>
+                <td>{{ x.Message|safe }}</td>
+                <td><a style="border-radius:10px;"class="w3-button w3-blue w3-hover-black"href="/downloadmedia/?mid={{ x.Mail_ID|safe }}&mpath={{ x.Media|safe }}">Download Here</a></td>
             </tr>
+            {% endfor %}
+            {% for x in smails %}
+            <tr>
+                <td>{{ x.Mail_Date|safe }}</td>
+                <td>{{ x.To_Email|safe }}</td>
+                <td>{{ x.Subject|safe }}</td>
+                <td>{{ x.Message|safe }}</td>
+                <td><button style="border-radius:10px;"class="w3-button w3-blue w3-hover-black"href="/downloadmedia/?mid={{ x.Mail_ID|safe }}&mpath={{ x.Media|safe }}" disabled>Download Here</button></td>
+            </tr>
+            {% endfor %}
           </table>  
         </div>
         <div id="accountsetting" style="display:none;padding:30px;" class="w3-animate-top">
@@ -356,6 +365,42 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 document.getElementById('phone').disabled = false;
                 document.getElementById('password').disabled = false;
             }
+            function FileValidation2() {
+            const fi = document.getElementById('file2'); 
+            // Check if any file is selected. 
+            if (fi.files.length > 0) { 
+                for (const i = 0; i <= fi.files.length - 1; i++) { 
+      
+                    const fsize = fi.files.item(i).size; 
+                    const file = Math.round((fsize / 1024)); 
+                    // The size of the file. 
+                    if (file >= (1024*5000)) { 
+                        alert( 
+                          "File too Big, please select a file less than 5GB"); 
+                    } else { 
+                        document.getElementById('send2').disabled = false; 
+                    } 
+                } 
+            }
+        }
+        function FileValidation3() {
+            const fi = document.getElementById('file3'); 
+            // Check if any file is selected. 
+            if (fi.files.length > 0) { 
+                for (const i = 0; i <= fi.files.length - 1; i++) { 
+      
+                    const fsize = fi.files.item(i).size; 
+                    const file = Math.round((fsize / 1024)); 
+                    // The size of the file. 
+                    if (file >= (1024*5000)) { 
+                        alert( 
+                          "File too Big, please select a file less than 5GB"); 
+                    } else { 
+                        document.getElementById('send3').disabled = false; 
+                    } 
+                } 
+            }
+        }
     </script>
     </body>
     

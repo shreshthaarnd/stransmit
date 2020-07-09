@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>S|Transmit</title>
+    <title>Stransmit</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -58,9 +58,13 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a class="active" href="/index/">home</a></li>
-                                        <li><a href="/contact/">Contact</a></li>
+                                        {% if checksession == True %}
+                                        <li><a href="/userdashboard/">Dashboard</a></li>
+                                        <li><a href="/logout/">Logout</a></li>
+                                        {% else %}
                                         <li><a href="#" onclick="document.getElementById('id02').style.display='block';">Login</a></li>
                                         <li><a href="#" onclick="document.getElementById('id01').style.display='block';">Signup</a></li>
+                                        {% endif %}
                                     </ul>
                                 </nav>
                             </div>
@@ -167,10 +171,10 @@
                                     <input style="margin-top:10px;"class="w3-input" type="email" name="email" placeholder="Your Email" required>
                                     <textarea style="height:100px;margin-top:10px;"class="w3-input" name="message" type="text" placeholder="Your Message" required></textarea>
 
-                                    <input type="file" id="file" name="media" onchange="GetPath()"/ required>
+                                    <input type="file" id="file" name="media" onchange="GetPath();FileValidation();"/ required>
                                     <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File</label>
                                     
-                                    <input style="margin-top:10px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Send">
+                                    <input style="margin-top:10px;width:100%;border-radius:10px;" id="send"class="w3-button w3-blue w3-hover-black" type="submit" value="Send" disabled>
                                 </form>
                                 {% endif %}
                             </div>
@@ -224,16 +228,27 @@
                                     Usefull Links
                             </h3>
                             <ul>
+                                {% if checksession == True %}
                                 <li>
-                                    <a href="#">
-                                        Login
-
+                                    <a href="/userdashboard/">
+                                        Dashboard
                                     </a>
                                 </li>
-                                <li><a href="#">
+                                <li><a href="/logout/">
+                                        Logout
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="#" onclick="document.getElementById('id02').style.display='block';">
+                                        Login
+                                    </a>
+                                </li>
+                                <li><a href="#" onclick="document.getElementById('id01').style.display='block';">
                                         Register
                                     </a>
                                 </li>
+                                {% endif %}
                                 <li><a href="#">
                                         Terms & Conditions
                                     </a>
@@ -246,7 +261,11 @@
                                         Disclaimer
                                     </a>
                                 </li>
-                                </ul>
+                                <li><a href="/contact/">
+                                        Contact Us
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -300,6 +319,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script type="text/javascript">
         function GetPath() { 
             document.getElementById('myFile').innerHTML = document.getElementById("file").value;
+        }
+        function FileValidation() {
+            const fi = document.getElementById('file'); 
+            // Check if any file is selected. 
+            if (fi.files.length > 0) { 
+                for (const i = 0; i <= fi.files.length - 1; i++) { 
+      
+                    const fsize = fi.files.item(i).size; 
+                    const file = Math.round((fsize / 1024)); 
+                    // The size of the file. 
+                    if (file >= (1024*5000)) { 
+                        alert( 
+                          "File too Big, please select a file less than 5GB"); 
+                    } else { 
+                        document.getElementById('send').disabled = false; 
+                    } 
+                } 
+            }
         }
     </script>
 </body>

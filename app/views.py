@@ -13,7 +13,7 @@ import os
 from django.conf import settings
 # Create your views here.
 def index(request):
-	dic={'verify':False}
+	dic={'verify':False,'checksession':checksession(request)}
 	return render(request,'index.html',dic)
 def blog(request):
 	return render(request,'blog.html',{})
@@ -33,11 +33,22 @@ def adminindex(request):
 	return render(request,'adminpages/index.html',{})
 def registration(request):
 	return render(request,'registration.html',{})
+def logout(request):
+	try:
+		del request.session['userid']
+		request.session.flush()
+		return redirect('/index/')
+	except:
+		return redirect('/index/')
 def userdashboard(request):
 	try:
 		uid=request.session['userid']
 		userdata=UserData.objects.filter(User_ID=uid)
-		dic={'userdata':userdata}
+		mails=MailData.objects.filter(User_ID=uid)
+		smails=SentData.objects.filter(User_ID=uid)
+		dic={'userdata':userdata,
+			'mails':reversed(mails),
+			'smails':reversed(mails)}
 		return render(request,'userdashboard.html',dic)
 	except:
 		return Http404
@@ -54,6 +65,14 @@ def edituserdata(request):
 		return HttpResponse("<script>alert('Details Updated Successfully'); window.location.replace('/userdashboard/')</script>")
 	except:
 		return Http404
+def downloadmailcsv(request):
+	file_path = os.path.join(settings.MEDIA_ROOT, 'mails.csv')
+	if os.path.exists(file_path):
+		with open(file_path, 'rb') as fh:
+			response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+			response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+			return response
+		raise Http404
 import pandas as pd
 @csrf_exempt
 def sendbulkmails(request):
@@ -62,10 +81,12 @@ def sendbulkmails(request):
 		subject=request.POST.get('subject')
 		message=request.POST.get('message')
 		media=request.FILES['media']
+		emailcsv=request.FILES['emailcsv']
 		useremail=''
 		for x in UserData.objects.filter(User_ID=uid):
 			useremail=x.User_Email
-		df=pd.read_csv(request.FILES['emailcsv'])
+		print('hello')
+		df=pd.read_csv(emailcsv)
 		for x in df['Email']:
 			sendmailutil(x, subject, message, media, uid, useremail)
 		return HttpResponse("<script>alert('Mails Sent Successfully'); window.location.replace('/userdashboard/')</script>")

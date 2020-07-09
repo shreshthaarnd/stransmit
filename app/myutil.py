@@ -33,7 +33,9 @@ def checkmedia():
 				MailData.objects.filter(Mail_ID=x.Mail_ID).delete()
 	return 'Done'
 
-def sendmail(email, subject, message, media, userid, useremail):
+def sendmailutil(email, subject, message, media, userid, useremail):
+	m='M00'
+	x=1
 	mid=m+str(x)
 	while MailData.objects.filter(Mail_ID=mid).exists():
 		x=x+1
@@ -65,3 +67,9 @@ S|Transmit.com'''
 	sub='S|Transmit - New Mail Received'
 	email=EmailMessage(sub,msg,to=[email])
 	email.send()
+def checksession(request):
+	try:
+		uid=request.session['userid']
+		return True
+	except:
+		return False
