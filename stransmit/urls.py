@@ -31,6 +31,7 @@ urlpatterns = [
     path('sendquery/',sendquery),
     path('adminchecklogin/',adminchecklogin),
     path('adminlogout/',adminlogut),
+    path('downloadCSV/',downloadCSV),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

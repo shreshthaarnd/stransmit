@@ -73,3 +73,32 @@ def checksession(request):
 		return True
 	except:
 		return False
+
+def downloaddata(table):
+	if table=='UserData':
+		response = HttpResponse()
+		response['Content-Disposition'] = 'attachment;filename=UserData.csv'
+		writer = csv.writer(response)
+		writer.writerow(["User_ID", "User_Name", "User_Email", "User_Phone", "User_Password", "Verify_Status", "Status"])
+		obj1=UserData.objects.all()
+		for x in obj1:
+			writer.writerow([x.User_ID, x.User_Name, x.User_Email, x.User_Phone, x.User_Password, x.Verify_Status, x.Status])
+		return response
+	if table=='MailData':
+		response = HttpResponse()
+		response['Content-Disposition'] = 'attachment;filename=MailData.csv'
+		writer = csv.writer(response)
+		writer.writerow(["Mail_Date", "Mail_ID", "User_ID", "User_Email", "To_Email", "Subject", "Message", "MediaFile"])
+		obj1=MailData.objects.all()
+		for x in obj1:
+			writer.writerow([x.Mail_Date, x.Mail_ID, x.User_ID, x.User_Email, x.To_Email, x.Subject, x.Message, x.MediaFile])
+		return response
+	if table=='SentData':
+		response = HttpResponse()
+		response['Content-Disposition'] = 'attachment;filename=SentData.csv'
+		writer = csv.writer(response)
+		writer.writerow(["Mail_Date", "Mail_ID", "User_ID", "User_Email", "To_Email", "Message"])
+		obj1=SentData.objects.all()
+		for x in obj1:
+			writer.writerow([x.Mail_Date, x.Mail_ID, x.User_ID, x.User_Email, x.To_Email, x.Message])
+		return response

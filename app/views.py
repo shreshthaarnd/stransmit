@@ -372,3 +372,16 @@ def adminlogut(request):
 		return redirect('/adminlogin/')
 	except:
 		return redirect('/index/')
+def downloaddatabase(request):
+	try:
+		aid=request.session['admin']
+		return render(request,'adminpages/datatables.html',{})
+	except:
+		return redirect('/shoppanelpages404/')
+def downloadCSV(request):
+#	try:
+		aid=request.session['adminid']
+		table=request.GET.get('tablename')
+		return downloaddata(table)
+#	except:
+#		return redirect('/shoppanelpages404/')
