@@ -385,3 +385,9 @@ def downloadCSV(request):
 		return downloaddata(table)
 #	except:
 #		return redirect('/shoppanelpages404/')
+def adminuserlist(request):
+	return render(request,'adminpages/userlist.html',{})
+def adminblockeduser(request):
+	return render(request,'adminpages/blockeduser.html',{})
+def adminsentmaillist(request):
+	return render(request,'adminpages/sentmaillist.html',{})
