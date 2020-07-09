@@ -1,0 +1,308 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Stransmit - Send FREE Media Mails | Send Mails with More Than 2GB of Attachment Media | Send Bulk Media Mails in One Click</title>
+    <meta name="description" content="Stransmit is an indian web application for online media transfer. Support indian product - An Initiative by Shreshtha Research & Development. Send FREE Media Mails | Send Mails with More Than 2GB of Attachment Media | Send Bulk Media Mails in One Click">
+    <meta name="keywords" content="stransmit.com, www.stransmit.com, stransmit, shreshtha research & development, srd.mobi, srd, send media mails, send bulk mails, bulk mails, send mails, send free mails, send free media mails, send mails upto 10 GB">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <link rel="shortcut icon" type="image/x-icon" href="{% static 'Stransmitfavicon.png' %}"> 
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'w3.css' %}">
+    <style type="text/css">
+        [type="file"] {
+          height: 0;
+          overflow: hidden;
+          width: 0;
+        }
+    </style>    <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
+</head>
+
+<body style="background-color:black;">
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- header-start -->
+    <header>
+        <div class="header-area ">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-xl-3 col-lg-2">
+                            <div class="logo">
+                                <a href="/index/">
+                                    <img style="width:200px;"src="{% static 'Stransmit.png' %}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a class="active" href="/index/">home</a></li>
+                                        {% if checksession == True %}
+                                        <li><a href="/userdashboard/">Dashboard</a></li>
+                                        <li><a href="/logout/">Logout</a></li>
+                                        {% else %}
+                                        <li><a href="#" onclick="document.getElementById('id02').style.display='block';">Login</a></li>
+                                        <li><a href="#" onclick="document.getElementById('id01').style.display='block';">Signup</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                            <div class="Appointment">
+                                <span style="color:white;">Made In India</span>
+                                <img style="margin-left:10px;width:50px;"src="{% static 'images.png' %}">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-end -->
+
+<div id="id02" class="w3-modal" style="display:block;z-index:100;padding:0px;">
+  <div style="width:100%;height:auto;margin-top:155px;border-top-right-radius:30px;border-top-left-radius:30px;padding:50px;"class="w3-modal-content text-center w3-animate-bottom">
+
+
+    <div style="padding:10px;"class="w3-container">
+      <div class="row">
+        <div style="padding:20px;width:470px;"class="column">
+            <h1>Verify Email</h1>
+            <form action="/verify2/" method="POST">
+                <label style="margin-top:66px;">Enter OTP Sent on Your Email</label>
+                <input class="w3-input" type="text" placeholder="Enter OTP (One Time Password)" name="otp" required>
+                <input style="border-radius:10px;margin-top:33px;width:100%;margin-bottom:10px;"class="w3-button w3-blue w3-hover-black w3-large" type="submit" value="Verify">
+            </form>
+            <a href="/resendotp2/">Didn't Received? Resend OTP</a>
+        </div>
+        <div style="padding:20px;width:650px;border-radius:30px;"class="column w3-blue">
+            <div style="padding-left:30px;padding-right:30px;">
+            <H1 style="color:white;margin:auto;">Login With</H1>
+            <button style="padding:20px;width:100%;margin-top:30px;font-size:20px;border-radius:10px;"class="w3-button w3-white w3-hover-black" disabled>Goolge <i class="fa fa-google"></i></button>
+            <button disabled style="padding:20px;width:100%;margin-top:30px;font-size:20px;border-radius:10px;"class="w3-button w3-white w3-hover-black">Facebook <i class="fa fa-facebook"></i></button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="slider_area">
+        <div class="single_slider align-items-center slider_bg_1">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-5 col-md-6" style="margin-top:10px;">
+                        <div class="phone_thumb wow fadeInDown" data-wow-duration="1.1s" data-wow-delay=".2s">
+                            <div style="width:100%;height:100%;padding:30px;border-radius:20px;"class="w3-white">
+                                {% if verify == True %}
+                                <h1>Verify Your Email</h1>
+                                <form class="w3-container" action="/verify/" method="POST">
+                                    <label style="margin-top:10px;">Enter OTP sent on your mail.</label><br>
+                                    <label style="margin-top:10px;">{{ msg|safe }}</label>
+                                    <input style="margin-bottom:10px;" class="w3-input" type="text" name="otp" placeholder="One Time Password (OTP)">
+                                    <a href="/resendotp/">Didn't get? Resend OTP</a>
+                                    <input style="margin-top:10px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Verify">
+                                </form>
+                                {% else %}
+                                <h1>Send Your File Here</h1>
+                                <form class="w3-container" action="/sendmail/" method="POST" enctype="multipart/form-data">
+                                    <input style="margin-top:10px;"class="w3-input" type="email" name="toemail" placeholder="Email" required>
+                                    <input style="margin-top:10px;"class="w3-input" type="email" name="email" placeholder="Your Email" required>
+                                    <textarea style="height:100px;margin-top:10px;"class="w3-input" name="message" type="text" placeholder="Your Message" required></textarea>
+
+                                    <input type="file" id="file" name="media" onchange="GetPath();FileValidation();"/ required>
+                                    <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File</label>
+                                    
+                                    <input style="margin-top:10px;width:100%;border-radius:10px;" id="send"class="w3-button w3-blue w3-hover-black" type="submit" value="Send" disabled>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 col-md-6" style="padding-top:200px;">
+                        <div class="slider_text ">
+                            <h3 class="wow fadeInDown" data-wow-duration="1s" data-wow-delay=".1s" >Send Bulky Files <br>
+                                via Mail</h3>
+                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">Convert your bulky files to a link and directly send them to anyone in few seconds.</p>
+                            <div class="video_service_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">
+                                <a href="#" onclick="document.getElementById('id01').style.display='block';"class="boxed-btn3">Signup Here</a>
+                                <a href="#" onclick="document.getElementById('id02').style.display='block';"class="boxed-btn3">Login Here</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- slider_area_end -->
+    <!-- service_area  -->
+    
+    <!-- footer start -->
+    <footer class="footer">
+        <div style="padding-bottom:20px;background-color:black;"class="footer_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <div class="footer_widget">
+                            <div class="footer_logo">
+                                <a href="#">
+                                    <img style="width:150px;"src="{% static 'Stransmit.png' %}" alt="">
+                                </a>
+                            </div>
+                            <p>
+                              Stransmit is an indian web application for online media transfer. Support indian product - An Initiative by Shreshtha Research & Development.
+                            </p>
+                            <div class="socail_links">
+                                <span style="color:white;">Made In India</span>
+                                <img style="margin-left:10px;width:60px;"src="{% static 'india-flag-1024x600.jpg' %}">
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                    Usefull Links
+                            </h3>
+                            <ul>
+                                {% if checksession == True %}
+                                <li>
+                                    <a href="/userdashboard/">
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout/">
+                                        Logout
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="#" onclick="document.getElementById('id02').style.display='block';">
+                                        Login
+                                    </a>
+                                </li>
+                                <li><a href="#" onclick="document.getElementById('id01').style.display='block';">
+                                        Register
+                                    </a>
+                                </li>
+                                {% endif %}
+                                <li><a href="#" onclick="document.getElementById('id03').style.display='block';">
+                                        Privacy Policy
+                                    </a>
+                                </li>
+                                <li><a href="#" onclick="document.getElementById('id04').style.display='block';">
+                                        Disclaimer
+                                    </a>
+                                </li>
+                                <li><a href="/contact/">
+                                        Contact Us
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copy-right_text">
+            <div class="container">
+                <div class="footer_border"></div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <p class="copy_right text-center">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved @ <a href="https://www.srd.mobi">SRD - Shreshtha Research & Development </a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--/ footer end  -->
+
+    <!-- JS here -->
+    <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/ajax-form.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/scrollIt.js' %}"></script>
+    <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/nice-select.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/gijgo.min.js' %}"></script>
+
+    <!--contact js-->
+    <script src="{% static 'js/contact.js' %}"></script>
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/mail-script.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+        function GetPath() { 
+            document.getElementById('myFile').innerHTML = document.getElementById("file").value;
+        }
+        function FileValidation() {
+            const fi = document.getElementById('file'); 
+            // Check if any file is selected. 
+            if (fi.files.length > 0) { 
+                for (const i = 0; i <= fi.files.length - 1; i++) { 
+      
+                    const fsize = fi.files.item(i).size; 
+                    const file = Math.round((fsize / 1024)); 
+                    // The size of the file. 
+                    if (file >= (1024*5000)) { 
+                        alert( 
+                          "File too Big, please select a file less than 5GB"); 
+                    } else { 
+                        document.getElementById('send').disabled = false; 
+                    } 
+                } 
+            }
+        }
+    </script>
+</body>
+
+</html>

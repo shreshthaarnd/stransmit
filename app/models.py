@@ -3,6 +3,7 @@ from datetime import date
 from django.conf import settings
 # Create your models here.
 class UserData(models.Model):
+	User_Date=models.CharField(max_length=15, default=date.today())
 	User_ID=models.CharField(max_length=50, primary_key=True)
 	User_Name=models.CharField(max_length=50, default='None')
 	User_Email=models.CharField(max_length=50)

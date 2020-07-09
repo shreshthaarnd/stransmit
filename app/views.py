@@ -20,6 +20,25 @@ def blog(request):
 def contact(request):
 	dic={'checksession':checksession(request)}
 	return render(request,'contact.html',dic)
+def forgotpass(request):
+	return render(request,'forgotpass.html',{})
+@csrf_exempt
+def sendpassword(request):
+	email=request.POST.get('email')
+	if UserData.objects.filter(User_Email=email).exists():
+		for x in UserData.objects.filter(User_Email=email):
+			msg='''Hi '''+x.User_Name+'''!
+Your Password is : '''+x.User_Password+'''
+
+Thanks!,
+Stransmit.com'''
+			sub='Stransmit - Account Recovery Email'
+			email=EmailMessage(sub,msg,to=[email])
+			email.send()
+			break
+		return HttpResponse("<script>alert('Password has been sent to your email, you may proceed for login.'); window.location.replace('/index/')</script>")
+	else:
+		return HttpResponse("<script>alert('Incorrect Email, Account not found with this email.'); window.location.replace('/forgotpass/')</script>")
 def sendquery(request):
 	name=request.POST.get('name')
 	email=request.POST.get('email')
@@ -153,6 +172,81 @@ Stransmit.com'''
 	except:
 		return Http404
 @csrf_exempt
+def saveuser(request):
+	if request.method=='POST':
+		name=request.POST.get('name')
+		email=request.POST.get('email')
+		mobile=request.POST.get('mobile')
+		password=request.POST.get('password')
+		u="U00"
+		x=1
+		uid=u+str(x)
+		while UserData.objects.filter(User_ID=uid).exists():
+			x=x+1
+			uid=u+str(x)
+		x=int(x)
+		otp=uuid.uuid5(uuid.NAMESPACE_DNS, uid+str(datetime.datetime.today())+name+mobile+password+email).int
+		otp=str(otp)
+		otp=otp.upper()[0:8]
+		request.session['userotp'] = otp
+		obj=UserData(
+			User_Date=datetime.date.today(),
+			User_ID=uid,
+			User_Name=name,
+			User_Email=email,
+			User_Phone=mobile,
+			User_Password=password
+			)
+		if UserData.objects.filter(User_Email=email).exists():
+			return HttpResponse("<script>alert('User Already Exists'); window.location.replace('/index/')</script>")
+		else:
+			obj.save()
+			request.session['useridd'] = uid
+			msg='''Hi there!
+Your Stransmit Verification OTP is,
+
+'''+otp+'''
+
+Thanks!,
+Stransmit.com'''
+			sub='Stransmit - Verification One Time Password (OTP)'
+			email=EmailMessage(sub,msg,to=[email])
+			email.send()
+			return render(request,'verify.html',{})
+def verifyuser(request):
+	return render(request,'verify.html',{})
+@csrf_exempt
+def verify2(request):
+	if request.method=='POST':
+		otp=request.POST.get('otp')
+		otpp=request.session['userotp']
+		uid=request.session['useridd']
+		if otp==otpp:
+			UserData.objects.filter(User_ID=uid).update(Verify_Status='Verified')
+			request.session['userid'] = uid
+			return HttpResponse("<script>alert('Account Verified!'); window.location.replace('/userdashboard/')</script>")
+		else:
+			return HttpResponse("<script>alert('Incorrect OTP'); window.location.replace('/verifyuser/')</script>")
+def resendotp2(request):
+	try:
+		otp=request.session['userotp']
+		uid=request.session['useridd']
+		for x in UserData.objects.filter(User_ID=uid):
+			msg='''Hi there!
+Your One Time Password (OTP) is,
+
+'''+otp+'''
+
+Thanks!,
+Stransmit.com'''
+			sub='Stransmit - One Time Password (OTP)'
+			email=EmailMessage(sub,msg,to=[x.User_Email])
+			email.send()
+			break
+		return HttpResponse("<script>alert('Sent Successfully!'); window.location.replace('/verifyuser/')</script>")
+	except:
+		return redirect('/index/')
+@csrf_exempt
 def sendmail(request):
 	if request.method=='POST':
 		email=request.POST.get('email')
@@ -210,7 +304,7 @@ Stransmit.com'''
 			otp=str(otp)
 			otp=otp.upper()[0:6]
 			request.session['userotp'] = otp
-			request.session['userid'] = uid
+			request.session['useridd'] = uid
 			m="M00"
 			x=1
 			mid=m+str(x)
@@ -229,9 +323,10 @@ Stransmit.com'''
 				)
 			obj.save()
 			password=uuid.uuid5(uuid.NAMESPACE_DNS, uid+email).int
-			password=str(otp)
+			password=str(password)
 			password=password.upper()[0:8]
 			obj=UserData(
+				User_Date=datetime.date.today(),
 				User_ID=uid,
 				User_Email=email,
 				User_Password=password
@@ -254,7 +349,7 @@ def verify(request):
 	if request.method=='POST':
 		otp=request.POST.get('otp')
 		otpp=request.session['userotp']
-		uid=request.session['userid']
+		uid=request.session['useridd']
 		mid=request.session['mailid']
 		if otp==otpp:
 			UserData.objects.filter(User_ID=uid).update(Verify_Status='Verified')
@@ -294,7 +389,7 @@ Stransmit.com'''
 def resendotp(request):
 	try:
 		otp=request.session['userotp']
-		uid=request.session['userid']
+		uid=request.session['useridd']
 		for x in UserData.objects.filter(User_ID=uid):
 			msg='''Hi there!
 Your One Time Password (OTP) is,

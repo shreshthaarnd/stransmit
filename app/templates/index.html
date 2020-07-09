@@ -99,12 +99,12 @@
       <div class="row">
         <div style="padding:20px;width:470px;"class="column">
             <h1>Signup Here</h1>
-            <form>
-                <input style="margin-top:16px;" class="w3-input" type="text" placeholder="Username*">
-                <input style="margin-top:16px;"class="w3-input" type="email" placeholder="Email*">
-                <input style="margin-top:16px;"class="w3-input" type="number" placeholder="Mobile No.*">
-                <input style="margin-top:16px;"class="w3-input" type="password" placeholder="Password*">
-                <input style="margin-top:16px;"class="w3-input" type="password" placeholder="Confirm Password*">
+            <form action="/saveuser/" method="POST">
+                <input style="margin-top:16px;" class="w3-input" type="text" placeholder="Username*" name="name" required>
+                <input style="margin-top:16px;"class="w3-input" type="email" placeholder="Email*" name="email" required>
+                <input style="margin-top:16px;"class="w3-input" type="number" placeholder="Mobile No.*" name="mobile" required>
+                <input style="margin-top:16px;"class="w3-input" type="password" placeholder="Password*" name="password" required>
+                <input style="margin-top:16px;"class="w3-input" type="password" placeholder="Confirm Password*" required>
                 <input style="border-radius:10px;margin-top:16px;width:100%;"class="w3-button w3-blue w3-hover-black w3-large" type="submit" value="Signup">
             </form>
         </div>
@@ -131,9 +131,9 @@
         <div style="padding:20px;width:470px;"class="column">
             <h1>Login Here</h1>
             <form action="/checklogin/" method="POST">
-                <input style="margin-top:66px;"class="w3-input" type="email" placeholder="Email *" name="email">
-                <input style="margin-top:66px;margin-bottom:33px;"class="w3-input" type="password" placeholder="Password *" name="password">
-                <a href="" style="">Forgot Password</a>
+                <input style="margin-top:66px;"class="w3-input" type="email" placeholder="Email *" name="email" required>
+                <input style="margin-top:66px;margin-bottom:33px;"class="w3-input" type="password" placeholder="Password *" name="password" required>
+                <a href="/forgotpass/" style="">Forgot Password</a>
                 <input style="border-radius:10px;margin-top:33px;width:100%;"class="w3-button w3-blue w3-hover-black w3-large" type="submit" value="Login">
             </form>
         </div>
@@ -346,7 +346,7 @@
                                 <form class="w3-container" action="/verify/" method="POST">
                                     <label style="margin-top:10px;">Enter OTP sent on your mail.</label><br>
                                     <label style="margin-top:10px;">{{ msg|safe }}</label>
-                                    <input style="margin-bottom:10px;" class="w3-input" type="text" name="otp" placeholder="One Time Password (OTP)">
+                                    <input style="margin-bottom:10px;" class="w3-input" type="text" name="otp" placeholder="One Time Password (OTP)" required>
                                     <a href="/resendotp/">Didn't get? Resend OTP</a>
                                     <input style="margin-top:10px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Verify">
                                 </form>
