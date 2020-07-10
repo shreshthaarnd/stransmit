@@ -39,6 +39,9 @@ urlpatterns = [
     path('verify2/',verify2),
     path('saveuser/',saveuser),
     path('resendotp2/',resendotp2),
+    path('adminuserlist/',adminuserlist),
+    path('adminblockeduser/',adminblockeduser),
+    path('adminsentmaillist/',adminsentmaillist),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

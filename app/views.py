@@ -120,7 +120,6 @@ def sendbulkmails(request):
 		useremail=''
 		for x in UserData.objects.filter(User_ID=uid):
 			useremail=x.User_Email
-		print('hello')
 		df=pd.read_csv(emailcsv)
 		for x in df['Email']:
 			sendmailutil(x, subject, message, media, uid, useremail)
@@ -187,7 +186,7 @@ def saveuser(request):
 		x=int(x)
 		otp=uuid.uuid5(uuid.NAMESPACE_DNS, uid+str(datetime.datetime.today())+name+mobile+password+email).int
 		otp=str(otp)
-		otp=otp.upper()[0:8]
+		otp=otp.upper()[0:6]
 		request.session['userotp'] = otp
 		obj=UserData(
 			User_Date=datetime.date.today(),
@@ -427,9 +426,28 @@ def checklogin(request):
 		email=request.POST.get('email')
 		password=request.POST.get('password')
 		if UserData.objects.filter(User_Email=email,User_Password=password).exists():
-			for x in UserData.objects.filter(User_Email=email):
-				request.session['userid'] = x.User_ID
-			return redirect('/userdashboard/')
+			if UserData.objects.filter(User_Email=email,Verify_Status='Verified').exists():
+				for x in UserData.objects.filter(User_Email=email):
+					request.session['userid'] = x.User_ID
+				return redirect('/userdashboard/')
+			else:
+				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+password+email).int
+				otp=str(otp)
+				otp=otp.upper()[0:6]
+				msg='''Hi there!
+Your Stransmit Verification OTP is,
+
+'''+otp+'''
+
+Thanks!,
+Stransmit.com'''
+				sub='Stransmit - Verification One Time Password (OTP)'
+				email=EmailMessage(sub,msg,to=[email])
+				email.send()
+				for x in UserData.objects.filter(User_Email=email):
+					request.session['useridd'] = x.User_ID
+				request.session['userotp'] = otp
+				return render(request,'verify.html',{})
 		else:
 			return HttpResponse("<script>alert('Incorrect Login Credentials'); window.location.replace('/index/')</script>")
 	else:
@@ -474,9 +492,15 @@ def downloaddatabase(request):
 	except:
 		return redirect('/shoppanelpages404/')
 def downloadCSV(request):
-#	try:
+	try:
 		aid=request.session['adminid']
 		table=request.GET.get('tablename')
 		return downloaddata(table)
-#	except:
-#		return redirect('/shoppanelpages404/')
+	except:
+		return redirect('/shoppanelpages404/')
+def adminuserlist(request):
+	return render(request,'adminpages/userlist.html',{})
+def adminblockeduser(request):
+	return render(request,'adminpages/blockeduser.html',{})
+def adminsentmaillist(request):
+	return render(request,'adminpages/sentmaillist.html',{})
