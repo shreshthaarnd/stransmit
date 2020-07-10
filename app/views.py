@@ -405,17 +405,22 @@ Stransmit.com'''
 		return render(request,'index.html',dic)
 	except:
 		return redirect('/index/')
-
+import mimetypes
 def downloadmedia(request):
 	path=''
 	mid=request.GET.get('mid')
 	media=request.GET.get('mpath')
 	if MailData.objects.filter(Mail_ID=mid,MediaFile=media).exists():
 		file_path = os.path.join(settings.MEDIA_ROOT, media)
-		print(file_path)
-		with open(file_path, 'rb') as fh:
-			response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
-			response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+		# fill these variables with real values
+		for x in MailData.objects.filter(Mail_ID=mid,MediaFile=media):
+			print(x.MediaFile.url)
+			fl_path = x.MediaFile.url
+			filename = x.MediaFile.name
+			#fl = open(fl_path, 'r')
+			mime_type, _ = mimetypes.guess_type(fl_path)
+			response = HttpResponse(fl_path, content_type=mime_type)
+			response['Content-Disposition'] = "attachment; filename=%s" % filename
 			return response
 	else:
 		return HttpResponse("<script>alert('File Not Found'); window.location.replace('/index/')</script>")
