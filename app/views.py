@@ -412,12 +412,11 @@ def downloadmedia(request):
 	media=request.GET.get('mpath')
 	if MailData.objects.filter(Mail_ID=mid,MediaFile=media).exists():
 		file_path = os.path.join(settings.MEDIA_ROOT, media)
-		if os.path.exists(file_path):
-			with open(file_path, 'rb') as fh:
-				response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
-				response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
-				return response
-			raise Http404
+		print(file_path)
+		with open(file_path, 'rb') as fh:
+			response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+			response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+			return response
 	else:
 		return HttpResponse("<script>alert('File Not Found'); window.location.replace('/index/')</script>")
 @csrf_exempt
