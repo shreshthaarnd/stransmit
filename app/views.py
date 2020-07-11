@@ -416,7 +416,7 @@ s32 = boto3.resource('s3',
          aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
          aws_secret_access_key= settings.AWS_SECRET_ACCESS_KEY)
 from wsgiref.util import FileWrapper
-def downloadmedia(request):
+def downloadmedia2(request):
 	path=''
 	mid=request.GET.get('mid')
 	media=request.GET.get('mpath')
@@ -441,6 +441,11 @@ def downloadmedia(request):
 				return response
 	else:
 		return HttpResponse("<script>alert('File Not Found'); window.location.replace('/index/')</script>")
+def downloadmedia(request):
+	path=''
+	mid=request.GET.get('mid')
+	media=request.GET.get('mpath')
+	return render(request,'download.html',{'mid':mid,'mpath':media})
 @csrf_exempt
 def checklogin(request):
 	if request.method=='POST':

@@ -43,6 +43,7 @@ urlpatterns = [
     path('adminuserlist/',adminuserlist),
     path('adminblockeduser/',adminblockeduser),
     path('adminsentmaillist/',adminsentmaillist),
+    path('downloadmedia2/',downloadmedia2),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
