@@ -3,7 +3,7 @@ from django.views.decorators.csrf import *
 from app.models import *
 from django.core.paginator import *
 from django.core.mail import EmailMessage
-from django.http import HttpResponse, Http404
+from django.http import *
 import uuid
 from app.myutil import *
 import csv
@@ -12,6 +12,8 @@ from django.conf import settings
 import os
 from django.conf import settings
 # Create your views here.
+def download(request):
+	return render(request,'download.html',{})
 def index(request):
 	dic={'verify':False,'checksession':checksession(request)}
 	return render(request,'index.html',dic)
@@ -405,23 +407,37 @@ Stransmit.com'''
 		return render(request,'index.html',dic)
 	except:
 		return redirect('/index/')
+import boto3
 import mimetypes
+s3 = boto3.client('s3',
+         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+         aws_secret_access_key= settings.AWS_SECRET_ACCESS_KEY)
+s32 = boto3.resource('s3',
+         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+         aws_secret_access_key= settings.AWS_SECRET_ACCESS_KEY)
+from wsgiref.util import FileWrapper
 def downloadmedia(request):
 	path=''
 	mid=request.GET.get('mid')
 	media=request.GET.get('mpath')
 	if MailData.objects.filter(Mail_ID=mid,MediaFile=media).exists():
-		file_path = os.path.join(settings.MEDIA_ROOT, media)
-		# fill these variables with real values
 		for x in MailData.objects.filter(Mail_ID=mid,MediaFile=media):
-			print(x.MediaFile.url)
-			fl_path = x.MediaFile.url
-			filename = x.MediaFile.name
-			#fl = open(fl_path, 'r')
-			mime_type, _ = mimetypes.guess_type(fl_path)
-			response = HttpResponse(fl_path, content_type=mime_type)
-			response['Content-Disposition'] = "attachment; filename=%s" % filename
-			return response
+			filename2=str(x.MediaFile)[11:int(len(str(x.MediaFile))+1)]
+			bucket = s32.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+			for s3_object in bucket.objects.all():
+				path, filename = os.path.split(s3_object.key)
+				if filename == filename2:
+					with open(filename, 'wb') as f:
+						s3.download_fileobj(str(settings.AWS_STORAGE_BUCKET_NAME), s3_object.key, f)
+				fl_path = filename2
+				file_path = filename2
+				file_wrapper = FileWrapper(open(file_path,'rb'))
+				file_mimetype, _ = mimetypes.guess_type(file_path)
+				response = HttpResponse(file_wrapper, content_type=file_mimetype )
+				response['X-Sendfile'] = file_path
+				response['Content-Length'] = os.stat(file_path).st_size
+				response['Content-Disposition'] = 'attachment; filename=%s' % file_path
+				return response
 	else:
 		return HttpResponse("<script>alert('File Not Found'); window.location.replace('/index/')</script>")
 @csrf_exempt

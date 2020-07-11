@@ -124,7 +124,7 @@ STATIC_ROOT = 'static'
 
 AWS_ACCESS_KEY_ID = 'AKIASDNGY6JWXMQYNEOS'
 AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'elasticbeanstalk-ap-south-1-144768037485'
+AWS_STORAGE_BUCKET_NAME = 'stransmitstorage'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
@@ -133,9 +133,11 @@ AWS_LOCATION = 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_REGION_NAME = "ap-south-1"
+AWS_S3_SIGNATURE_VERSION = "v4"
 
 EMAIL_USE_TLS=True
-EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST='smtp.gmail.com' 
 EMAIL_HOST_USER='stransmitdotcom@gmail.com'
 EMAIL_HOST_PASSWORD='sqonvefydyoewzmr'
 EMAIL_PORT=587
