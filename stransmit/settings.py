@@ -133,8 +133,6 @@ AWS_LOCATION = 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_S3_REGION_NAME = "ap-south-1"
-AWS_S3_SIGNATURE_VERSION = "v4"
 
 EMAIL_USE_TLS=True
 EMAIL_HOST='smtp.gmail.com' 
