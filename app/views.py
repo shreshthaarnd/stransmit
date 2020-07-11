@@ -427,7 +427,7 @@ def downloadmedia2(request):
 			url = x.MediaFile.url
 			r = requests.get(url, allow_redirects=True)
 			filedownload = open(filename, 'wb').write(r.content)
-			fl_path = filename
+			'''fl_path = filename
 			file_path = filename
 			file_wrapper = FileWrapper(open(filename, 'rb'))
 			file_mimetype, _ = mimetypes.guess_type(file_path)
@@ -436,9 +436,23 @@ def downloadmedia2(request):
 			response['Content-Length'] = os.stat(file_path).st_size
 			response['Content-Disposition'] = 'attachment; filename=%s' % file_path
 			os.remove(filename)
-			return response
+			return response'''
+			return render(request,'download2.html',{'filename':filename})
 	else:
 		return HttpResponse("<script>alert('File Not Found'); window.location.replace('/index/')</script>")
+def downloadmedia3(request):
+	filename=request.GET.get('filename')
+	fl_path = filename
+	file_path = filename
+	file_wrapper = FileWrapper(open(filename, 'rb'))
+	file_mimetype, _ = mimetypes.guess_type(file_path)
+	response = HttpResponse(file_wrapper, content_type=file_mimetype )
+	response['X-Sendfile'] = file_path
+	response['Content-Length'] = os.stat(file_path).st_size
+	response['Content-Disposition'] = 'attachment; filename=%s' % file_path
+	os.remove(filename)
+	return response
+
 def downloadmedia(request):
 	path=''
 	mid=request.GET.get('mid')
