@@ -437,6 +437,7 @@ def downloadmedia(request):
 				response['X-Sendfile'] = file_path
 				response['Content-Length'] = os.stat(file_path).st_size
 				response['Content-Disposition'] = 'attachment; filename=%s' % file_path
+				os.remove(filename2)
 				return response
 	else:
 		return HttpResponse("<script>alert('File Not Found'); window.location.replace('/index/')</script>")
