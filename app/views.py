@@ -542,3 +542,33 @@ def adminblockeduser(request):
 	return render(request,'adminpages/blockeduser.html',{})
 def adminsentmaillist(request):
 	return render(request,'adminpages/sentmaillist.html',{})
+'''def uploaddata(request):
+	df=pd.read_csv('app/data/UserData.csv')
+	for x in range(0,len(df)):
+		data=df.loc[x]
+		obj=UserData(
+			User_Date=data.User_Date,
+			User_ID=data.User_ID,
+			User_Name=data.User_Name,
+			User_Email=data.User_Email,
+			User_Phone=data.User_Phone,
+			User_Password=data.User_Password,
+			Verify_Status=data.Verify_Status,
+			Status=data.Status
+			)
+		obj.save()
+	df=pd.read_csv('app/data/MailData.csv')
+	for x in range(0,len(df)):
+		data=df.loc[x]
+		obj=MailData(
+			Mail_Date=data.Mail_Date,
+			Mail_ID=data.Mail_ID,
+			User_ID=data.User_ID,
+			User_Email=data.User_Email,
+			To_Email=data.To_Email,
+			Subject=data.Subject,
+			Message=data.Message,
+			MediaFile=data.MediaFile
+			)
+		obj.save()
+		return HttpResponse('Done')'''
