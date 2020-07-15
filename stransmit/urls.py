@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('download/',download),
     path('index/',index),
+    path('email/',emaildownload),
     path('',index),
     path('blog/',blog),
     path('contact/',contact),

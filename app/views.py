@@ -11,7 +11,12 @@ import datetime
 from django.conf import settings
 import os
 from django.conf import settings
+from app.htmlmail import *
 # Create your views here.
+def emaildownload(request):
+	mail=open('app/templates/email.html', 'r')
+	#sendemail(mail.read())
+	return render(request,'email.html',{})
 def download(request):
 	return render(request,'download.html',{})
 def index(request):
@@ -135,6 +140,7 @@ def usersendmail(request):
 		message=request.POST.get('message')
 		media=request.FILES['media']
 		userdata=UserData.objects.filter(User_ID=uid)
+		fromemail=''
 		for i in userdata:
 			m="M00"
 			x=1
@@ -154,21 +160,11 @@ def usersendmail(request):
 				)
 			obj.save()
 			murl=''
+			fromemail=i.User_Email
 			for x in MailData.objects.filter(Mail_ID=mid):
 				murl=x.MediaFile
-			msg='''Hi there!
-A mail has been sent to you from '''+i.User_Email+''' with following message,
-
-Subject : '''+subject+'''
-Message : '''+message+'''
-
-Media Link : https://stransmit.com/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
-
-Thanks!,
-Stransmit.com'''
-			sub='Stransmit - New Mail Received'
-			email=EmailMessage(sub,msg,to=[toemail])
-			email.send()
+			link='https://stransmit.com/downloadmedia/?mid='+mid+'&mpath='+str(murl)
+			sendemail('no-subject', message, toemail, fromemail, link)
 		return HttpResponse("<script>alert('Mail Sent Successfully'); window.location.replace('/userdashboard/')</script>")
 	except:
 		return Http404
@@ -285,20 +281,8 @@ def sendmail(request):
 			murl=''
 			for x in MailData.objects.filter(Mail_ID=mid):
 				murl=x.MediaFile
-			msg='''Hi there!
-A mail has been sent to you from '''+email+''' with following message,
-
-Message : '''+message+'''
-
-Media Link : https://stransmit.com/downloadmedia/?mid='''+mid+'''&mpath='''+str(murl)+'''
-
-This media is only availiable for 10 Days.
-
-Thanks!,
-Stransmit.com'''
-			sub='Stransmit - New Mail Received'
-			email=EmailMessage(sub,msg,to=[toemail])
-			email.send()
+			link='https://stransmit.com/downloadmedia/?mid='+mid+'&mpath='+str(murl)
+			sendemail('no-subject', message, toemail, email, link)
 			return HttpResponse("<script>alert('Your mail has been sent successfully.'); window.location.replace('/index/')</script>")
 		else:
 			otp=uuid.uuid5(uuid.NAMESPACE_DNS, uid+str(datetime.datetime.now())+email).int
@@ -355,20 +339,8 @@ def verify(request):
 		if otp==otpp:
 			UserData.objects.filter(User_ID=uid).update(Verify_Status='Verified')
 			for x in MailData.objects.filter(Mail_ID=mid):
-				msg='''Hi there!
-A mail has been sent to you from '''+x.User_Email+''' with following message,
-
-Message : '''+x.Message+'''
-
-Media Link : https://stransmit.com/downloadmedia/?mid='''+mid+'''&mpath='''+str(x.MediaFile)+'''
-
-This media is only availiable for 10 Days.
-
-Thanks!,
-Stransmit.com'''
-				sub='Stransmit - New Mail Received'
-				email=EmailMessage(sub,msg,to=[x.To_Email])
-				email.send()
+				link='https://stransmit.com/downloadmedia/?mid='+mid+'&mpath='+str(x.MediaFile)
+				sendemail('no-subject', x.Message, x.To_Email, x.User_Email, link)
 				break
 			for x in UserData.objects.filter(User_ID=uid):
 				msg='''Hi there!
