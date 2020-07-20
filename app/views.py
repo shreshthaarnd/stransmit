@@ -473,9 +473,11 @@ Your Stransmit Verification OTP is,
 Thanks!,
 Stransmit.com'''
 				sub='Stransmit - Verification One Time Password (OTP)'
+				email2=request.POST.get('email')
 				email=EmailMessage(sub,msg,to=[email])
 				email.send()
-				for x in UserData.objects.filter(User_Email=email):
+				for x in UserData.objects.filter(User_Email=email2,User_Password=password):
+					print('hello')
 					request.session['useridd'] = x.User_ID
 				request.session['userotp'] = otp
 				return render(request,'verify.html',{})

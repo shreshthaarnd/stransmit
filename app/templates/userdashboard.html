@@ -96,30 +96,42 @@
     <!-- /bradcam_area  -->
     <div style="padding:30px;width:"class="w3-container">
       <div class="w3-bar">
-        {% if plan == 'PL003' %}
-        <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="#bulkmail" onclick="OpenBulkMail()";>Send Bulk Email</a>
+        {% if plan == 'PL001' %}
+            <button disabled style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="#bulkmail" onclick="OpenBulkMail()";>Send Bulk Email</button>
+        {% else %}
+            {% if plan == 'PL002' %}
+                <button disabled style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="#bulkmail" onclick="OpenBulkMail()";>Send Bulk Email</button>
+            {% else %}
+                <button style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="#bulkmail" onclick="OpenBulkMail()";>Send Bulk Email</button>
+            {% endif %}
         {% endif %}
-        <a style="width:24%;border-radius:10px;"onclick="OpenSendMail()"class="w3-button  w3-blue w3-hover-black"href="#sendmail">Send Email</a>
-        <a style="width:24%;border-radius:10px;"onclick="OpenMailHistory()"class="w3-button  w3-blue w3-hover-black"href="#mailhistory">Sent Email History</a>
-        <a style="width:24%;border-radius:10px;"onclick="OpenAccountSettings()"class="w3-button  w3-blue w3-hover-black"href="#accountsetting">Account Settings</a>
+        <button style="width:24%;border-radius:10px;"onclick="OpenSendMail()"class="w3-button  w3-blue w3-hover-black"href="#sendmail">Send Email</button>
+        {% if plan == 'PL001' %}
+            <button disabled style="width:24%;border-radius:10px;"onclick="OpenMailHistory()"class="w3-button  w3-blue w3-hover-black"href="#mailhistory">Sent Email History</button>
+        {% else %}
+            <button style="width:24%;border-radius:10px;"onclick="OpenMailHistory()"class="w3-button  w3-blue w3-hover-black"href="#mailhistory">Sent Email History</button>
+        {% endif %}
+        <button style="width:24%;border-radius:10px;"onclick="OpenAccountSettings()"class="w3-button  w3-blue w3-hover-black"href="#accountsetting">Account Settings</button>
        </div>
-       <div id="bulkmail" style="padding:30px;" class="w3-animate-top">
-        <h1>Send Mail to Bulk Peoples in Just One Click</h1>
-        <form action="/sendbulkmails/" method="POST" enctype="multipart/form-data">
-            <label style="margin-top:20px;">Upload Mail CSV <a href="/downloadmailcsv/">(Get Sample Here)</a></label>
-            <input type="file" id="file" name="emailcsv" onchange="GetPath()"/ required>
-            <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File Here
-            </label>
-            <input style="margin-top:20px;" class="w3-input" type="text" placeholder="Subject" name="subject">
-            <textarea style="margin-top:20px;" class="w3-input" type="text" placeholder="Message" name="message"></textarea>
-            <label style="margin-top:20px;">Attach File</label>
-            <input type="file" id="file2" name="media" onchange="GetPath2();FileValidation2();" required>
-            <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile2" for="file2" class="w3-button w3-black w3-hover-blue">Select Here
-            </label>
-            <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" id="send2" disabled type="submit" value="Send">
-        </form>
-       </div>
-       <div id="sendmail" style="display:none;padding:30px;" class="w3-animate-top">
+       {% if plan == 'PL003' %}
+           <div id="bulkmail" style="display:none;padding:30px;" class="w3-animate-top">
+            <h1>Send Mail to Bulk Peoples in Just One Click</h1>
+            <form action="/sendbulkmails/" method="POST" enctype="multipart/form-data">
+                <label style="margin-top:20px;">Upload Mail CSV <a href="/downloadmailcsv/">(Get Sample Here)</a></label>
+                <input type="file" id="file" name="emailcsv" onchange="GetPath()"/ required>
+                <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File Here
+                </label>
+                <input style="margin-top:20px;" class="w3-input" type="text" placeholder="Subject" name="subject">
+                <textarea style="margin-top:20px;" class="w3-input" type="text" placeholder="Message" name="message"></textarea>
+                <label style="margin-top:20px;">Attach File</label>
+                <input type="file" id="file2" name="media" onchange="GetPath2();FileValidation2();" required>
+                <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile2" for="file2" class="w3-button w3-black w3-hover-blue">Select Here
+                </label>
+                <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" id="send2" disabled type="submit" value="Send">
+            </form>
+           </div>
+       {% endif %}
+       <div id="sendmail" style="padding:30px;" class="w3-animate-top">
                 <h1>Send Media Mails</h1>
                 <form action="/usersendmail/" method="POST" enctype="multipart/form-data">
                     <input style="margin-top:20px;margin-top:20px;" class="w3-input" type="text" placeholder="To" name="toemail">
