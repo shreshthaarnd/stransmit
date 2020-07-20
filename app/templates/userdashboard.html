@@ -95,11 +95,13 @@
     </div>
     <!-- /bradcam_area  -->
     <div style="padding:30px;width:"class="w3-container">
-       <div class="w3-bar">
-       <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="#bulkmail" onclick="OpenBulkMail()";>Send Bulk Email</a>
-       <a style="width:24%;border-radius:10px;"onclick="OpenSendMail()"class="w3-button  w3-blue w3-hover-black"href="#sendmail">Send Email</a>
-       <a style="width:24%;border-radius:10px;"onclick="OpenMailHistory()"class="w3-button  w3-blue w3-hover-black"href="#mailhistory">Sent Email History</a>
-       <a style="width:24%;border-radius:10px;"onclick="OpenAccountSettings()"class="w3-button  w3-blue w3-hover-black"href="#accountsetting">Account Settings</a>
+      <div class="w3-bar">
+        {% if plan == 'PL003' %}
+        <a style="width:24%;border-radius:10px;"class="w3-button  w3-blue w3-hover-black"href="#bulkmail" onclick="OpenBulkMail()";>Send Bulk Email</a>
+        {% endif %}
+        <a style="width:24%;border-radius:10px;"onclick="OpenSendMail()"class="w3-button  w3-blue w3-hover-black"href="#sendmail">Send Email</a>
+        <a style="width:24%;border-radius:10px;"onclick="OpenMailHistory()"class="w3-button  w3-blue w3-hover-black"href="#mailhistory">Sent Email History</a>
+        <a style="width:24%;border-radius:10px;"onclick="OpenAccountSettings()"class="w3-button  w3-blue w3-hover-black"href="#accountsetting">Account Settings</a>
        </div>
        <div id="bulkmail" style="padding:30px;" class="w3-animate-top">
         <h1>Send Mail to Bulk Peoples in Just One Click</h1>

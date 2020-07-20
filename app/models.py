@@ -35,3 +35,11 @@ class SentData(models.Model):
 	Message=models.CharField(max_length=500)
 	class Meta:
 		db_table="SentData"
+
+class UserPlanData(models.Model):
+	Plan_Date=models.DateField().auto_now
+	Plan_ID=models.CharField(max_length=7, default='PL001')
+	User_ID=models.CharField(max_length=50)
+	Pay_ID=models.CharField(max_length=20, default='Not Availiable')
+	class Meta:
+		db_table="UserPlanData"

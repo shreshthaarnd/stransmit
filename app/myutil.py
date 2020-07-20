@@ -33,6 +33,11 @@ def checkmedia():
 				MailData.objects.filter(Mail_ID=x.Mail_ID).delete()
 	return 'Done'
 
+def GetPlanID(uid):
+	response=''
+	for x in UserPlanData.objects.filter(User_ID=uid):
+		response=x.Plan_ID
+	return response
 def sendmailutil(email, subject, message, media, userid, useremail):
 	m='M00'
 	x=1

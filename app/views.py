@@ -85,10 +85,12 @@ def logout(request):
 def userdashboard(request):
 	try:
 		uid=request.session['userid']
+		pid=GetPlanID(uid)
 		userdata=UserData.objects.filter(User_ID=uid)
 		mails=MailData.objects.filter(User_ID=uid)
 		smails=SentData.objects.filter(User_ID=uid)
 		dic={'userdata':userdata,
+			'plan':pid,
 			'mails':reversed(mails),
 			'smails':reversed(mails)}
 		return render(request,'userdashboard.html',dic)
@@ -220,6 +222,7 @@ def verify2(request):
 		uid=request.session['useridd']
 		if otp==otpp:
 			UserData.objects.filter(User_ID=uid).update(Verify_Status='Verified')
+			UserPlanData(User_ID=uid).save()
 			request.session['userid'] = uid
 			return HttpResponse("<script>alert('Account Verified!'); window.location.replace('/userdashboard/')</script>")
 		else:
@@ -243,6 +246,7 @@ Stransmit.com'''
 		return HttpResponse("<script>alert('Sent Successfully!'); window.location.replace('/verifyuser/')</script>")
 	except:
 		return redirect('/index/')
+
 @csrf_exempt
 def sendmail(request):
 	if request.method=='POST':
@@ -265,9 +269,11 @@ def sendmail(request):
 				x=x+1
 				mid=m+str(x)
 			x=int(x)
+			request.session['mailid'] = mid
 			uid=''
 			for x in UserData.objects.filter(User_Email=email):
 				uid=x.User_ID
+				request.session['useridd'] = x.User_ID
 			obj=MailData(
 				Mail_Date=str(datetime.date.today()),
 				Mail_ID=mid,
@@ -278,12 +284,8 @@ def sendmail(request):
 				MediaFile=media
 				)
 			obj.save()
-			murl=''
-			for x in MailData.objects.filter(Mail_ID=mid):
-				murl=x.MediaFile
-			link='https://stransmit.com/downloadmedia/?mid='+mid+'&mpath='+str(murl)
-			sendemail('no-subject', message, toemail, email, link)
-			return HttpResponse("<script>alert('Your mail has been sent successfully.'); window.location.replace('/index/')</script>")
+			dic={'useremail':email}
+			return render(request, 'password.html', dic)
 		else:
 			otp=uuid.uuid5(uuid.NAMESPACE_DNS, uid+str(datetime.datetime.now())+email).int
 			otp=str(otp)
@@ -330,6 +332,24 @@ Stransmit.com'''
 			dic={'verify':True}
 			return render(request,'index.html',dic)
 @csrf_exempt
+def password(request):
+	uid=request.session['useridd']
+	mid=request.session['mailid']
+	password=request.POST.get('password')
+	if UserData.objects.filter(User_ID=uid, User_Password=password).exists():
+		for x in MailData.objects.filter(Mail_ID=mid):
+			link='https://stransmit.com/downloadmedia/?mid='+mid+'&mpath='+str(x.MediaFile)
+			sendemail('no-subject', x.Message, x.To_Email, x.User_Email, link)
+			break
+		request.session['userid'] = uid
+		return HttpResponse("<script>alert('Your mail has been sent successfully.'); window.location.replace('/userdashboard/')</script>")
+	else:
+		uemail=''
+		for x in UserData.objects.filter(User_ID=uid):
+			uemail=x.User_Email
+		dic={'msg':'Incorrect Password','useremail':uemail}
+		return render(request, 'password.html', dic)
+@csrf_exempt
 def verify(request):
 	if request.method=='POST':
 		otp=request.POST.get('otp')
@@ -338,6 +358,7 @@ def verify(request):
 		mid=request.session['mailid']
 		if otp==otpp:
 			UserData.objects.filter(User_ID=uid).update(Verify_Status='Verified')
+			UserPlanData(User_ID=uid).save()
 			for x in MailData.objects.filter(Mail_ID=mid):
 				link='https://stransmit.com/downloadmedia/?mid='+mid+'&mpath='+str(x.MediaFile)
 				sendemail('no-subject', x.Message, x.To_Email, x.User_Email, link)
