@@ -547,3 +547,9 @@ def adminsentmaillist(request):
 		return HttpResponse('Done')'''
 def checkout(request):
 	return render(request,'checkout.html',{})
+def otp(request):
+	return render(request,'otp.html',{})
+def forward(request):
+	return render(request,'forward.html',{})
+def account(request):
+	return render(request,'account.html',{})
