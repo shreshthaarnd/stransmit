@@ -19,7 +19,7 @@ def checkmedia():
 		mday=mdate[8:10]
 		tdate=datetime.date.today()
 		delta=tdate-datetime.date(int(myear), int(mmonth), int(mday))
-		if delta.days == 10:
+		if GetPlanID(x.User_ID) == 'PL001' and delta.days < 10:
 			if not SentData.objects.filter(Mail_ID=x.Mail_ID).exists():
 				obj=SentData(
 					Mail_Date=x.Mail_Date,
@@ -27,7 +27,34 @@ def checkmedia():
 					User_ID=x.User_ID,
 					User_Email=x.User_Email,
 					To_Email=x.To_Email,
-					Message=x.Message
+					Message=x.Message,
+					MediaSize=sizify(x.MediaFile.size)
+					)
+				obj.save()
+				MailData.objects.filter(Mail_ID=x.Mail_ID).delete()
+		if GetPlanID(x.User_ID) == 'PL002' and delta.days < 20:
+			if not SentData.objects.filter(Mail_ID=x.Mail_ID).exists():
+				obj=SentData(
+					Mail_Date=x.Mail_Date,
+					Mail_ID=x.Mail_ID,
+					User_ID=x.User_ID,
+					User_Email=x.User_Email,
+					To_Email=x.To_Email,
+					Message=x.Message,
+					MediaSize=sizify(x.MediaFile.size)
+					)
+				obj.save()
+				MailData.objects.filter(Mail_ID=x.Mail_ID).delete()
+		if GetPlanID(x.User_ID) == 'PL003' and delta.days < 30:
+			if not SentData.objects.filter(Mail_ID=x.Mail_ID).exists():
+				obj=SentData(
+					Mail_Date=x.Mail_Date,
+					Mail_ID=x.Mail_ID,
+					User_ID=x.User_ID,
+					User_Email=x.User_Email,
+					To_Email=x.To_Email,
+					Message=x.Message,
+					MediaSize=sizify(x.MediaFile.size)
 					)
 				obj.save()
 				MailData.objects.filter(Mail_ID=x.Mail_ID).delete()
@@ -107,3 +134,59 @@ def downloaddata(table):
 		for x in obj1:
 			writer.writerow([x.Mail_Date, x.Mail_ID, x.User_ID, x.User_Email, x.To_Email, x.Message])
 		return response
+
+def sizify(value):
+	value = value / 1073741824.0
+	return value
+
+def GetPlanMailDifference(MailId):
+	for x in MailData.objects.filter(Mail_ID=MailId):
+		plandate=''
+		for y in UserPlanData.objects.filter(User_ID=x.User_ID):
+			plandate=x.Plan_Date
+		mdate=x.Mail_Date
+		myear=mdate[:4]
+		mmonth=mdate[5:7]
+		mday=mdate[8:10]
+		tdate=datetime.date.today()
+		delta=datetime.date(int(myear), int(mmonth), int(mday))-plandate
+	if delta.days > 0:
+		return True
+	else:
+		return False
+
+def Get30DaysMailsSize(userid):
+	size=0.0
+	for x in SentData.objects.filter(User_ID=userid):
+		if GetPlanMailDifference(x.Mail_ID):
+			mdate=x.Mail_Date
+			myear=mdate[:4]
+			mmonth=mdate[5:7]
+			mday=mdate[8:10]
+			tdate=datetime.date.today()
+			delta=tdate-datetime.date(int(myear), int(mmonth), int(mday))
+			if delta.days < 30:
+				size=size+float(x.MediaSize)
+	return size
+
+def checkmediasize(userid):
+	mails=MailData.objects.filter(User_ID=userid)
+	size=0.0
+	for x in mails:
+		size=size+sizify(x.MediaFile.size)
+	size=size+Get30DaysMailsSize(userid)
+	if GetPlanID(userid) == 'PL002':
+		if size > 1000.0:
+			return False
+		else:
+			return True
+	elif GetPlanID(userid) == 'PL003':
+		if size > 2000.0:
+			return False
+		else:
+			return True
+	elif GetPlanID(userid) == 'PL001':
+		if size > 50.0:
+			return False
+		else:
+			return True

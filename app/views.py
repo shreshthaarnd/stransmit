@@ -70,7 +70,15 @@ def elements(request):
 def features(request):
 	return render(request,'features.html',{})
 def pricing(request):
-	return render(request,'pricing.html',{})
+	try:
+		uid=request.session['userid']
+		pid=GetPlanID(uid)
+		dic={'checksession':checksession(request),
+			'plan':pid}
+		return render(request,'pricing.html',dic)
+	except:
+		dic={'checksession':checksession(request)}
+		return render(request,'pricing.html',dic)
 def singleblog(request):
 	return render(request,'single-blog.html',{})
 def registration(request):
@@ -92,7 +100,7 @@ def userdashboard(request):
 		dic={'userdata':userdata,
 			'plan':pid,
 			'mails':reversed(mails),
-			'smails':reversed(mails)}
+			'smails':reversed(smails)}
 		return render(request,'userdashboard.html',dic)
 	except:
 		return Http404
@@ -160,14 +168,17 @@ def usersendmail(request):
 				Message=message,
 				MediaFile=media
 				)
-			obj.save()
-			murl=''
-			fromemail=i.User_Email
-			for x in MailData.objects.filter(Mail_ID=mid):
-				murl=x.MediaFile
-			link='https://stransmit.com/downloadmedia/?mid='+mid+'&mpath='+str(murl)
-			sendemail('no-subject', message, toemail, fromemail, link)
-		return HttpResponse("<script>alert('Mail Sent Successfully'); window.location.replace('/userdashboard/')</script>")
+			if checkmediasize(uid):
+				obj.save()
+				murl=''
+				fromemail=i.User_Email
+				for x in MailData.objects.filter(Mail_ID=mid):
+					murl=x.MediaFile
+				link='https://stransmit.com/downloadmedia/?mid='+mid+'&mpath='+str(murl)
+				sendemail(subject, message, toemail, fromemail, link)
+				return HttpResponse("<script>alert('Mail Sent Successfully!'); window.location.replace('/userdashboard/')</script>")
+			else:
+				return HttpResponse("<script>alert('Media Limit Exceed! Kindly Upgrade Your Plan.'); window.location.replace('/userdashboard/')</script>")
 	except:
 		return Http404
 @csrf_exempt
@@ -283,9 +294,12 @@ def sendmail(request):
 				Message=message,
 				MediaFile=media
 				)
-			obj.save()
-			dic={'useremail':email}
-			return render(request, 'password.html', dic)
+			if checkmediasize(uid):
+				obj.save()
+				dic={'useremail':email}
+				return render(request, 'password.html', dic)
+			else:
+				return HttpResponse("<script>alert('Your Monthly Limit Exceeds! Kindly Upgrade Your Plan'); window.location.replace('/index/')</script>")
 		else:
 			otp=uuid.uuid5(uuid.NAMESPACE_DNS, uid+str(datetime.datetime.now())+email).int
 			otp=str(otp)
@@ -476,8 +490,7 @@ Stransmit.com'''
 				email2=request.POST.get('email')
 				email=EmailMessage(sub,msg,to=[email])
 				email.send()
-				for x in UserData.objects.filter(User_Email=email2,User_Password=password):
-					print('hello')
+				for x in UserData.objects.filter(User_Email=email2):
 					request.session['useridd'] = x.User_ID
 				request.session['userotp'] = otp
 				return render(request,'verify.html',{})
@@ -567,3 +580,9 @@ def adminsentmaillist(request):
 			)
 		obj.save()
 		return HttpResponse('Done')'''
+def checkout(request):
+	plan=request.GET.get('plan')
+	uid=request.session['userid']
+	dic={'checksession':checksession(request),
+		'plan':plan}
+	return render(request,'checkout.html',dic)

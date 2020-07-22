@@ -5,11 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Stransmit - Pricing</title>
+    <title>Stransmit - Checkout</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'Stransmitfavicon.png' %}">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
@@ -22,9 +22,9 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/gijgo.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
     <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'w3.css' %}">
     <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
 </head>
 
@@ -32,6 +32,7 @@
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
+
 
     <!-- header-start -->
     <header>
@@ -51,7 +52,7 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="/index/">home</a></li>
-                                        <li><a class="active" href="/pricing/">pricing</a></li>
+                                        <li><a href="/pricing/">pricing</a></li>
                                         {% if checksession == True %}
                                         <li><a href="/userdashboard/">Dashboard</a></li>
                                         <li><a href="/logout/">Logout</a></li>
@@ -83,7 +84,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="bradcam_text">
-                        <h3>Affordable Pricing</h3>
+                        <h3>Proceed to Pay</h3>
                     </div>
                 </div>
             </div>
@@ -91,82 +92,49 @@
     </div>
     <!-- /bradcam_area  -->
 
-        <!-- prising_area  -->
-        <div class="prising_area minus_padding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="section_title text-center wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".5s">
-                            <h3>Unlock full Power</h3>
-                            <p>Upgrade Your Plan and Get Full Access to Our Features</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row no-gutters align-items-center">
-                    <div class="col-xl-4 col-md-4">
-                        <div class="single_prising text-center wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".8s">
-                            <div class="prising_header d-flex justify-content-between">
-                                <h3>Free</h3>
-                            </div>
-                            <ul>
-                                <li>Media Capacity 5GB Per Mail</li>
-                                <li>Media Availabilty for 10 Days</li>
-                                <li>Mail Storage 50GB Per Month</li>
-                            </ul>
-                            <div class="prising_bottom">
-                                {% if not plan == 'PL001' %}
-                                    <a href="#" class="get_now prising_btn">Get Now</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-4">
-                        <div class="single_prising text-center wow fadeInUp" data-wow-duration=".6s" data-wow-delay=".6s">
-                            <div class="prising_header d-flex justify-content-between pink_header">
-                                <h3>Basic</h3>
-                                <span>299/month</span>
-                            </div>
-                            <ul>
-                                <li>Media Capacity 20GB Per Mail</li>
-                                <li>Media Availabilty for 20 Days</li>
-                                <li>Mail Storage 1TB Per Month</li>
-                                <li>Mail History Available</li>
-                            </ul>
-                            <div class="prising_bottom">
-                                {% if not plan == 'PL002' %}
-                                    <a href="/checkout/?plan=PL002" class="get_now prising_btn">Get Now</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-4">
-                        <div class="single_prising text-center wow fadeInUp" data-wow-duration=".7s" data-wow-delay=".8s">
-                            <div class="prising_header d-flex justify-content-between green_header">
-                                <h3>Premium</h3>
-                                <span>399/month</span>
-                            </div>
-                            <ul>
-                                <li>Media Capacity 50GB Per Mail</li>
-                                <li>Media Availabilty for 1 Month</li>
-                                <li>Mail Storage 2TB Per Month</li>
-                                <li>Mail History Available</li>
-                            </ul>
-                            <div class="prising_bottom">
-                                {% if not plan == 'PL003' %}
-                                    <a href="/checkout/?plan=PL003" class="get_now prising_btn">Get Now</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div style="padding:50px;">
+        <div style="margin-bottom:20px;padding:10px;border-radius:10px;"class="w3-container w3-blue">
+            <h2 style="color:white;">Biling Invoice</h2>
         </div>
-        <!--/ prising_area  -->
-
-    <!-- about  -->
+        <div class="row" style="width:100%;">
+            {% if plan == 'PL002' %}
+            <div class="column" style="width:50%;padding:10px;">
+                <button style="width:100%;adding:10px;border-radius:10px;margin-bottom:10px;"class="w3-button w3-red w3-hover-black text-center">
+                    <h3 style="color:white;">Basic Plan <i class="fa fa-check"></i></h3>
+                </button>
+            </div>
+            <div class="column" style="width:50%;padding:10px;">
+                <button disabled style="width:100%;padding:10px;border-radius:10px;margin-bottom:10px;"class="w3-button w3-yellow w3-hover-white text-center">
+                    <h3>Premium Plan</h3>
+                </button>
+            </div>
+            {% endif %}
+            {% if plan == 'PL003' %}
+            <div class="column" style="width:50%;padding:10px;">
+                <button disabled style="width:100%;adding:10px;border-radius:10px;margin-bottom:10px;"class="w3-button w3-red w3-hover-black text-center">
+                    <h3 style="color:white;">Basic Plan</h3>
+                </button>
+            </div>
+            <div class="column" style="width:50%;padding:10px;">
+                <button style="width:100%;padding:10px;border-radius:10px;margin-bottom:10px;"class="w3-button w3-yellow w3-hover-white text-center">
+                    <h3>Premium Plan <i class="fa fa-check"></i></h3>
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        <table style="width:100%;">
+            <tr>
+                <td style="font-size:30px;font-weight:bold;">Total Amount to Pay</td>
+                {% if plan == 'PL002' %}
+                <td style="font-size:30px;font-weight:bold;"><i class="fa fa-inr"></i>299/-</td>
+                {% else %}
+                <td style="font-size:30px;font-weight:bold;"><i class="fa fa-inr"></i>399/-</td>
+                {% endif %}
+            </tr>
+        </table>
+        <a style="margin-top:10px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black w3-large"href="">Pay Now</a>
+    </div>
     
-    <!--/ productivity_area  -->
-
     <!-- footer start -->
     <footer class="footer">
         <div style="padding-bottom:20px;background-color:black;"class="footer_top">
@@ -253,35 +221,50 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </footer>
     <!--/ footer end  -->
-
-    <!-- JS here -->
-    <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
-    <script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'js/ajax-form.js' %}"></script>
-    <script src="{% static 'js/waypoints.min.js' %}"></script>
-    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
-    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
-    <script src="{% static 'js/scrollIt.js' %}"></script>
-    <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
-    <script src="{% static 'js/wow.min.js' %}"></script>
-    <script src="{% static 'js/nice-select.min.js' %}"></script>
-    <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
-    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-    <script src="{% static 'js/plugins.js' %}"></script>
-    <script src="{% static 'js/gijgo.min.js' %}"></script>
-
-    <!--contact js-->
-    <script src="{% static 'js/contact.js' %}"></script>
-    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
-    <script src="{% static 'js/jquery.form.js' %}"></script>
-    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
-    <script src="{% static 'js/mail-script.js' %}"></script>
-
-    <script src="{% static 'js/main.js' %}"></script>
-</body>
-
-</html>
+    
+        <!-- JS here -->
+        <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+        <script src="{% static 'js/ajax-form.js' %}"></script>
+        <script src="{% static 'js/waypoints.min.js' %}"></script>
+        <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+        <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+        <script src="{% static 'js/scrollIt.js' %}"></script>
+        <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static 'js/wow.min.js' %}"></script>
+        <script src="{% static 'js/nice-select.min.js' %}"></script>
+        <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+        <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/gijgo.min.js' %}"></script>
+    
+        <!--contact js-->
+        <script src="{% static 'js/contact.js' %}"></script>
+        <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+        <script src="{% static 'js/jquery.form.js' %}"></script>
+        <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'js/mail-script.js' %}"></script>
+    
+        <script src="{% static 'js/main.js' %}"></script>
+        <script>
+            $('#datepicker').datepicker({
+                iconsLibrary: 'fontawesome',
+                icons: {
+                 rightIcon: '<span class="fa fa-caret-down"></span>'
+             }
+            });
+            $('#datepicker2').datepicker({
+                iconsLibrary: 'fontawesome',
+                icons: {
+                 rightIcon: '<span class="fa fa-caret-down"></span>'
+             }
+    
+            });
+        </script>
+    </body>
+    
+    </html>
