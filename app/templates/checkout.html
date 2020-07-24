@@ -132,7 +132,25 @@
                 {% endif %}
             </tr>
         </table>
-        <a style="margin-top:10px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black w3-large"href="">Pay Now</a>
+        <a href="">Pay Now</a>
+        <form method="POST" action="https://securegw-stage.paytm.in/order/process" id="pay1">
+            <input name="MID" type="hidden" value="{{ MID|safe }}">
+            <input name="ORDER_ID" type="hidden" value="{{ ORDER_ID|safe }}">
+            <input name="TXN_AMOUNT" type="hidden" value="{{ TXN_AMOUNT|safe }}">
+            <input name="CUST_ID" type="hidden" value="{{ CUST_ID|safe }}">
+            <input name="INDUSTRY_TYPE_ID" type="hidden" value="{{ INDUSTRY_TYPE_ID|safe }}">
+            <input name="WEBSITE" type="hidden" value="{{ WEBSITE|safe }}">
+            <input name="CHANNEL_ID" type="hidden" value="{{ CHANNEL_ID|safe }}">
+            <input name="CALLBACK_URL" type="hidden" value="{{ CALLBACK_URL|safe }}">
+            <input name="CHECKSUMHASH" type="hidden" value="{{ CHECKSUMHASH|safe }}">
+            <input style="margin-top:10px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black w3-large" type="submit" value="Pay Now" onclick="document.getElementById('pay').style.display = 'block';document.getElementById('pay1').submit();">
+        </form>
+    </div>
+    <div style="display:block;display:none;" id="pay" class="text-center">
+        <img style="width:100px;" src="{% static 'loading.gif' %}">
+        <h3>Processing Your Transaction</h3>
+        <h4>Please Wait</h4>
+        <span style="font-size:20px;color:red;">Do Not Press 'Refresh' Or 'Back Button'</span>
     </div>
     
     <!-- footer start -->

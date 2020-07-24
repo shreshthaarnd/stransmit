@@ -10,6 +10,8 @@ idna==2.10
 jmespath==0.10.0
 numpy==1.19.0
 pandas==1.0.5
+paytm-pg==1.0.8
+pycryptodome==3.9.8
 python-dateutil==2.6.1
 pytz==2020.1
 requests==2.24.0

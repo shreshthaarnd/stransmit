@@ -48,6 +48,7 @@ urlpatterns = [
     path('downloadmedia3/',downloadmedia3),
     path('password/',password),
     path('checkout/',checkout),
+    path('verifypayment/',verifypayment),
     #path('demo/',checksize),
     #path('uploaddata/',uploaddata),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -34,14 +34,7 @@ def sendpassword(request):
 	email=request.POST.get('email')
 	if UserData.objects.filter(User_Email=email).exists():
 		for x in UserData.objects.filter(User_Email=email):
-			msg='''Hi '''+x.User_Name+'''!
-Your Password is : '''+x.User_Password+'''
-
-Thanks!,
-Stransmit.com'''
-			sub='Stransmit - Account Recovery Email'
-			email=EmailMessage(sub,msg,to=[email])
-			email.send()
+			sendforgotpassword(x.User_Password, email)
 			break
 		return HttpResponse("<script>alert('Password has been sent to your email, you may proceed for login.'); window.location.replace('/index/')</script>")
 	else:
@@ -212,16 +205,7 @@ def saveuser(request):
 		else:
 			obj.save()
 			request.session['useridd'] = uid
-			msg='''Hi there!
-Your Stransmit Verification OTP is,
-
-'''+otp+'''
-
-Thanks!,
-Stransmit.com'''
-			sub='Stransmit - Verification One Time Password (OTP)'
-			email=EmailMessage(sub,msg,to=[email])
-			email.send()
+			sendotp(otp, email)
 			return render(request,'verify.html',{})
 def verifyuser(request):
 	return render(request,'verify.html',{})
@@ -235,6 +219,9 @@ def verify2(request):
 			UserData.objects.filter(User_ID=uid).update(Verify_Status='Verified')
 			UserPlanData(User_ID=uid).save()
 			request.session['userid'] = uid
+			for x in UserData.objects.filter(User_ID=uid):
+				sendaccountdetails(x.User_Email, x.User_Password)
+				break
 			return HttpResponse("<script>alert('Account Verified!'); window.location.replace('/userdashboard/')</script>")
 		else:
 			return HttpResponse("<script>alert('Incorrect OTP'); window.location.replace('/verifyuser/')</script>")
@@ -243,16 +230,7 @@ def resendotp2(request):
 		otp=request.session['userotp']
 		uid=request.session['useridd']
 		for x in UserData.objects.filter(User_ID=uid):
-			msg='''Hi there!
-Your One Time Password (OTP) is,
-
-'''+otp+'''
-
-Thanks!,
-Stransmit.com'''
-			sub='Stransmit - One Time Password (OTP)'
-			email=EmailMessage(sub,msg,to=[x.User_Email])
-			email.send()
+			sendotp(otp, x.User_Email)
 			break
 		return HttpResponse("<script>alert('Sent Successfully!'); window.location.replace('/verifyuser/')</script>")
 	except:
@@ -333,16 +311,7 @@ def sendmail(request):
 				User_Password=password
 				)
 			obj.save()
-			msg='''Hi there!
-Your One Time Password (OTP) is,
-
-'''+otp+'''
-
-Thanks!,
-Stransmit.com'''
-			sub='Stransmit - One Time Password (OTP)'
-			email=EmailMessage(sub,msg,to=[email])
-			email.send()
+			sendotp(otp, email)
 			dic={'verify':True}
 			return render(request,'index.html',dic)
 @csrf_exempt
@@ -378,17 +347,7 @@ def verify(request):
 				sendemail('no-subject', x.Message, x.To_Email, x.User_Email, link)
 				break
 			for x in UserData.objects.filter(User_ID=uid):
-				msg='''Hi there!
-Your Stransmit Account has been successfully created,
-
-Login Email : '''+x.User_Email+'''
-Login Password : '''+x.User_Password+'''
-
-Thanks for being with us!,
-Stransmit.com'''
-				sub='Stransmit - Account Created!'
-				email=EmailMessage(sub,msg,to=[x.User_Email])
-				email.send()
+				sendaccountdetails(x.User_Email, x.User_Password)
 				break
 			return HttpResponse("<script>alert('Your mail has been sent successfully. And we have also sent the login credentials to your mail'); window.location.replace('/index/')</script>")
 		else:
@@ -399,16 +358,7 @@ def resendotp(request):
 		otp=request.session['userotp']
 		uid=request.session['useridd']
 		for x in UserData.objects.filter(User_ID=uid):
-			msg='''Hi there!
-Your One Time Password (OTP) is,
-
-'''+otp+'''
-
-Thanks!,
-Stransmit.com'''
-			sub='Stransmit - One Time Password (OTP)'
-			email=EmailMessage(sub,msg,to=[x.User_Email])
-			email.send()
+			sendotp(otp, x.User_Email)
 			break
 		dic={'verify':True,'msg':'OTP Sent Again'}
 		return render(request,'index.html',dic)
@@ -434,16 +384,6 @@ def downloadmedia2(request):
 			url = x.MediaFile.url
 			r = requests.get(url, allow_redirects=True)
 			filedownload = open(filename, 'wb').write(r.content)
-			'''fl_path = filename
-			file_path = filename
-			file_wrapper = FileWrapper(open(filename, 'rb'))
-			file_mimetype, _ = mimetypes.guess_type(file_path)
-			response = HttpResponse(file_wrapper, content_type=file_mimetype )
-			response['X-Sendfile'] = file_path
-			response['Content-Length'] = os.stat(file_path).st_size
-			response['Content-Disposition'] = 'attachment; filename=%s' % file_path
-			os.remove(filename)
-			return response'''
 			return render(request,'download2.html',{'filename':filename})
 	else:
 		return HttpResponse("<script>alert('File Not Found'); window.location.replace('/index/')</script>")
@@ -479,17 +419,8 @@ def checklogin(request):
 				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+password+email).int
 				otp=str(otp)
 				otp=otp.upper()[0:6]
-				msg='''Hi there!
-Your Stransmit Verification OTP is,
-
-'''+otp+'''
-
-Thanks!,
-Stransmit.com'''
-				sub='Stransmit - Verification One Time Password (OTP)'
 				email2=request.POST.get('email')
-				email=EmailMessage(sub,msg,to=[email])
-				email.send()
+				sendotp(otp, email)
 				for x in UserData.objects.filter(User_Email=email2):
 					request.session['useridd'] = x.User_ID
 				request.session['userotp'] = otp
@@ -580,9 +511,131 @@ def adminsentmaillist(request):
 			)
 		obj.save()
 		return HttpResponse('Done')'''
+
+import app.Checksum as Checksum
 def checkout(request):
 	plan=request.GET.get('plan')
 	uid=request.session['userid']
-	dic={'checksession':checksession(request),
-		'plan':plan}
-	return render(request,'checkout.html',dic)
+	l="PY00"
+	x=1
+	lid=l+str(x)
+	while PayData.objects.filter(Pay_ID=lid).exists():
+		x=x+1
+		lid=l+str(x)
+	x=int(x)
+	obj=PayData(
+		Pay_ID=lid,
+		Plan_ID=plan,
+		User_ID=uid,
+		)
+	obj.save()
+	amount = 0
+	if plan == 'PL002':
+		amount=299
+	elif plan == 'PL003':
+		amount=399
+	dic={
+			'ORDER_ID':lid,
+			'TXN_AMOUNT':str(amount),
+			'CUST_ID':uid,
+			'INDUSTRY_TYPE_ID':'Retail',
+			'CHANNEL_ID':'WEB',
+			'WEBSITE':'WEBSTAGING',
+			'CALLBACK_URL':'http://127.0.0.1:8000/verifypayment/'
+	}
+	MERCHANT_KEY = 'gDokYWVAFFW9OSlZ'
+	MID = 'bAQrse69179758299775'
+	data_dict = {'MID':MID}
+	data_dict.update(dic)
+	param_dict = data_dict
+	param_dict['CHECKSUMHASH'] =Checksum.generateSignature(data_dict, MERCHANT_KEY)
+	param_dict.update({'checksession':checksession(request),
+			'plan':plan})
+	return render(request,'checkout.html',param_dict)
+
+import cgi
+@csrf_exempt
+def verifypayment(request):
+		MERCHANT_KEY = 'gDokYWVAFFW9OSlZ'
+		MID = 'bAQrse69179758299775'
+		CURRENCY=request.POST.get('CURRENCY')
+		GATEWAYNAME=request.POST.get('GATEWAYNAME')
+		RESPMSG=request.POST.get('RESPMSG')
+		BANKNAME=request.POST.get('BANKNAME')
+		PAYMENTMODE=request.POST.get('PAYMENTMODE')
+		RESPCODE=request.POST.get('RESPCODE')
+		TXNID=request.POST.get('TXNID')
+		TXNAMOUNT=request.POST.get('TXNAMOUNT')
+		ORDERID=request.POST.get('ORDERID')
+		STATUS=request.POST.get('STATUS')
+		BANKTXNID=request.POST.get('BANKTXNID')
+		TXNDATE=request.POST.get('TXNDATE')
+		CHECKSUMHASH=request.POST.get('CHECKSUMHASH')
+		respons_dict = {
+						'MERCHANT_KEY':MERCHANT_KEY,
+						'CURRENCY':CURRENCY,
+						'GATEWAYNAME':GATEWAYNAME,
+						'RESPMSG':RESPMSG,
+						'BANKNAME':BANKNAME,
+						'PAYMENTMODE':PAYMENTMODE,
+						'MID':MID,
+						'RESPCODE':RESPCODE,
+						'TXNID':TXNID,
+						'TXNAMOUNT':TXNAMOUNT,
+						'ORDERID':ORDERID,
+						'STATUS':STATUS,
+						'BANKTXNID':BANKTXNID,
+						'TXNDATE':TXNDATE,
+						'CHECKSUMHASH':CHECKSUMHASH
+		}
+		checksum=respons_dict['CHECKSUMHASH']
+		if 'GATEWAYNAME' in respons_dict:
+			if respons_dict['GATEWAYNAME'] == 'WALLET':
+				respons_dict['BANKNAME'] = 'null';
+		obj=PaymentData(
+			Pay_ID=ORDERID,
+			CURRENCY=CURRENCY,
+			GATEWAYNAME=str(GATEWAYNAME),
+			RESPMSG=RESPMSG,
+			BANKNAME=str(BANKNAME),
+			PAYMENTMODE=str(PAYMENTMODE),
+			RESPCODE=RESPCODE,
+			TXNID=str(TXNID),
+			TXNAMOUNT=TXNAMOUNT,
+			STATUS=STATUS,
+			BANKTXNID=BANKTXNID,
+			TXNDATE=str(TXNDATE),
+			CHECKSUMHASH=str(CHECKSUMHASH)
+			)
+		obj.save()
+		obj=PayData.objects.filter(Pay_ID=ORDERID)
+		for x in obj:
+			request.session['userid']=str(x.User_ID)
+		custid=request.session['userid']
+		data_dict = {
+			'MID':respons_dict['MID'],
+			'ORDER_ID':ORDERID,
+			'TXN_AMOUNT':TXNAMOUNT,
+			'CUST_ID':custid,
+			'INDUSTRY_TYPE_ID':'Retail',
+			'CHANNEL_ID':'WEB',
+			'WEBSITE':'WEBSTAGING',
+			'CALLBACK_URL':'http://127.0.0.1:8000/verifypayment/'
+			}
+		checksum =Checksum.generateSignature(data_dict, MERCHANT_KEY)
+		verify = Checksum.verifySignature(data_dict, MERCHANT_KEY, checksum)
+		if verify:
+			if respons_dict['RESPCODE'] == '01':
+				obj=PayData.objects.filter(Pay_ID=ORDERID)
+				obj.update(Status='Success')
+				for x in obj:
+					UserPlanData(
+						Plan_ID=x.Plan_ID,
+						User_ID=x.User_ID,
+						Pay_ID=x.Pay_ID
+						).save()
+				return HttpResponse("<script>alert('Plan Changed!'); window.location.replace('/userdashboard/')</script>")
+			else:
+				return HttpResponse("<script>alert('Failed'); window.location.replace('/userdashboard/')</script>")
+		else:
+			return HttpResponse("<script>alert('Failed'); window.location.replace('/userdashboard/')</script>")

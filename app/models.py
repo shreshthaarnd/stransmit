@@ -44,3 +44,29 @@ class UserPlanData(models.Model):
 	Pay_ID=models.CharField(max_length=20, default='Not Availiable')
 	class Meta:
 		db_table="UserPlanData"
+
+class PayData(models.Model):
+	Pay_Date=models.DateTimeField(auto_now=True)
+	Pay_ID=models.CharField(max_length=100, primary_key=True)
+	Plan_ID=models.CharField(max_length=7)
+	User_ID=models.CharField(max_length=50)
+	Status=models.CharField(max_length=20, default='Not Availiable')
+	class Meta:
+		db_table="PayData"
+
+class PaymentData(models.Model):
+	Pay_ID=models.CharField(max_length=100, primary_key=True)
+	CURRENCY=models.CharField(max_length=100, default='None', blank=True)
+	GATEWAYNAME=models.CharField(max_length=100, default='None', blank=True)
+	RESPMSG=models.CharField(max_length=1000, default='None', blank=True)
+	BANKNAME=models.CharField(max_length=100, default='None', blank=True)
+	PAYMENTMODE=models.CharField(max_length=100, default='None', blank=True)
+	RESPCODE=models.CharField(max_length=100, default='None', blank=True)
+	TXNID=models.CharField(max_length=100, default='None', blank=True)
+	TXNAMOUNT=models.CharField(max_length=100, default='None', blank=True)
+	STATUS=models.CharField(max_length=100, default='None', blank=True)
+	BANKTXNID=models.CharField(max_length=100, default='None', blank=True)
+	TXNDATE=models.CharField(max_length=100, default='None', blank=True)
+	CHECKSUMHASH=models.CharField(max_length=100, default='None', blank=True)
+	class Meta:
+		db_table="PaymentData"

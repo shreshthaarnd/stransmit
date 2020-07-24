@@ -28,7 +28,7 @@ def checkmedia():
 					User_Email=x.User_Email,
 					To_Email=x.To_Email,
 					Message=x.Message,
-					MediaSize=sizify(x.MediaFile.size)
+					MediaSize=GetFileSize(x.MediaFile)
 					)
 				obj.save()
 				MailData.objects.filter(Mail_ID=x.Mail_ID).delete()
@@ -41,7 +41,7 @@ def checkmedia():
 					User_Email=x.User_Email,
 					To_Email=x.To_Email,
 					Message=x.Message,
-					MediaSize=sizify(x.MediaFile.size)
+					MediaSize=GetFileSize(x.MediaFile)
 					)
 				obj.save()
 				MailData.objects.filter(Mail_ID=x.Mail_ID).delete()
@@ -54,7 +54,7 @@ def checkmedia():
 					User_Email=x.User_Email,
 					To_Email=x.To_Email,
 					Message=x.Message,
-					MediaSize=sizify(x.MediaFile.size)
+					MediaSize=GetFileSize(x.MediaFile)
 					)
 				obj.save()
 				MailData.objects.filter(Mail_ID=x.Mail_ID).delete()
@@ -134,26 +134,36 @@ def downloaddata(table):
 		for x in obj1:
 			writer.writerow([x.Mail_Date, x.Mail_ID, x.User_ID, x.User_Email, x.To_Email, x.Message])
 		return response
+import boto3
+def GetFileSize(media):
+	s3 = boto3.client('s3',
+         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+         aws_secret_access_key= settings.AWS_SECRET_ACCESS_KEY)
+	response = s3.head_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key='media/'+str(media))
+	size = response['ContentLength']
+	return sizify(size)
 
 def sizify(value):
 	value = value / 1073741824.0
 	return value
 
 def GetPlanMailDifference(MailId):
+	response=False
 	for x in MailData.objects.filter(Mail_ID=MailId):
 		plandate=''
 		for y in UserPlanData.objects.filter(User_ID=x.User_ID):
-			plandate=x.Plan_Date
+			plandate=y.Plan_Date
 		mdate=x.Mail_Date
 		myear=mdate[:4]
 		mmonth=mdate[5:7]
 		mday=mdate[8:10]
 		tdate=datetime.date.today()
 		delta=datetime.date(int(myear), int(mmonth), int(mday))-plandate
-	if delta.days > 0:
-		return True
-	else:
-		return False
+		if delta.days > 0:
+			response = True
+		else:
+			response = False
+	return response
 
 def Get30DaysMailsSize(userid):
 	size=0.0
@@ -173,7 +183,7 @@ def checkmediasize(userid):
 	mails=MailData.objects.filter(User_ID=userid)
 	size=0.0
 	for x in mails:
-		size=size+sizify(x.MediaFile.size)
+		size=size+GetFileSize(x.MediaFile)
 	size=size+Get30DaysMailsSize(userid)
 	if GetPlanID(userid) == 'PL002':
 		if size > 1000.0:
