@@ -642,3 +642,7 @@ def verifypayment(request):
 				return HttpResponse("<script>alert('Failed'); window.location.replace('/userdashboard/')</script>")
 		else:
 			return HttpResponse("<script>alert('Failed'); window.location.replace('/userdashboard/')</script>")
+def paymentfailure(request):
+	return render(request,'paymentfailure.html',{})
+def paymentsuccess(request):
+	return render(request,'paymentsuccess.html',{})

@@ -1,0 +1,235 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Stransmit</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'Stransmitfavicon.png' %}">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'w3.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+
+    <!-- header-start -->
+    <header>
+        <div class="header-area ">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-xl-3 col-lg-2">
+                            <div class="logo">
+                                <a href="/index/">
+                                    <img style="width:200px;"src="{% static 'Stransmit.png' %}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a class="active" href="/index/">home</a></li>
+                                        {% if checksession == True %}
+                                        <li><a href="/userdashboard/">Dashboard</a></li>
+                                        <li><a href="/logout/">Logout</a></li>
+                                        {% else %}
+                                        <li><a href="#" onclick="document.getElementById('id02').style.display='block';">Login</a></li>
+                                        <li><a href="#" onclick="document.getElementById('id01').style.display='block';">Signup</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                            <div class="Appointment">
+                                <span style="color:white;">Made In India</span>
+                                <img style="margin-left:10px;width:50px;"src="{% static 'images.png' %}">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-end -->
+
+    <!-- bradcam_area  -->
+    <div style="background-color:#e80f00;"class="bradcam_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3 style="padding-bottom:20px;">Payment Failure</h3>
+                        <h4 style="color:white;">Transaction ID:TYU67</h4>
+                        <h4 style="color:white;">Payment ID:RTY67</h4>
+                        <h4 style="color:white;">Date&Time:04-03-20/03:00PM</h4>
+                        <a style="margin-top:10px;border-radius:10px;"class="w3-button w3-white w3-hover-black w3-large"href="">Go To Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /bradcam_area  -->
+
+    
+    
+    <!-- footer start -->
+    <footer class="footer">
+        <div style="padding-bottom:20px;background-color:black;"class="footer_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <div class="footer_widget">
+                            <div class="footer_logo">
+                                <a href="#">
+                                    <img style="width:150px;"src="{% static 'Stransmit.png' %}" alt="">
+                                </a>
+                            </div>
+                            <p>
+                              Stransmit is an indian web application for online media transfer. Support indian product - An Initiative by Shreshtha Research & Development.
+                            </p>
+                            <div class="socail_links">
+                                <span style="color:white;">Made In India</span>
+                                <img style="margin-left:10px;width:60px;"src="{% static 'india-flag-1024x600.jpg' %}">
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                    Usefull Links
+                            </h3>
+                            <ul>
+                                {% if checksession == True %}
+                                <li>
+                                    <a href="/userdashboard/">
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout/">
+                                        Logout
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="#" onclick="document.getElementById('id02').style.display='block';">
+                                        Login
+                                    </a>
+                                </li>
+                                <li><a href="#" onclick="document.getElementById('id01').style.display='block';">
+                                        Register
+                                    </a>
+                                </li>
+                                {% endif %}
+                                <li><a href="#" onclick="document.getElementById('id03').style.display='block';">
+                                        Privacy Policy
+                                    </a>
+                                </li>
+                                <li><a href="#" onclick="document.getElementById('id04').style.display='block';">
+                                        Disclaimer
+                                    </a>
+                                </li>
+                                <li><a href="/contact/">
+                                        Contact Us
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copy-right_text">
+            <div class="container">
+                <div class="footer_border"></div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <p class="copy_right text-center">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved @ <a href="https://www.srd.mobi">SRD - Shreshtha Research & Development </a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--/ footer end  -->
+    
+        <!-- JS here -->
+        <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+        <script src="{% static 'js/ajax-form.js' %}"></script>
+        <script src="{% static 'js/waypoints.min.js' %}"></script>
+        <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+        <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+        <script src="{% static 'js/scrollIt.js' %}"></script>
+        <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static 'js/wow.min.js' %}"></script>
+        <script src="{% static 'js/nice-select.min.js' %}"></script>
+        <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+        <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/gijgo.min.js' %}"></script>
+    
+        <!--contact js-->
+        <script src="{% static 'js/contact.js' %}"></script>
+        <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+        <script src="{% static 'js/jquery.form.js' %}"></script>
+        <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'js/mail-script.js' %}"></script>
+    
+        <script src="{% static 'js/main.js' %}"></script>
+        <script>
+            $('#datepicker').datepicker({
+                iconsLibrary: 'fontawesome',
+                icons: {
+                 rightIcon: '<span class="fa fa-caret-down"></span>'
+             }
+            });
+            $('#datepicker2').datepicker({
+                iconsLibrary: 'fontawesome',
+                icons: {
+                 rightIcon: '<span class="fa fa-caret-down"></span>'
+             }
+    
+            });
+        </script>
+    </body>
+    
+    </html>
