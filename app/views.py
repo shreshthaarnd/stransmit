@@ -643,5 +643,11 @@ def verifypayment(request):
 			return HttpResponse("<script>alert('Failed'); window.location.replace('/userdashboard/')</script>")
 def paymentfailure(request):
 	return render(request,'paymentfailure.html',{})
+def adminusersubcription(request):
+	return render(request,'adminpages/usersubcription.html',{})
 def paymentsuccess(request):
 	return render(request,'paymentsuccess.html',{})
+def adminpaydata(request):
+	return render(request,'adminpages/paydata.html',{})
+def adminpaymentdata(request):
+	return render(request,'adminpages/paymentdata.html',{})

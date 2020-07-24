@@ -51,6 +51,9 @@ urlpatterns = [
     path('verifypayment/',verifypayment),
     path('paymentfailure/',paymentfailure),
     path('paymentsuccess/',paymentsuccess),
+    path('adminusersubcription/',adminusersubcription),
+    path('adminpaydata/',adminpaydata),
+    path('adminpaymentdata/',adminpaymentdata),
     #path('demo/',checksize),
     #path('uploaddata/',uploaddata),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
