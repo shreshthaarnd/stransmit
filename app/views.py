@@ -415,6 +415,7 @@ def checklogin(request):
 			if UserData.objects.filter(User_Email=email,Verify_Status='Verified').exists():
 				for x in UserData.objects.filter(User_Email=email):
 					request.session['userid'] = x.User_ID
+				checkplan(request.session['userid'])
 				return redirect('/userdashboard/')
 			else:
 				otp=uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+password+email).int
