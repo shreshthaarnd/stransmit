@@ -122,9 +122,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
-AWS_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxxxxx'
+AWS_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxxxxxx'
 AWS_SECRET_ACCESS_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-AWS_STORAGE_BUCKET_NAME = 'xxxxxxxxxxxxxxx'
+AWS_STORAGE_BUCKET_NAME = 'xxxxxxxxxxxxxxxxx'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',

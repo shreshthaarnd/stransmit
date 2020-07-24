@@ -20,6 +20,7 @@ def emaildownload(request):
 def download(request):
 	return render(request,'download.html',{})
 def index(request):
+	checkplan(request.session['userid'])
 	dic={'verify':False,'checksession':checksession(request)}
 	return render(request,'index.html',dic)
 def blog(request):
@@ -629,6 +630,7 @@ def verifypayment(request):
 				obj=PayData.objects.filter(Pay_ID=ORDERID)
 				obj.update(Status='Success')
 				for x in obj:
+					UserPlanData.objects.filter(User_ID=x.User_ID).delete()
 					UserPlanData(
 						Plan_ID=x.Plan_ID,
 						User_ID=x.User_ID,
