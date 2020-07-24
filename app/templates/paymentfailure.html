@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Stransmit</title>
+    <title>Stransmit - Payment Failed</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -86,11 +86,12 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="bradcam_text">
-                        <h3 style="padding-bottom:20px;">Payment Failure</h3>
-                        <h4 style="color:white;">Transaction ID:TYU67</h4>
-                        <h4 style="color:white;">Payment ID:RTY67</h4>
-                        <h4 style="color:white;">Date&Time:04-03-20/03:00PM</h4>
-                        <a style="margin-top:10px;border-radius:10px;"class="w3-button w3-white w3-hover-black w3-large"href="">Go To Dashboard</a>
+                        <h3 style="padding-bottom:20px;"><i class="fa fa-times"></i> Payment Failure</h3>
+                        <h4 style="color:white;">Your transaction is failed due to {{ RESPMSG|safe }}</h4>
+                        <h4 style="color:white;">Transaction ID : {{ TXNID|safe }}</h4>
+                        <h4 style="color:white;">Payment ID : {{ PAYID|safe }}</h4>
+                        <h4 style="color:white;">Date & Time : {{ TXNDATE|safe }}</h4>
+                        <a style="margin-top:10px;border-radius:10px;"class="w3-button w3-white w3-hover-black w3-large"href="/userdashboard/">Go To Dashboard</a>
                     </div>
                 </div>
             </div>

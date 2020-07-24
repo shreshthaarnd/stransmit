@@ -20,7 +20,6 @@ def emaildownload(request):
 def download(request):
 	return render(request,'download.html',{})
 def index(request):
-	checkplan(request.session['userid'])
 	dic={'verify':False,'checksession':checksession(request)}
 	return render(request,'index.html',dic)
 def blog(request):
@@ -630,18 +629,45 @@ def verifypayment(request):
 			if respons_dict['RESPCODE'] == '01':
 				obj=PayData.objects.filter(Pay_ID=ORDERID)
 				obj.update(Status='Success')
+				dic={}
 				for x in obj:
+					request.session['userid'] = x.User_ID
 					UserPlanData.objects.filter(User_ID=x.User_ID).delete()
 					UserPlanData(
 						Plan_ID=x.Plan_ID,
 						User_ID=x.User_ID,
 						Pay_ID=x.Pay_ID
 						).save()
-				return HttpResponse("<script>alert('Plan Changed!'); window.location.replace('/userdashboard/')</script>")
+					dic={'TXNID':TXNID,
+						'PAYID':ORDERID,
+						'PLAN':x.Plan_ID,
+						'TXNDATE':TXNDATE,
+						'checksession':checksession(request)}
+				return render(request,'paymentsuccess.html',dic)
 			else:
-				return HttpResponse("<script>alert('Failed'); window.location.replace('/userdashboard/')</script>")
+				obj=PayData.objects.filter(Pay_ID=ORDERID)
+				obj.update(Status='Failed')
+				dic={}
+				for x in obj:
+					request.session['userid'] = x.User_ID
+					dic={'TXNID':TXNID,
+						'PAYID':ORDERID,
+						'TXNDATE':TXNDATE,
+						'RESPMSG':RESPMSG,
+						'checksession':checksession(request)}
+				return render(request,'paymentfailure.html',dic)
 		else:
-			return HttpResponse("<script>alert('Failed'); window.location.replace('/userdashboard/')</script>")
+			obj=PayData.objects.filter(Pay_ID=ORDERID)
+			obj.update(Status='Failed')
+			dic={}
+			for x in obj:
+				request.session['userid'] = x.User_ID
+				dic={'TXNID':TXNID,
+					'PAYID':ORDERID,
+					'TXNDATE':TXNDATE,
+					'RESPMSG':RESPMSG,
+					'checksession':checksession(request)}
+			return render(request,'paymentfailure.html',dic)
 def paymentfailure(request):
 	return render(request,'paymentfailure.html',{})
 def paymentsuccess(request):
