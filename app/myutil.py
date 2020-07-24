@@ -27,6 +27,7 @@ def checkmedia():
 					User_ID=x.User_ID,
 					User_Email=x.User_Email,
 					To_Email=x.To_Email,
+					Subject=x.Subject,
 					Message=x.Message,
 					MediaSize=GetFileSize(x.MediaFile)
 					)
@@ -105,6 +106,12 @@ def checksession(request):
 		return True
 	except:
 		return False
+
+def checkplan(userid):
+	for x in UserPlanData.objects.filter(User_ID=userid):
+		delta=datetime.date.today()-x.Plan_Date
+		if delta.days > 30:
+			UserPlanData.objects.filter(User_ID=userid).update(Plan_ID='PL001')
 
 def downloaddata(table):
 	if table=='UserData':

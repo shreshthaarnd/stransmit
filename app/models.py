@@ -32,6 +32,7 @@ class SentData(models.Model):
 	User_ID=models.CharField(max_length=50)
 	User_Email=models.CharField(max_length=50)
 	To_Email=models.CharField(max_length=50)
+	Subject=models.CharField(max_length=200, default="no-subject")
 	Message=models.CharField(max_length=500)
 	MediaSize=models.CharField(max_length=70)
 	class Meta:

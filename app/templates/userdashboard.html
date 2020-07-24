@@ -93,19 +93,36 @@
             </div>
         </div>
     </div>
+    {% if plan == 'PL001' %}
     <div style="padding-right:50px;padding-left:20px;">
-    <div style="width:100%;padding-top:20px;padding-bottom:20px;padding-right:30px;padding-left:30px;border-radius:10px;margin-top:20px;margin-left:20px;"class="w3-model-containt w3-blue">
-        <div class="row">
-            <div style="width:75%;"class="column">
-                <h2 style="color:white;">Get More Feature Upgrade Your Account Now!</h2>
+        <div style="width:100%;padding-top:20px;padding-bottom:20px;padding-right:30px;padding-left:30px;border-radius:10px;margin-top:20px;margin-left:20px;"class="w3-model-containt w3-blue">
+            <div class="row">
+                <div style="width:75%;"class="column">
+                    <h2 style="color:white;">Get More Feature Upgrade Your Account Now!</h2>
+                </div>
+                <div style="width:25%;"class="column">
+                    <a style="border-radius:10px;width:100%;"class="w3-button w3-white w3-hover-blue"href="/pricing/">Upgrade Now</a>
+                </div>
             </div>
-            <div style="width:25%;"class="column">
-                <a style="border-radius:10px;width:100%;"class="w3-button w3-white w3-hover-blue"href="/pricing/">Upgrade Now</a>
-            </div>
-        </div>
 
+        </div>
     </div>
+    {% endif %}
+    {% if plan == 'PL002' %}
+    <div style="padding-right:50px;padding-left:20px;">
+        <div style="width:100%;padding-top:20px;padding-bottom:20px;padding-right:30px;padding-left:30px;border-radius:10px;margin-top:20px;margin-left:20px;"class="w3-model-containt w3-red">
+            <div class="row">
+                <div style="width:75%;"class="column">
+                    <h2 style="color:white;">Send Bulk Media Mails in One Click!</h2>
+                </div>
+                <div style="width:25%;"class="column">
+                    <a style="border-radius:10px;width:100%;"class="w3-button w3-white w3-hover-red"href="/pricing/">Upgrade Now</a>
+                </div>
+            </div>
+
+        </div>
     </div>
+    {% endif %}
     <!-- /bradcam_area  -->
     <div style="padding:30px;width:"class="w3-container">
       <div class="w3-bar">
@@ -126,8 +143,7 @@
         {% endif %}
         <button style="width:24%;border-radius:10px;"onclick="OpenAccountSettings()"class="w3-button  w3-blue w3-hover-black"href="#accountsetting">Account Settings</button>
        </div>
-       {% if plan == 'PL003' %}
-           <div id="bulkmail" style="display:none;padding:30px;" class="w3-animate-top">
+        <div id="bulkmail" style="display:none;padding:30px;" class="w3-animate-top">
             <h1>Send Mail to Bulk Peoples in Just One Click</h1>
             <form action="/sendbulkmails/" method="POST" enctype="multipart/form-data">
                 <label style="margin-top:20px;">Upload Mail CSV <a href="/downloadmailcsv/">(Get Sample Here)</a></label>
@@ -143,8 +159,7 @@
                 <input style="margin-top:20px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" id="send2" disabled type="submit" value="Send">
             </form>
            </div>
-       {% endif %}
-       <div id="sendmail" style="padding:30px;" class="w3-animate-top">
+        <div id="sendmail" style="padding:30px;" class="w3-animate-top">
                 <h1>Send Media Mails</h1>
                 <form action="/usersendmail/" method="POST" enctype="multipart/form-data">
                     <input style="margin-top:20px;margin-top:20px;" class="w3-input" type="text" placeholder="To" name="toemail">
@@ -368,15 +383,16 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                     const fsize = fi.files.item(i).size; 
                     const file = Math.round((fsize / 1024)); 
                     // The size of the file. 
-                    if (file >= (1024*5000)) { 
+                    if (file >= (1024*50000)) { 
                         alert( 
-                          "File too Big, please select a file less than 5GB"); 
+                          "File too Big, please select a file less than 50GB"); 
                     } else { 
                         document.getElementById('send2').disabled = false; 
                     } 
                 } 
             }
         }
+        {% if plan == 'PL001' %}
         function FileValidation3() {
             const fi = document.getElementById('file3'); 
             // Check if any file is selected. 
@@ -395,6 +411,47 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 } 
             }
         }
+        {% endif %}
+        {% if plan == 'PL002' %}
+        function FileValidation3() {
+            const fi = document.getElementById('file3'); 
+            // Check if any file is selected. 
+            if (fi.files.length > 0) { 
+                for (const i = 0; i <= fi.files.length - 1; i++) { 
+      
+                    const fsize = fi.files.item(i).size; 
+                    const file = Math.round((fsize / 1024)); 
+                    // The size of the file. 
+                    if (file >= (1024*20000)) { 
+                        alert( 
+                          "File too Big, please select a file less than 20GB"); 
+                    } else { 
+                        document.getElementById('send3').disabled = false; 
+                    } 
+                } 
+            }
+        }
+        {% endif %}
+        {% if plan == 'PL003' %}
+        function FileValidation3() {
+            const fi = document.getElementById('file3'); 
+            // Check if any file is selected. 
+            if (fi.files.length > 0) { 
+                for (const i = 0; i <= fi.files.length - 1; i++) { 
+      
+                    const fsize = fi.files.item(i).size; 
+                    const file = Math.round((fsize / 1024)); 
+                    // The size of the file. 
+                    if (file >= (1024*50000)) { 
+                        alert( 
+                          "File too Big, please select a file less than 50GB"); 
+                    } else { 
+                        document.getElementById('send3').disabled = false; 
+                    } 
+                } 
+            }
+        }
+        {% endif %}
     </script>
     </body>
     
