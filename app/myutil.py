@@ -136,11 +136,39 @@ def downloaddata(table):
 		response = HttpResponse()
 		response['Content-Disposition'] = 'attachment;filename=SentData.csv'
 		writer = csv.writer(response)
-		writer.writerow(["Mail_Date", "Mail_ID", "User_ID", "User_Email", "To_Email", "Message"])
+		writer.writerow(["Mail_Date", "Mail_ID", "User_ID", "User_Email", "To_Email", "Subject", "Message", "MediaSize"])
 		obj1=SentData.objects.all()
 		for x in obj1:
-			writer.writerow([x.Mail_Date, x.Mail_ID, x.User_ID, x.User_Email, x.To_Email, x.Message])
+			writer.writerow([x.Mail_Date, x.Mail_ID, x.User_ID, x.User_Email, x.To_Email, x.Subject, x.Message, x.MediaSize])
 		return response
+	if table=='UserPlanData':
+		response = HttpResponse()
+		response['Content-Disposition'] = 'attachment;filename=UserPlanData.csv'
+		writer = csv.writer(response)
+		writer.writerow(["Plan_Date", "Plan_ID", "User_ID", "Pay_ID"])
+		obj1=UserPlanData.objects.all()
+		for x in obj1:
+			writer.writerow([x.Plan_Date, x.Plan_ID, x.User_ID, x.Pay_ID])
+		return response
+	if table=='PayData':
+		response = HttpResponse()
+		response['Content-Disposition'] = 'attachment;filename=PayData.csv'
+		writer = csv.writer(response)
+		writer.writerow(["Pay_Date", "Pay_ID", "Plan_ID", "User_ID", "Status"])
+		obj1=PayData.objects.all()
+		for x in obj1:
+			writer.writerow([x.Pay_Date, x.Pay_ID, x.Plan_ID, x.User_ID, x.Status])
+		return response
+	if table=='PaymentData':
+		response = HttpResponse()
+		response['Content-Disposition'] = 'attachment;filename=PaymentData.csv'
+		writer = csv.writer(response)
+		writer.writerow(["Pay_ID", "CURRENCY", "GATEWAYNAME", "RESPMSG", "BANKNAME", "PAYMENTMODE", "RESPCODE", "TXNID", "TXNAMOUNT", "STATUS", "BANKTXNID", "TXNDATE", "CHECKSUMHASH"])
+		obj1=PaymentData.objects.all()
+		for x in obj1:
+			writer.writerow([x.Pay_ID, x.CURRENCY, x.GATEWAYNAME, x.RESPMSG, x.BANKNAME, x.PAYMENTMODE, x.RESPCODE, x.TXNID, x.TXNAMOUNT, x.STATUS, x.BANKTXNID, x.TXNDATE, x.CHECKSUMHASH])
+		return response
+
 import boto3
 def GetFileSize(media):
 	s3 = boto3.client('s3',

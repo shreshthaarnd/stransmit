@@ -58,6 +58,8 @@ urlpatterns = [
     path('adminblockuser/',adminblockuser),
     path('adminunblockuser/',adminunblockuser),
     path('adminsitemap/',adminsitemap),
+    path('adminsavesitemap/',adminsavesitemap),
+    path('sitemap/',sitemap),
     path('adminkeyword/',adminkeyword),
     path('admindescription/',admindescription),
     path('admindownload/',admindownload),

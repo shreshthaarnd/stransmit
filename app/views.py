@@ -730,10 +730,36 @@ def adminpaymentdata(request):
 	except:
 		raise Http404
 def adminsitemap(request):
-	return render(request,'adminpages/sitemap.html',{})
+	try:
+		aid=request.session['adminid']
+		return render(request,'adminpages/sitemap.html',{})
+	except:
+		raise Http404
+@csrf_exempt
+def adminsavesitemap(request):
+	if request.method=='POST':
+		smap=request.POST.get('sitemap')
+		Sitemap.objects.all().delete()
+		obj=Sitemap(Sitemap=smap).save()
+		return HttpResponse("<script>alert('Saved Successfully'); window.location.replace('/adminsitemap/')</script>")
+def sitemap(request):
+	dic={'data':Sitemap.objects.all()}
+	return render(request,'sitemap.xml',dic)
 def adminkeyword(request):
-	return render(request,'adminpages/keyword.html',{})
+	try:
+		aid=request.session['adminid']
+		return render(request,'adminpages/keyword.html',{})
+	except:
+		raise Http404
 def admindescription(request):
-	return render(request,'adminpages/description.html',{})
+	try:
+		aid=request.session['adminid']
+		return render(request,'adminpages/description.html',{})
+	except:
+		raise Http404
 def admindownload(request):
-	return render(request,'adminpages/download.html',{})
+	try:
+		aid=request.session['adminid']
+		return render(request,'adminpages/download.html',{})
+	except:
+		raise Http404

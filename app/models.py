@@ -71,3 +71,8 @@ class PaymentData(models.Model):
 	CHECKSUMHASH=models.CharField(max_length=100, default='None', blank=True)
 	class Meta:
 		db_table="PaymentData"
+
+class Sitemap(models.Model):
+	Sitemap=models.CharField(max_length=2000)
+	class Meta:
+		db_table="Sitemap"
