@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Stransmit - Sent Mail List</title>
+    <title>Stransmit - User Subscription</title>
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,6 +78,7 @@
         </nav>
     </aside><!-- /#left-panel -->
 
+    <!-- Left Panel -->
 
     <!-- Right Panel -->
 
@@ -127,46 +128,27 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Sent  Mail List</strong>
+                                <strong class="card-title">User Subscription</strong>
                             </div>
                             <div class="card-body">
-                                <div style="width:850px;overflow-y:auto;"    >
+                                <div style="width:100%;overflow-y:auto;"    >
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                        
                                     <thead>
                                         <tr>
-                                            <th>Mail Date</th>
-                                            <th>Mail ID</th>
+                                            <th>Subscription Date</th>
+                                            <th>Plan ID</th>
                                             <th>User ID</th>
-                                            <th>User Email</th>
-                                            <th>To Email</th>
-                                            <th>Subject</th>
-                                            <th>Message</th>
-                                            <th>Media</th>
+                                            <th>Pay ID</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for x in data %}
                                         <tr>
-                                            <td>{{ x.Mail_Date|safe }}</td>
-                                            <td>{{ x.Mail_ID|safe }}</td>
+                                            <td>{{ x.Plan_Date|safe }}</td>
+                                            <td>{{ x.Plan_ID|safe }}</td>
                                             <td>{{ x.User_ID|safe }}</td>
-                                            <td>{{ x.User_Email|safe }}</td>
-                                            <td>{{ x.To_Email|safe }}</td>
-                                            <td>{{ x.Subject|safe }}</td>
-                                            <td>{{ x.Message|safe }}</td>
-                                            <td><a class="btn btn-primary"href="/downloadmedia/?mid={{ x.Mail_ID|safe }}&mpath={{ x.MediaFile.url|safe }}">Download Media</a></td>
-                                        </tr>
-                                        {% endfor %}
-                                        {% for x in data2 %}
-                                        <tr>
-                                            <td>{{ x.Mail_Date|safe }}</td>
-                                            <td>{{ x.Mail_ID|safe }}</td>
-                                            <td>{{ x.User_ID|safe }}</td>
-                                            <td>{{ x.User_Email|safe }}</td>
-                                            <td>{{ x.To_Email|safe }}</td>
-                                            <td>{{ x.Subject|safe }}</td>
-                                            <td>{{ x.Message|safe }}</td>
-                                            <td><a class="btn btn-primary"href="">{{ x.MediaSize|safe }} GB</a></td>
+                                            <td>{{ x.Pay_ID|safe }}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

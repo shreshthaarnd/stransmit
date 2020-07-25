@@ -79,7 +79,6 @@ def registration(request):
 def logout(request):
 	try:
 		del request.session['userid']
-		request.session.flush()
 		return redirect('/index/')
 	except:
 		return redirect('/index/')
@@ -250,7 +249,7 @@ def sendmail(request):
 			x=x+1
 			uid=u+str(x)
 		x=int(x)
-		if UserData.objects.filter(User_Email=email, Verify_Status='Verified').exists():
+		if UserData.objects.filter(User_Email=email, Verify_Status='Verified', Status='Active').exists():
 			m="M00"
 			x=1
 			mid=m+str(x)
@@ -279,41 +278,44 @@ def sendmail(request):
 			else:
 				return HttpResponse("<script>alert('Your Monthly Limit Exceeds! Kindly Upgrade Your Plan'); window.location.replace('/index/')</script>")
 		else:
-			otp=uuid.uuid5(uuid.NAMESPACE_DNS, uid+str(datetime.datetime.now())+email).int
-			otp=str(otp)
-			otp=otp.upper()[0:6]
-			request.session['userotp'] = otp
-			request.session['useridd'] = uid
-			m="M00"
-			x=1
-			mid=m+str(x)
-			while MailData.objects.filter(Mail_ID=mid).exists():
-				x=x+1
+			if UserData.objects.filter(User_Email=email, Verify_Status='Verified', Status='Deactive').exists():
+				return HttpResponse("<script>alert('Your account is Deactivated by the Admin. Kindly send query from Contact Page.'); window.location.replace('/index/')</script>")
+			else:
+				otp=uuid.uuid5(uuid.NAMESPACE_DNS, uid+str(datetime.datetime.now())+email).int
+				otp=str(otp)
+				otp=otp.upper()[0:6]
+				request.session['userotp'] = otp
+				request.session['useridd'] = uid
+				m="M00"
+				x=1
 				mid=m+str(x)
-			x=int(x)
-			request.session['mailid'] = mid
-			obj=MailData(
-				Mail_ID=mid,
-				User_ID=uid,
-				User_Email=email,
-				To_Email=toemail,
-				Message=message,
-				MediaFile=media
-				)
-			obj.save()
-			password=uuid.uuid5(uuid.NAMESPACE_DNS, uid+email).int
-			password=str(password)
-			password=password.upper()[0:8]
-			obj=UserData(
-				User_Date=datetime.date.today(),
-				User_ID=uid,
-				User_Email=email,
-				User_Password=password
-				)
-			obj.save()
-			sendotp(otp, email)
-			dic={'verify':True}
-			return render(request,'index.html',dic)
+				while MailData.objects.filter(Mail_ID=mid).exists():
+					x=x+1
+					mid=m+str(x)
+				x=int(x)
+				request.session['mailid'] = mid
+				obj=MailData(
+					Mail_ID=mid,
+					User_ID=uid,
+					User_Email=email,
+					To_Email=toemail,
+					Message=message,
+					MediaFile=media
+					)
+				obj.save()
+				password=uuid.uuid5(uuid.NAMESPACE_DNS, uid+email).int
+				password=str(password)
+				password=password.upper()[0:8]
+				obj=UserData(
+					User_Date=datetime.date.today(),
+					User_ID=uid,
+					User_Email=email,
+					User_Password=password
+					)
+				obj.save()
+				sendotp(otp, email)
+				dic={'verify':True}
+				return render(request,'index.html',dic)
 @csrf_exempt
 def password(request):
 	uid=request.session['useridd']
@@ -410,7 +412,7 @@ def checklogin(request):
 	if request.method=='POST':
 		email=request.POST.get('email')
 		password=request.POST.get('password')
-		if UserData.objects.filter(User_Email=email,User_Password=password).exists():
+		if UserData.objects.filter(User_Email=email,User_Password=password, Status='Active').exists():
 			if UserData.objects.filter(User_Email=email,Verify_Status='Verified').exists():
 				for x in UserData.objects.filter(User_Email=email):
 					request.session['userid'] = x.User_ID
@@ -427,91 +429,12 @@ def checklogin(request):
 				request.session['userotp'] = otp
 				return render(request,'verify.html',{})
 		else:
-			return HttpResponse("<script>alert('Incorrect Login Credentials'); window.location.replace('/index/')</script>")
+			if UserData.objects.filter(User_Email=email,Status='Deactive').exists():
+				return HttpResponse("<script>alert('Your account is Deactivated by the Admin. Kindly send a query from Contact Page.'); window.location.replace('/index/')</script>")
+			else:
+				return HttpResponse("<script>alert('Incorrect Login Email or Password'); window.location.replace('/index/')</script>")	
 	else:
 		raise Http404
-def adminlogin(request):
-	return render(request,'adminpages/login.html',{})
-@csrf_exempt
-def adminchecklogin(request):
-	email=request.POST.get('email')
-	password=request.POST.get('password')
-	if email=='admin@stransmit.com' and password=='2Baramttpochna@Stransmit':
-		request.session['adminid'] = email
-		return redirect('/adminindex/')
-	else:
-		return HttpResponse("<script>alert('Incorrect Login Credentials'); window.location.replace('/adminlogin/')</script>")
-def adminindex(request):
-	try:
-		adminid=request.session['adminid']
-		users=len(UserData.objects.all())
-		mails=len(MailData.objects.all())+len(SentData.objects.all())
-		return render(request,'adminpages/index.html',{'users':users,'mails':mails})
-	except:
-		raise Http404
-def checkmediadel(request):
-	try:
-		adminid=request.session['adminid']
-		checkmedia()
-		return HttpResponse("<script>alert('Deleted Successfully'); window.location.replace('/adminindex/')</script>")
-	except:
-		raise Http404
-def adminlogut(request):
-	try:
-		del request.session['adminid']
-		request.session.flush()
-		return redirect('/adminlogin/')
-	except:
-		return redirect('/index/')
-def downloaddatabase(request):
-	try:
-		aid=request.session['admin']
-		return render(request,'adminpages/datatables.html',{})
-	except:
-		return redirect('/shoppanelpages404/')
-def downloadCSV(request):
-	try:
-		aid=request.session['adminid']
-		table=request.GET.get('tablename')
-		return downloaddata(table)
-	except:
-		return redirect('/shoppanelpages404/')
-def adminuserlist(request):
-	return render(request,'adminpages/userlist.html',{})
-def adminblockeduser(request):
-	return render(request,'adminpages/blockeduser.html',{})
-def adminsentmaillist(request):
-	return render(request,'adminpages/sentmaillist.html',{})
-'''def uploaddata(request):
-	df=pd.read_csv('app/data/UserData.csv')
-	for x in range(0,len(df)):
-		data=df.loc[x]
-		obj=UserData(
-			User_Date=data.User_Date,
-			User_ID=data.User_ID,
-			User_Name=data.User_Name,
-			User_Email=data.User_Email,
-			User_Phone=data.User_Phone,
-			User_Password=data.User_Password,
-			Verify_Status=data.Verify_Status,
-			Status=data.Status
-			)
-		obj.save()
-	df=pd.read_csv('app/data/MailData.csv')
-	for x in range(0,len(df)):
-		data=df.loc[x]
-		obj=MailData(
-			Mail_Date=data.Mail_Date,
-			Mail_ID=data.Mail_ID,
-			User_ID=data.User_ID,
-			User_Email=data.User_Email,
-			To_Email=data.To_Email,
-			Subject=data.Subject,
-			Message=data.Message,
-			MediaFile=data.MediaFile
-			)
-		obj.save()
-		return HttpResponse('Done')'''
 
 import app.Checksum as Checksum
 def checkout(request):
@@ -638,6 +561,8 @@ def verifypayment(request):
 						User_ID=x.User_ID,
 						Pay_ID=x.Pay_ID
 						).save()
+					for y in UserData.objects.filter(User_ID=x.User_ID):
+						sendplanmail(y.User_Email, x.Plan_ID, TXNDATE, TXNID, ORDERID, TXNAMOUNT)
 					dic={'TXNID':TXNID,
 						'PAYID':ORDERID,
 						'PLAN':x.Plan_ID,
@@ -668,7 +593,139 @@ def verifypayment(request):
 					'RESPMSG':RESPMSG,
 					'checksession':checksession(request)}
 			return render(request,'paymentfailure.html',dic)
+
+def adminlogin(request):
+	return render(request,'adminpages/login.html',{})
+@csrf_exempt
+def adminchecklogin(request):
+	email=request.POST.get('email')
+	password=request.POST.get('password')
+	if email=='admin@stransmit.com' and password=='2Baramttpochna@Stransmit':
+		request.session['adminid'] = email
+		return redirect('/adminindex/')
+	else:
+		return HttpResponse("<script>alert('Incorrect Login Credentials'); window.location.replace('/adminlogin/')</script>")
+def adminindex(request):
+	try:
+		adminid=request.session['adminid']
+		users=len(UserData.objects.all())
+		mails=len(MailData.objects.all())+len(SentData.objects.all())
+		return render(request,'adminpages/index.html',{'users':users,'mails':mails})
+	except:
+		raise Http404
+def checkmediadel(request):
+	try:
+		adminid=request.session['adminid']
+		checkmedia()
+		return HttpResponse("<script>alert('Deleted Successfully'); window.location.replace('/adminindex/')</script>")
+	except:
+		raise Http404
+def adminlogut(request):
+	try:
+		del request.session['adminid']
+		return redirect('/adminlogin/')
+	except:
+		return redirect('/index/')
+def downloaddatabase(request):
+	try:
+		aid=request.session['admin']
+		return render(request,'adminpages/datatables.html',{})
+	except:
+		raise Http404
+def downloadCSV(request):
+	try:
+		aid=request.session['adminid']
+		table=request.GET.get('tablename')
+		return downloaddata(table)
+	except:
+		raise Http404
+def adminuserlist(request):
+	try:
+		aid=request.session['adminid']
+		dic={'data':UserData.objects.all()}
+		return render(request,'adminpages/userlist.html',dic)
+	except:
+		raise Http404
+def adminblockuser(request):
+	try:
+		aid=request.session['adminid']
+		uid=request.GET.get('user')
+		UserData.objects.filter(User_ID=uid).update(Status='Deactive')
+		return redirect('/adminuserlist/')
+	except:
+		raise Http404
+def adminunblockuser(request):
+	try:
+		aid=request.session['adminid']
+		uid=request.GET.get('user')
+		UserData.objects.filter(User_ID=uid).update(Status='Active')
+		return redirect('/adminuserlist/')
+	except:
+		raise Http404
+def adminblockeduser(request):
+	return render(request,'adminpages/blockeduser.html',{})
+def adminsentmaillist(request):
+	try:
+		aid=request.session['adminid']
+		dic={'data':MailData.objects.all(),'data2':SentData.objects.all()}
+		return render(request,'adminpages/sentmaillist.html',dic)
+	except:
+		raise Http404
+'''def uploaddata(request):
+	df=pd.read_csv('app/data/UserData.csv')
+	for x in range(0,len(df)):
+		data=df.loc[x]
+		obj=UserData(
+			User_Date=data.User_Date,
+			User_ID=data.User_ID,
+			User_Name=data.User_Name,
+			User_Email=data.User_Email,
+			User_Phone=data.User_Phone,
+			User_Password=data.User_Password,
+			Verify_Status=data.Verify_Status,
+			Status=data.Status
+			)
+		obj.save()
+	df=pd.read_csv('app/data/MailData.csv')
+	for x in range(0,len(df)):
+		data=df.loc[x]
+		obj=MailData(
+			Mail_Date=data.Mail_Date,
+			Mail_ID=data.Mail_ID,
+			User_ID=data.User_ID,
+			User_Email=data.User_Email,
+			To_Email=data.To_Email,
+			Subject=data.Subject,
+			Message=data.Message,
+			MediaFile=data.MediaFile
+			)
+		obj.save()
+		return HttpResponse('Done')'''
+
 def paymentfailure(request):
 	return render(request,'paymentfailure.html',{})
+def paymentsuccessmail(request):
+	return render(request,'successmail.html',{})
+def adminusersubcription(request):
+	try:
+		aid=request.session['adminid']
+		dic={'data':UserPlanData.objects.all()}
+		return render(request,'adminpages/usersubcription.html',dic)
+	except:
+		raise Http404
 def paymentsuccess(request):
 	return render(request,'paymentsuccess.html',{})
+def adminpaydata(request):
+	try:
+		aid=request.session['adminid']
+		dic={'data':PayData.objects.all()}
+		return render(request,'adminpages/paydata.html',dic)
+	except:
+		raise Http404
+def adminpaymentdata(request):
+	try:
+		aid=request.session['adminid']
+		dic={'data':PaymentData.objects.all()}
+		return render(request,'adminpages/paymentdata.html',dic)
+	except:
+		raise Http404

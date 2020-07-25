@@ -58,7 +58,6 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>Users</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-building"></i><a href="/userlist/">Users List</a></li>
-                            <li><i class="fa fa-users"></i><a href="/blockeduser/">Blocked Users</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
@@ -71,9 +70,23 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>Plans</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-building"></i><a href="/sentmaillist/">User Subscriptions</a></li>
-                            <li><i class="fa fa-users"></i><a href="/checkmediadel/">Pay Data</a></li>
-                            <li><i class="fa fa-users"></i><a href="/checkmediadel/">Payment Data</a></li>
+                            <li><i class="fa fa-building"></i><a href="/adminusersubcription/">User Subscriptions</a></li>
+                            <li><i class="fa fa-users"></i><a href="/adminpaydata/">Pay Data</a></li>
+                            <li><i class="fa fa-users"></i><a href="/adminpaymentdata/">Payment Data</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>SEO Tools</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-building"></i><a href="/adminusersubcription/">Sitemap</a></li>
+                            <li><i class="fa fa-users"></i><a href="/adminpaydata/">Keywords</a></li>
+                            <li><i class="fa fa-users"></i><a href="/adminpaymentdata/">Description</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>Database</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-building"></i><a href="/adminusersubcription/">Download Tables</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -128,18 +141,6 @@
 
             <div class="col-sm-12">
                 <div class="alert  alert-success alert-dismissible fade show" role="alert">
-                    <span class="badge badge-pill badge-success">{{  users|safe }}</span> Users Joined Stransmit.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="alert  alert-success alert-dismissible fade show" role="alert">
-                    <span class="badge badge-pill badge-success">{{  mails|safe }}</span> Message Sent.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="alert  alert-success alert-dismissible fade show" role="alert">
                     <a href="/downloadCSV/?tablename=UserData" class="w3-button w3-blue w3-hover-black">UserData</a>
                     <a href="/downloadCSV/?tablename=MailData" class="w3-button w3-blue w3-hover-black">MailData</a>
                     <a href="/downloadCSV/?tablename=SentData" class="w3-button w3-blue w3-hover-black">SentData</a>
@@ -150,18 +151,6 @@
             <div class="col-sm-6 col-lg-3">
                 <div class="card text-white bg-flat-color-1">
                     <div class="card-body pb-0">
-                        <div class="dropdown float-right">
-                            <button class="btn bg-transparent dropdown-toggle theme-toggle text-light" type="button" id="dropdownMenuButton1" data-toggle="dropdown">
-                                <i class="fa fa-cog"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <div class="dropdown-menu-content">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
                         <h4 class="mb-0">
                             <span class="count">10468</span>
                         </h4>

@@ -153,3 +153,79 @@ def accounthtml(to_email, password):
     
 </html>'''
     return html
+
+def sendplanmail(to_email, plan, date, txnid, payid, amount):
+    message = EmailMultiAlternatives(
+        subject='Congratulations! New Plan subscribed - Stransmit',
+        body='',
+        from_email=settings.EMAIL_HOST_USER,
+        to=[to_email]
+    )
+    message.mixed_subtype = 'related'
+    message.attach_alternative(planhtml(plan, date, txnid, payid, amount), "text/html")
+    message.send(fail_silently=False)
+
+def planhtml(plan, date, txnid, payid, amount):
+    if plan == 'PL003':
+        html='''<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="text-align:center;">
+
+        <div style="background-color:black;padding:20px;">
+            <img src="https://stransmit.com/static/Stransmit.png" style="width:200px;">
+        </div>
+        <div style="padding:20px;">
+            <p style="line-height:30px;text-align:left;">
+                Congratulation! You have successfully subscribed to<br>
+                <span style="font-size:25px;font-weight:bold;color:#ffc800;">Premium Plan</span><br>
+                Date & Time : <span style="font-weight:bold;">'''+date+'''</span><br>
+                Transaction ID : <span style="font-weight:bold;">'''+txnid+'''</span><br>
+                Payment ID : <span style="font-weight:bold;">'''+payid+'''</span><br>
+                <span style="font-weight:bold;font-size:20px;">Total Amount Received</span><br>
+                <span style="font-weight:bold;font-size:20px;">Rs '''+amount+'''/-</span><br>
+                <span style="font-weight:bold;">Note : </span>Your plan is valid for next one month from today.<br>
+                Thanks for being with us!<br>Team Stransmit
+            </p>
+        </div>
+
+</body>
+    
+</html>'''
+    else:
+        html='''<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="text-align:center;">
+
+        <div style="background-color:black;padding:20px;">
+            <img src="https://stransmit.com/static/Stransmit.png" style="width:200px;">
+        </div>
+        <div style="padding:20px;">
+            <p style="line-height:30px;text-align:left;">
+                Congratulation! You have successfully subscribed to<br>
+                <span style="font-size:25px;font-weight:bold;color:#ff0000;">Basic Plan</span><br>
+                Date & Time : <span style="font-weight:bold;">'''+date+'''</span><br>
+                Transaction ID : <span style="font-weight:bold;">'''+txnid+'''</span><br>
+                Payment ID : <span style="font-weight:bold;">'''+payid+'''</span><br>
+                <span style="font-weight:bold;font-size:20px;">Total Amount Received</span><br>
+                <span style="font-weight:bold;font-size:20px;">Rs '''+amount+'''/-</span><br>
+                <span style="font-weight:bold;">Note : </span>Your plan is valid for next one month from today.<br>
+                Thanks for being with us!<br>Team Stransmit
+            </p>
+        </div>
+
+</body>
+    
+</html>'''
+    return html
