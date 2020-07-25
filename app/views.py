@@ -729,3 +729,11 @@ def adminpaymentdata(request):
 		return render(request,'adminpages/paymentdata.html',dic)
 	except:
 		raise Http404
+def adminsitemap(request):
+	return render(request,'adminpages/sitemap.html',{})
+def adminkeyword(request):
+	return render(request,'adminpages/keyword.html',{})
+def admindescription(request):
+	return render(request,'adminpages/description.html',{})
+def admindownload(request):
+	return render(request,'adminpages/download.html',{})
