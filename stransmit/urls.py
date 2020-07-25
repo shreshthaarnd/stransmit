@@ -57,6 +57,10 @@ urlpatterns = [
     path('adminpaymentdata/',adminpaymentdata),
     path('adminblockuser/',adminblockuser),
     path('adminunblockuser/',adminunblockuser),
+    path('adminsitemap/',adminsitemap),
+    path('adminkeyword/',adminkeyword),
+    path('admindescription/',admindescription),
+    path('admindownload/',admindownload),
     #path('demo/',checksize),
     #path('uploaddata/',uploaddata),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
