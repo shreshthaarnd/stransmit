@@ -464,11 +464,11 @@ def checkout(request):
 			'CUST_ID':uid,
 			'INDUSTRY_TYPE_ID':'Retail',
 			'CHANNEL_ID':'WEB',
-			'WEBSITE':'WEBSTAGING',
-			'CALLBACK_URL':'http://127.0.0.1:8000/verifypayment/'
+			'WEBSITE':'DEFAULT',
+			'CALLBACK_URL':'https://stransmit.com/verifypayment/'
 	}
-	MERCHANT_KEY = 'gDokYWVAFFW9OSlZ'
-	MID = 'bAQrse69179758299775'
+	MERCHANT_KEY = 'UvLwriZgMrbFs65E'
+	MID = 'iogjiL69888304358895'
 	data_dict = {'MID':MID}
 	data_dict.update(dic)
 	param_dict = data_dict
@@ -480,8 +480,8 @@ def checkout(request):
 import cgi
 @csrf_exempt
 def verifypayment(request):
-		MERCHANT_KEY = 'gDokYWVAFFW9OSlZ'
-		MID = 'bAQrse69179758299775'
+		MERCHANT_KEY = 'UvLwriZgMrbFs65E'
+		MID = 'iogjiL69888304358895'
 		CURRENCY=request.POST.get('CURRENCY')
 		GATEWAYNAME=request.POST.get('GATEWAYNAME')
 		RESPMSG=request.POST.get('RESPMSG')
@@ -543,8 +543,8 @@ def verifypayment(request):
 			'CUST_ID':custid,
 			'INDUSTRY_TYPE_ID':'Retail',
 			'CHANNEL_ID':'WEB',
-			'WEBSITE':'WEBSTAGING',
-			'CALLBACK_URL':'http://127.0.0.1:8000/verifypayment/'
+			'WEBSITE':'DEFAULT',
+			'CALLBACK_URL':'https://stransmit.com/verifypayment/'
 			}
 		checksum =Checksum.generateSignature(data_dict, MERCHANT_KEY)
 		verify = Checksum.verifySignature(data_dict, MERCHANT_KEY, checksum)
