@@ -68,10 +68,10 @@ def pricing(request):
 		pid=GetPlanID(uid)
 		dic={'checksession':checksession(request),
 			'plan':pid}
-		return render(request,'pricing.html',dic)
+		return render(request,'stransmitpricing.html',dic)
 	except:
 		dic={'checksession':checksession(request)}
-		return render(request,'pricing.html',dic)
+		return render(request,'stransmitpricing.html',dic)
 def singleblog(request):
 	return render(request,'single-blog.html',{})
 def registration(request):
