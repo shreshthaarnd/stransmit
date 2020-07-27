@@ -774,3 +774,5 @@ def admindownload(request):
 		return render(request,'adminpages/download.html',{})
 	except:
 		raise Http404
+def changemail(request):
+	return render(request,'changemail.html',{})

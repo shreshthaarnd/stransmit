@@ -60,6 +60,7 @@
                                     <ul id="navigation">
                                         <li><a class="active" href="/index/">home</a></li>
                                         <li><a href="/logout/">Logout</a></li>
+                                        <li><a href="/pricing/">Pricing</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -214,8 +215,8 @@
                 <input class="w3-input" id="phone" type="number" value="{{ x.User_Phone|safe }}" name="phone" disabled>
                 <label style="margin-top:20px;">Password</label>
                 <input class="w3-input" id="password" type="password" value="{{ x.User_Password|safe }}" name="password" disabled>
-                <input style="width:100%;border-radius:10px;margin-top:20px;" type="reset" class="w3-button w3-black w3-hover-blue" onclick="EnableInput()" value="Edit">
-                <input style="width:100%;border-radius:10px;margin-top:20px;"type="submit" class="w3-button w3-blue w3-hover-black" value="Save">
+                <input style="width:100%;border-radius:10px;margin-top:20px;" type="reset" class="w3-button w3-black w3-hover-blue" onclick="EnableInput()" value="Edit" id="edit">
+                <input style="display:none;width:100%;border-radius:10px;margin-top:20px;"type="submit" class="w3-button w3-blue w3-hover-black" value="Save" id="save">
             </form>
             {% endfor %}
         </div>
@@ -373,6 +374,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 document.getElementById('name').disabled = false;
                 document.getElementById('phone').disabled = false;
                 document.getElementById('password').disabled = false;
+                document.getElementById('edit').style.display = 'none';
+                document.getElementById('save').style.display = 'block';
+                document.getElementById('password').value = ' ';
             }
             function FileValidation2() {
             const fi = document.getElementById('file2'); 
