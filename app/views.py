@@ -316,6 +316,17 @@ def sendmail(request):
 				sendotp(otp, email)
 				dic={'verify':True}
 				return render(request,'index.html',dic)
+
+def forgotpass2(request):
+	uid=request.session['useridd']
+	email=''
+	for x in UserData.objects.filter(User_ID=uid):
+		sendforgotpassword(x.User_Password, x.User_Email)
+		email=x.User_Email
+		break
+	dic={'useremail':email, 'msg':'Password has been sent to your email.'}
+	return render(request, 'password.html', dic)
+
 @csrf_exempt
 def password(request):
 	uid=request.session['useridd']
