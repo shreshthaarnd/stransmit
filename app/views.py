@@ -782,9 +782,32 @@ def forgotpassword(request):
 		uid=x.User_ID
 	uid_encrypt=str(uuid.uuid5(uuid.NAMESPACE_DNS, uid))
 	email_encrypt=str(uuid.uuid5(uuid.NAMESPACE_DNS, email))
-	link='http://127.0.0.1:8000/change/?get1='+uid_encrypt+'&get2='+email_encrypt
-	print(link)
+	link='https://stransmit.com/change/?get1='+uid_encrypt+'&get2='+email_encrypt
+	sendpassmail(email, link)
 	return HttpResponse("<script>alert('Check Your Mail Please!'); window.location.replace('/index/')</script>")
+@csrf_exempt
+def forgotpassword2(request):
+	email=request.GET.get('email')
+	uid=''
+	for x in UserData.objects.filter(User_Email=email):
+		uid=x.User_ID
+	uid_encrypt=str(uuid.uuid5(uuid.NAMESPACE_DNS, uid))
+	email_encrypt=str(uuid.uuid5(uuid.NAMESPACE_DNS, email))
+	link='https://stransmit.com/change/?get1='+uid_encrypt+'&get2='+email_encrypt
+	sendpassmail(email, link)
+	dic={'useremail':email,'msg':'Please check your mail. We have sent a mail to change your password.'}
+	return render(request, 'password.html', dic)
+@csrf_exempt
+def forgotpassword3(request):
+	email=request.GET.get('email')
+	uid=''
+	for x in UserData.objects.filter(User_Email=email):
+		uid=x.User_ID
+	uid_encrypt=str(uuid.uuid5(uuid.NAMESPACE_DNS, uid))
+	email_encrypt=str(uuid.uuid5(uuid.NAMESPACE_DNS, email))
+	link='https://stransmit.com/change/?get1='+uid_encrypt+'&get2='+email_encrypt
+	sendpassmail(email, link)
+	return HttpResponse("<script>alert('Check Your Mail Please!'); window.location.replace('/userdashboard/')</script>")
 def change(request):
 	uid_encrypt=request.GET.get('get1')
 	email_encrypt=request.GET.get('get2')
@@ -807,9 +830,11 @@ def savepassword(request):
 		if new == cnew:
 			UserData.objects.filter(User_ID=request.session['useridd']).update(User_Password=new)
 			request.session['userid'] = request.session['useridd']
-			return HttpResponse("<script>alert('Passord changed successfully!'); window.location.replace('/userdashboard/')</script>")
+			return HttpResponse("<script>alert('Password changed successfully!'); window.location.replace('/userdashboard/')</script>")
 		else:
 			dic={'msg':'Password did not match'}
 			return render(request,'changepass.html',dic)
 	else:
 		return redirect('/index/')
+def changemail(request):
+	return render(request,'changemail.html',{})

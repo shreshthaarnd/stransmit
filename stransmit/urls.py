@@ -65,7 +65,11 @@ urlpatterns = [
     path('admindownload/',admindownload),
     path('forgotpass2/',forgotpass2),
     path('sendforgotlink/',forgotpassword),
+    path('sendforgotlink2/',forgotpassword2),
+    path('sendforgotlink3/',forgotpassword3),
     path('change/',change),
+    path('savepassword/',savepassword),
+    path('changemail/',changemail),
     #path('demo/',checksize),
     #path('uploaddata/',uploaddata),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
