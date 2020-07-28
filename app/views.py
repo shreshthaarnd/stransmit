@@ -838,3 +838,7 @@ def savepassword(request):
 		return redirect('/index/')
 def changemail(request):
 	return render(request,'changemail.html',{})
+def privacy(request):
+	return render(request,'privacy.html',{})
+def disclaimer(request):
+	return render(request,'disclaimer.html',{})

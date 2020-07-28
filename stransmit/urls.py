@@ -70,6 +70,8 @@ urlpatterns = [
     path('change/',change),
     path('savepassword/',savepassword),
     path('changemail/',changemail),
+    path('privacy/',privacy),
+    path('disclaimer/',disclaimer),
     #path('demo/',checksize),
     #path('uploaddata/',uploaddata),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
