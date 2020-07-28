@@ -12,7 +12,7 @@ from django.conf import settings
 import os
 from django.conf import settings
 from app.htmlmail import *
-# Create your views here.
+
 def emaildownload(request):
 	mail=open('app/templates/email.html', 'r')
 	#sendemail(mail.read())
@@ -774,3 +774,42 @@ def admindownload(request):
 		return render(request,'adminpages/download.html',{})
 	except:
 		raise Http404
+@csrf_exempt
+def forgotpassword(request):
+	email=request.POST.get('email')
+	uid=''
+	for x in UserData.objects.filter(User_Email=email):
+		uid=x.User_ID
+	uid_encrypt=str(uuid.uuid5(uuid.NAMESPACE_DNS, uid))
+	email_encrypt=str(uuid.uuid5(uuid.NAMESPACE_DNS, email))
+	link='http://127.0.0.1:8000/change/?get1='+uid_encrypt+'&get2='+email_encrypt
+	print(link)
+	return HttpResponse("<script>alert('Check Your Mail Please!'); window.location.replace('/index/')</script>")
+def change(request):
+	uid_encrypt=request.GET.get('get1')
+	email_encrypt=request.GET.get('get2')
+	uid=''
+	email=''
+	for x in UserData.objects.all():
+		uid=str(uuid.uuid5(uuid.NAMESPACE_DNS, x.User_ID))
+		email=str(uuid.uuid5(uuid.NAMESPACE_DNS, x.User_Email))
+		if uid==uid_encrypt and email==email_encrypt:
+			uid=x.User_ID
+			email=x.User_Email
+			break
+	request.session['useridd']=uid
+	return render(request,'changepass.html',{})
+@csrf_exempt
+def savepassword(request):
+	if request.method=='POST':
+		new=request.POST.get('new')
+		cnew=request.POST.get('cnew')
+		if new == cnew:
+			UserData.objects.filter(User_ID=request.session['useridd']).update(User_Password=new)
+			request.session['userid'] = request.session['useridd']
+			return HttpResponse("<script>alert('Passord changed successfully!'); window.location.replace('/userdashboard/')</script>")
+		else:
+			dic={'msg':'Password did not match'}
+			return render(request,'changepass.html',dic)
+	else:
+		return redirect('/index/')
