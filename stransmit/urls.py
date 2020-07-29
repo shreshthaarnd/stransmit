@@ -72,6 +72,7 @@ urlpatterns = [
     path('changemail/',changemail),
     path('privacy/',privacy),
     path('disclaimer/',disclaimer),
+    path('termcondition/',termcondition),
     #path('demo/',checksize),
     #path('uploaddata/',uploaddata),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

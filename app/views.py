@@ -842,3 +842,5 @@ def privacy(request):
 	return render(request,'privacy.html',{})
 def disclaimer(request):
 	return render(request,'disclaimer.html',{})
+def termcondition(request):
+	return render(request,'termcondition.html',{})
