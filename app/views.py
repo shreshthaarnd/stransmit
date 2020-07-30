@@ -838,3 +838,15 @@ def savepassword(request):
 		return redirect('/index/')
 def changemail(request):
 	return render(request,'changemail.html',{})
+def privacy(request):
+	return render(request,'privacy.html',{})
+def disclaimer(request):
+	return render(request,'disclaimer.html',{})
+def termcondition(request):
+	return render(request,'termcondition.html',{})
+def promotion(request):
+	return render(request,'promotion.html',{})
+def sendpromotion(request):
+	df=pd.read_csv(emailcsv)
+	for x in df['Email']:
+		sendpromotion(x, subject, message, media, uid, useremail)

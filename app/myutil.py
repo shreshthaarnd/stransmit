@@ -235,3 +235,9 @@ def checkmediasize(userid):
 			return False
 		else:
 			return True
+
+def GetLink(Mailid):
+	key = uuid.uuid5(uuid.NAMESPACE_DNS, str(datetime.datetime.today())+Mailid)
+	obj=MailData.objects.filter(Mail_ID=Mailid).update(key=str(key))
+	link='https://stransmit.com/downloadmedia/?mid='+str(key)
+	return link

@@ -17,6 +17,7 @@ class UserData(models.Model):
 class MailData(models.Model):
 	Mail_Date=models.CharField(max_length=15, default=date.today())
 	Mail_ID=models.CharField(max_length=50, primary_key=True)
+	key=models.CharField(max_length=100, default="NA")
 	User_ID=models.CharField(max_length=50)
 	User_Email=models.CharField(max_length=50)
 	To_Email=models.CharField(max_length=50)

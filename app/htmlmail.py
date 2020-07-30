@@ -264,3 +264,38 @@ def passhtml(link):
     
 </html>'''
     return html
+
+def sendpassmail(to_email, link):
+    message = EmailMultiAlternatives(
+        subject='Stransmit - Account Recovery',
+        body='',
+        from_email=settings.EMAIL_HOST_USER,
+        to=[to_email]
+    )
+    message.mixed_subtype = 'related'
+    message.attach_alternative(passhtml(link), "text/html")
+    message.send(fail_silently=False)
+
+def passhtml(link):
+    html='''<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="text-align:center;">
+
+        <div style="background-color:black;padding:20px;">
+            <img src="https://stransmit.com/static/Stransmit.png" style="width:200px;">
+        </div>
+        <div style="padding:20px;">
+            <p style="line-height:30px;text-align:left;">Hi There!<br>We got a new request to change your password please click the below button</p><br>
+            <a style="float:left;background-color:#03a9fc;color:white;padding:20px;border-radius:10px;text-decoration:none;"href="'''+link+'''">Change Password</a>
+        </div>
+
+</body>
+    
+</html>'''
+    return html
