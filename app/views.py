@@ -844,3 +844,5 @@ def disclaimer(request):
 	return render(request,'disclaimer.html',{})
 def termcondition(request):
 	return render(request,'termcondition.html',{})
+def promotion(request):
+	return render(request,'promotion.html',{})
