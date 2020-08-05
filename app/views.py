@@ -20,6 +20,9 @@ def emaildownload(request):
 def download(request):
 	return render(request,'download.html',{})
 def index(request):
+	lt=['enquiry@uflexltd.com']
+	for x in lt:
+		print(sendpromotion(x))
 	dic={'verify':False,'checksession':checksession(request)}
 	return render(request,'index.html',dic)
 def blog(request):
@@ -846,7 +849,12 @@ def termcondition(request):
 	return render(request,'termcondition.html',{})
 def promotion(request):
 	return render(request,'promotion.html',{})
-def sendpromotion(request):
-	df=pd.read_csv(emailcsv)
+def sendpromotionemail(request):
+	count=0
+	df=pd.read_csv('app/mails.csv', encoding="ISO-8859-1")
 	for x in df['Email']:
-		sendpromotion(x, subject, message, media, uid, useremail)
+		sendpromotion(x)
+		count=count+1
+		print(count)
+	return redirect('/index/')
+

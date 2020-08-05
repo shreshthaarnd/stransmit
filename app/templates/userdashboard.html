@@ -253,6 +253,7 @@
                                     Usefull Links
                             </h3>
                             <ul>
+                                {% if checksession == True %}
                                 <li>
                                     <a href="/userdashboard/">
                                         Dashboard
@@ -263,15 +264,34 @@
                                         Logout
                                     </a>
                                 </li>
-                                <li><a href="#" onclick="document.getElementById('id03').style.display='block';">
+                                {% else %}
+                                <li>
+                                    <a href="#" onclick="document.getElementById('id02').style.display='block';">
+                                        Login
+                                    </a>
+                                </li>
+                                <li><a href="#" onclick="document.getElementById('id01').style.display='block';">
+                                        Register
+                                    </a>
+                                </li>
+                                {% endif %}
+                                <li><a href="/privacy/">
                                         Privacy Policy
                                     </a>
                                 </li>
-                                <li><a href="#" onclick="document.getElementById('id04').style.display='block';">
+                                <li><a href="/disclaimer/">
                                         Disclaimer
                                     </a>
                                 </li>
-                                </ul>
+                                <li><a href="/termcondition/">
+                                        Terms & Condition
+                                    </a>
+                                </li>
+                                <li><a href="/contact/">
+                                        Contact Us
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

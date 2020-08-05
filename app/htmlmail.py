@@ -265,18 +265,19 @@ def passhtml(link):
 </html>'''
     return html
 
-def sendpassmail(to_email, link):
+def sendpromotion(to_email):
     message = EmailMultiAlternatives(
-        subject='Stransmit - Account Recovery',
+        subject='Share Your Files Globally for FREE Upto 5GB - Stransmit',
         body='',
         from_email=settings.EMAIL_HOST_USER,
         to=[to_email]
     )
     message.mixed_subtype = 'related'
-    message.attach_alternative(passhtml(link), "text/html")
+    message.attach_alternative(promotionhtml(), "text/html")
     message.send(fail_silently=False)
+    return 'Done'
 
-def passhtml(link):
+def promotionhtml():
     html='''<!doctype html>
 <html class="no-js" lang="zxx">
 <head>
@@ -291,8 +292,21 @@ def passhtml(link):
             <img src="https://stransmit.com/static/Stransmit.png" style="width:200px;">
         </div>
         <div style="padding:20px;">
-            <p style="line-height:30px;text-align:left;">Hi There!<br>We got a new request to change your password please click the below button</p><br>
-            <a style="float:left;background-color:#03a9fc;color:white;padding:20px;border-radius:10px;text-decoration:none;"href="'''+link+'''">Change Password</a>
+            <p style="line-height:30px;text-align:left;">Hi there!<br>
+
+<span>Hope you are doing good!</span><br>
+
+We are from <a style="text-decoration:none;font-weight:bold;"href="https://srd.mobi">SRD (Shreshtha Research & Development),</a> after the ban of wetransfer.com in India we are facing problems to transfer files. So, our team has launched a new tool <a style="text-decoration:none;font-weight:bold;"href="https://stransmit.com">Stransmit.com</a> from which you can files to anybody in the globe. Stransmit.com brings you the capability to send upto <a style="text-decoration:none;font-weight:bold;"href="https://stransmit.com">5 GB file at a time for FREE.</a> And you can send upto 2 TB files for in our paid versions.<br><br>
+
+<a style="text-decoration:none;font-weight:bold;"href="https://stransmit.com">Use Stransmit.com</a> (Made in India Made for World)<br>
+
+<a style="text-decoration:none;font-weight:bold;"href="https://stransmit.com/pricing/">Select The Most Affordable Plan Here</a><br>
+
+<a style="text-decoration:none;font-weight:bold;"href="https://stransmit.com">START SHARING FOR FREE NOW!</a>
+
+<br><br>
+                Thanks!<br>Team Stransmit
+            </p>
         </div>
 
 </body>
