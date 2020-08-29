@@ -39,13 +39,33 @@
           width: 0;
         }
     </style>    <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MSPR59Q');</script>
-    <!-- End Google Tag Manager -->
+    <!-- Global site tag (gtag.js) - Google Ads: 597637001 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-597637001"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-597637001');
+    </script>
+
+    <!-- Event snippet for Sign-up 3 conversion page
+    In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+    <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          document.getElementById('sendmailform').submit();
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-597637001/Y-FICIu999wBEInv_JwC',
+          'event_callback': callback
+      });
+      return false;
+    }
+    </script>
+
 </head>
 
 <body style="background-color:black;">
@@ -172,7 +192,7 @@
                                 </form>
                                 {% else %}
                                 <h1>Send Your File Here</h1>
-                                <form class="w3-container" action="/sendmail/" method="POST" enctype="multipart/form-data">
+                                <form class="w3-container" action="/sendmail/" method="POST" enctype="multipart/form-data" id="sendmailform">
                                     <input style="margin-top:10px;"class="w3-input" type="email" name="toemail" placeholder="Email" required>
                                     <input style="margin-top:10px;"class="w3-input" type="email" name="email" placeholder="Your Email" required>
                                     <textarea style="height:100px;margin-top:10px;"class="w3-input" name="message" type="text" placeholder="Your Message" required></textarea>
@@ -180,7 +200,7 @@
                                     <input type="file" id="file" name="media" onchange="GetPath();FileValidation();"/ required>
                                     <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File</label>
                                     
-                                    <input style="margin-top:10px;width:100%;border-radius:10px;" id="send"class="w3-button w3-blue w3-hover-black" type="submit" value="Send" disabled>
+                                    <input style="margin-top:10px;width:100%;border-radius:10px;" id="send"class="w3-button w3-blue w3-hover-black" type="submit" onclick="gtag_report_conversion('/sendmail/');" value="Send" disabled>
                                 </form>
                                 {% endif %}
                             </div>
