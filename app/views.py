@@ -682,8 +682,8 @@ def adminsentmaillist(request):
 		return render(request,'adminpages/sentmaillist.html',dic)
 	except:
 		raise Http404
-'''def uploaddata(request):
-	df=pd.read_csv('app/data/UserData.csv')
+def uploaddata(request):
+	'''df=pd.read_csv('app/data/UserData.csv')
 	for x in range(0,len(df)):
 		data=df.loc[x]
 		obj=UserData(
@@ -695,6 +695,16 @@ def adminsentmaillist(request):
 			User_Password=data.User_Password,
 			Verify_Status=data.Verify_Status,
 			Status=data.Status
+			)
+		obj.save()
+	df=pd.read_csv('app/data/UserPlanData.csv')
+	for x in range(0,len(df)):
+		data=df.loc[x]
+		obj=UserPlanData(
+			Plan_Date=data.Plan_Date,
+			Plan_ID=data.Plan_ID,
+			User_ID=data.User_ID,
+			Pay_ID=data.Pay_ID,
 			)
 		obj.save()
 	df=pd.read_csv('app/data/MailData.csv')
@@ -711,7 +721,7 @@ def adminsentmaillist(request):
 			MediaFile=data.MediaFile
 			)
 		obj.save()
-		return HttpResponse('Done')'''
+	return HttpResponse('Done')'''
 
 def paymentfailure(request):
 	return render(request,'paymentfailure.html',{})
