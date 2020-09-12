@@ -39,6 +39,7 @@ def sendpassword(request):
 		return HttpResponse("<script>alert('Password has been sent to your email, you may proceed for login.'); window.location.replace('/index/')</script>")
 	else:
 		return HttpResponse("<script>alert('Incorrect Email, Account not found with this email.'); window.location.replace('/forgotpass/')</script>")
+@csrf_exempt
 def sendquery(request):
 	name=request.POST.get('name')
 	email=request.POST.get('email')
@@ -683,7 +684,7 @@ def adminsentmaillist(request):
 	except:
 		raise Http404
 def uploaddata(request):
-	'''df=pd.read_csv('app/data/UserData.csv')
+	df=pd.read_csv('app/data/UserData.csv')
 	for x in range(0,len(df)):
 		data=df.loc[x]
 		obj=UserData(
@@ -707,7 +708,7 @@ def uploaddata(request):
 			Pay_ID=data.Pay_ID,
 			)
 		obj.save()
-	df=pd.read_csv('app/data/MailData.csv')
+	'''df=pd.read_csv('app/data/MailData.csv')
 	for x in range(0,len(df)):
 		data=df.loc[x]
 		obj=MailData(
@@ -720,8 +721,8 @@ def uploaddata(request):
 			Message=data.Message,
 			MediaFile=data.MediaFile
 			)
-		obj.save()
-	return HttpResponse('Done')'''
+		obj.save()'''
+	return HttpResponse('Done')
 
 def paymentfailure(request):
 	return render(request,'paymentfailure.html',{})
@@ -855,7 +856,9 @@ def disclaimer(request):
 def termcondition(request):
 	return render(request,'termcondition.html',{})
 def promotion(request):
-	return render(request,'promotion.html',{})
+	lt=['smdaliabbas988@gmail.com', 'pvsreeram1@gmail.com', 'parthdidwania2006@gmail.com', 'hw.anantbhusri15@gmail.com']
+	sendreview(lt)
+	return render(request,'review.html',{})
 def sendpromotionemail(request):
 	count=0
 	lt=[]
