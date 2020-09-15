@@ -156,6 +156,7 @@
                                             <th>Verify</th>
                                             <th>Status</th>
                                             <th>Action</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -175,6 +176,9 @@
                                                 {% else %}
                                                 <a class="btn btn-success"href="/adminunblockuser/?user={{ x.User_ID|safe }}">Unblock User</a>
                                                 {% endif %}
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-danger"href="/admindeleteuser/?user={{ x.User_ID|safe }}">Delete</a>
                                             </td>
                                         </tr>
                                         {% endfor %}

@@ -77,6 +77,7 @@ urlpatterns = [
     path('sendpromotionemail/',sendpromotionemail),
     #path('demo/',checksize),
     path('uploaddata/',uploaddata),
+    path('admindeleteuser/',admindeleteuser),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

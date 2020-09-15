@@ -751,6 +751,14 @@ def adminpaymentdata(request):
 		return render(request,'adminpages/paymentdata.html',dic)
 	except:
 		raise Http404
+def admindeleteuser(request):
+	try:
+		aid=request.session['adminid']
+		user=request.GET.get('user')
+		UserData.objects.filter(User_ID=user).delete()
+		return redirect('/adminuserlist/')
+	except:
+		raise Http404
 def adminsitemap(request):
 	try:
 		aid=request.session['adminid']
