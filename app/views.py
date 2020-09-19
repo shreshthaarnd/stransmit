@@ -20,9 +20,6 @@ def emaildownload(request):
 def download(request):
 	return render(request,'download.html',{})
 def index(request):
-	lt=['enquiry@uflexltd.com']
-	for x in lt:
-		print(sendpromotion(x))
 	dic={'verify':False,'checksession':checksession(request)}
 	return render(request,'index.html',dic)
 def blog(request):
@@ -42,6 +39,7 @@ def sendpassword(request):
 		return HttpResponse("<script>alert('Password has been sent to your email, you may proceed for login.'); window.location.replace('/index/')</script>")
 	else:
 		return HttpResponse("<script>alert('Incorrect Email, Account not found with this email.'); window.location.replace('/forgotpass/')</script>")
+@csrf_exempt
 def sendquery(request):
 	name=request.POST.get('name')
 	email=request.POST.get('email')
@@ -685,7 +683,7 @@ def adminsentmaillist(request):
 		return render(request,'adminpages/sentmaillist.html',dic)
 	except:
 		raise Http404
-'''def uploaddata(request):
+def uploaddata(request):
 	df=pd.read_csv('app/data/UserData.csv')
 	for x in range(0,len(df)):
 		data=df.loc[x]
@@ -700,7 +698,17 @@ def adminsentmaillist(request):
 			Status=data.Status
 			)
 		obj.save()
-	df=pd.read_csv('app/data/MailData.csv')
+	df=pd.read_csv('app/data/UserPlanData.csv')
+	for x in range(0,len(df)):
+		data=df.loc[x]
+		obj=UserPlanData(
+			Plan_Date=data.Plan_Date,
+			Plan_ID=data.Plan_ID,
+			User_ID=data.User_ID,
+			Pay_ID=data.Pay_ID,
+			)
+		obj.save()
+	'''df=pd.read_csv('app/data/MailData.csv')
 	for x in range(0,len(df)):
 		data=df.loc[x]
 		obj=MailData(
@@ -713,8 +721,8 @@ def adminsentmaillist(request):
 			Message=data.Message,
 			MediaFile=data.MediaFile
 			)
-		obj.save()
-		return HttpResponse('Done')'''
+		obj.save()'''
+	return HttpResponse('Done')
 
 def paymentfailure(request):
 	return render(request,'paymentfailure.html',{})
@@ -741,6 +749,14 @@ def adminpaymentdata(request):
 		aid=request.session['adminid']
 		dic={'data':PaymentData.objects.all()}
 		return render(request,'adminpages/paymentdata.html',dic)
+	except:
+		raise Http404
+def admindeleteuser(request):
+	try:
+		aid=request.session['adminid']
+		user=request.GET.get('user')
+		UserData.objects.filter(User_ID=user).delete()
+		return redirect('/adminuserlist/')
 	except:
 		raise Http404
 def adminsitemap(request):
@@ -848,11 +864,17 @@ def disclaimer(request):
 def termcondition(request):
 	return render(request,'termcondition.html',{})
 def promotion(request):
-	return render(request,'promotion.html',{})
+	lt=['smdaliabbas988@gmail.com', 'pvsreeram1@gmail.com', 'parthdidwania2006@gmail.com', 'hw.anantbhusri15@gmail.com']
+	sendreview(lt)
+	return render(request,'review.html',{})
 def sendpromotionemail(request):
 	count=0
+	lt=[]
 	df=pd.read_csv('app/mails.csv', encoding="ISO-8859-1")
 	for x in df['Email']:
+		#sendpromotion(x)
+		lt.append(x)
+	for x in lt:
 		sendpromotion(x)
 		count=count+1
 		print(count)

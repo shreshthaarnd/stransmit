@@ -39,9 +39,40 @@
           width: 0;
         }
     </style>    <!-- <link rel="stylesheet" href="{% static 'css/responsive.css' %}"> -->
+    <!-- Global site tag (gtag.js) - Google Ads: 597637001 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-597637001"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-597637001');
+    </script>
+
+    <!-- Event snippet for Sign-up 3 conversion page
+    In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+    <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          document.getElementById('sendmailform').submit();
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-597637001/Y-FICIu999wBEInv_JwC',
+          'event_callback': callback
+      });
+      return false;
+    }
+    </script>
+    <script data-ad-client="ca-pub-4752143661380670" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 
 <body style="background-color:black;">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSPR59Q"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -161,7 +192,7 @@
                                 </form>
                                 {% else %}
                                 <h1>Send Your File Here</h1>
-                                <form class="w3-container" action="/sendmail/" method="POST" enctype="multipart/form-data">
+                                <form class="w3-container" action="/sendmail/" method="POST" enctype="multipart/form-data" id="sendmailform">
                                     <input style="margin-top:10px;"class="w3-input" type="email" name="toemail" placeholder="Email" required>
                                     <input style="margin-top:10px;"class="w3-input" type="email" name="email" placeholder="Your Email" required>
                                     <textarea style="height:100px;margin-top:10px;"class="w3-input" name="message" type="text" placeholder="Your Message" required></textarea>
