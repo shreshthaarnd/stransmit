@@ -133,8 +133,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
-AWS_ACCESS_KEY_ID = 'AKIASDNGY6JWVWR64T3B'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxxx'
+AWS_SECRET_ACCESS_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 AWS_STORAGE_BUCKET_NAME = 'stransmitstorage'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
@@ -148,5 +148,5 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 EMAIL_USE_TLS=True
 EMAIL_HOST='smtp.gmail.com' 
 EMAIL_HOST_USER='stransmitdotcom@gmail.com'
-EMAIL_HOST_PASSWORD='sqonvefydyoewzmr'
+EMAIL_HOST_PASSWORD='xxxxxxxxxxxxxxxxxxxx'
 EMAIL_PORT=587
