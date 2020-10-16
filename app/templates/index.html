@@ -51,21 +51,36 @@
 
     <!-- Event snippet for Sign-up 3 conversion page
     In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
-    <script>
-    function gtag_report_conversion(url) {
-      var callback = function () {
-        if (typeof(url) != 'undefined') {
-          document.getElementById('sendmailform').submit();
-        }
-      };
-      gtag('event', 'conversion', {
-          'send_to': 'AW-597637001/Y-FICIu999wBEInv_JwC',
-          'event_callback': callback
-      });
-      return false;
-    }
-    </script>
     <script data-ad-client="ca-pub-4752143661380670" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script>
+        function postFile() {
+            var formdata = new FormData();
+
+            formdata.append('file1', $('#file1')[0].files[0]);
+
+            var request = new XMLHttpRequest();
+
+            request.upload.addEventListener('progress', function (e) {
+                var file1Size = $('#file1')[0].files[0].size;
+
+                if (e.loaded <= file1Size) {
+                    var percent = Math.round(e.loaded / file1Size * 100);
+                    $('#progress-bar-file1').width(percent + '%').html(percent + '%');
+                } 
+
+                if(e.loaded == e.total){
+                    $('#progress-bar-file1').width(100 + '%').html(100 + '%');
+                }
+            });   
+
+            request.open('post', '/echo/html/');
+            request.timeout = 45000;
+            request.send(formdata);
+        }
+        </script>
+
 </head>
 
 <body>
