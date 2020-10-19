@@ -880,3 +880,61 @@ def sendpromotionemail(request):
 		print(count)
 	return redirect('/index/')
 
+from pytube import YouTube
+from django.http import FileResponse
+def youtube(request):
+	if request.method == 'POST':
+		link = request.POST.get('link_url')
+		quality = request.POST.get('quality')
+		format = request.POST.get('format')
+#		link = 'https://www.youtube.com/watch?v=TyGEv1YA7QI'
+#		quality = 'low'
+#		format = 'audio'
+		if format == 'video':
+			if quality == 'high':
+				yt = YouTube(link)
+				filters = yt.streams.filter(progressive=True, file_extension='mp4')
+				high = filters.get_highest_resolution()
+				high.download(filename = 'download_out')
+				filename='download_out.mp4'
+				fl_path = filename
+				file_path = filename
+				file_wrapper = FileWrapper(open(filename, 'rb'))
+				file_mimetype, _ = mimetypes.guess_type(file_path)
+				response = HttpResponse(file_wrapper, content_type=file_mimetype )
+				response['X-Sendfile'] = file_path
+				response['Content-Length'] = os.stat(file_path).st_size
+				response['Content-Disposition'] = 'attachment; filename=%s' % file_path
+				os.remove(filename)
+				return response
+			elif quality == 'low':
+				yt = YouTube(link)
+				filters = yt.streams.filter(progressive=True, file_extension='mp4')
+				low = filters.get_lowest_resolution()
+				low.download(filename = 'download_out')
+				filename='download_out.mp4'
+				fl_path = filename
+				file_path = filename
+				file_wrapper = FileWrapper(open(filename, 'rb'))
+				file_mimetype, _ = mimetypes.guess_type(file_path)
+				response = HttpResponse(file_wrapper, content_type=file_mimetype )
+				response['X-Sendfile'] = file_path
+				response['Content-Length'] = os.stat(file_path).st_size
+				response['Content-Disposition'] = 'attachment; filename=%s' % file_path
+				os.remove(filename)
+				return response
+		elif format == 'audio':
+			yt = YouTube(link)
+			audio = yt.streams.get_audio_only()
+			audio.download(filename = 'download_out')
+			filename='download_out.mp4'
+			fl_path = filename
+			file_path = filename
+			file_wrapper = FileWrapper(open(filename, 'rb'))
+			file_mimetype, _ = mimetypes.guess_type(file_path)
+			response = HttpResponse(file_wrapper, content_type=file_mimetype )
+			response['X-Sendfile'] = file_path
+			response['Content-Length'] = os.stat(file_path).st_size
+			response['Content-Disposition'] = 'attachment; filename=%s' % file_path
+			os.remove(filename)
+			return response
