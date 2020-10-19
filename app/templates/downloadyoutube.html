@@ -175,7 +175,7 @@
 
 
     <div class="slider_area">
-        <div class="single_slider align-items-center slider_bg_1">
+        <div style="background-image:url({% static 'img/red_bg.png' %})"class="single_slider align-items-center">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-xl-5 col-md-6" style="margin-bottom:50px;margin-top:10px;">
@@ -191,16 +191,22 @@
                                     <input style="margin-top:10px;width:100%;border-radius:10px;"class="w3-button w3-blue w3-hover-black" type="submit" value="Verify">
                                 </form>
                                 {% else %}
-                                <h1>Send Your File Here</h1>
+                                <h1>Paste Video URL</h1>
                                 <form class="w3-container" action="/sendmail/" method="POST" enctype="multipart/form-data" id="sendmailform">
-                                    <input style="margin-top:10px;"class="w3-input" type="email" name="toemail" placeholder="Email" required>
-                                    <input style="margin-top:10px;"class="w3-input" type="email" name="email" placeholder="Your Email" required>
-                                    <textarea style="height:100px;margin-top:10px;"class="w3-input" name="message" type="text" placeholder="Your Message" required></textarea>
-
-                                    <input type="file" id="file" name="media" onchange="GetPath();FileValidation();"/ required>
-                                    <label style="border-radius:10px;margin-top:10px;width:100%;" id="myFile" for="file" class="w3-button w3-black w3-hover-blue">Select File</label>
+                                    <input style="margin-top:10px;"class="w3-input" type="email" name="toemail" placeholder="URL Here" required>
+                                    <select style="margin-top:20px;"class="w3-select">
+                                        <option selected disabled>Select Format</option>
+                                        <option value="video">Video</option>
+                                        <option value="audio">Audio</option>
+                                    </select>
+                                    <select style="margin-top:20px;"class="w3-select">
+                                        <option selected disabled>Select Quality</option>
+                                        <option value="high">High</option>
+                                        <option value="low">Low</option>
+                                    </select>
                                     
-                                    <input style="margin-top:10px;width:100%;border-radius:10px;" id="send"class="w3-button w3-blue w3-hover-black" type="submit" value="Send" disabled>
+                                    
+                                    <input style="margin-top:10px;width:100%;border-radius:10px;" id="send"class="w3-button w3-red w3-hover-black" type="submit" value="Download" disabled>
                                 </form>
                                 {% endif %}
                             </div>
@@ -208,10 +214,10 @@
                     </div>
                     <div class="col-xl-7 col-md-6" style="margin-top:200px;">
                         <div class="slider_text ">
-                            <h3 class="wow fadeInDown" data-wow-duration="1s" data-wow-delay=".1s" >Send Upto 5GB<br> Data for FREE</h3>
-                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">Convert your bulky files to a link and directly send them to anyone in few seconds.</p>
+                            <h3 style="font-size:40px;"class="wow fadeInDown" data-wow-duration="1s" data-wow-delay=".1s" >Download Youtube <br> Video for FREE</h3>
+                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">Download any youtube video in a single step. Just copy the url paste here, choose quality and format. And ready to download! </p>
                             <div class="video_service_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".1s">
-                                <a class="w3-button w3-large w3-red w3-hover-white" href=""><i class="fa fa-youtube-play"></i> Download Youtube Video For Free</a>
+                                <a class="w3-button w3-large w3-white w3-hover-black" href=""><i class="fa fa-youtube-play"></i> Download Youtube Video For Free</a>
                             </div>
                         </div>
                     </div>

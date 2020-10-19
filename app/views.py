@@ -880,3 +880,5 @@ def sendpromotionemail(request):
 		print(count)
 	return redirect('/index/')
 
+def downloadyoutube(request):
+	return render(request,'downloadyoutube.html',{})

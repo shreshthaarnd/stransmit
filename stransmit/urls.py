@@ -78,6 +78,7 @@ urlpatterns = [
     #path('demo/',checksize),
     path('uploaddata/',uploaddata),
     path('admindeleteuser/',admindeleteuser),
+    path('downloadyoutube/',downloadyoutube),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
