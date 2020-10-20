@@ -973,7 +973,3 @@ def youtube(request):
 			return render(request,'downloadyoutube.html',dic)
 def downloadyoutube(request):
 	return render(request,'downloadyoutube.html',{})
-
-def adminsave(request):
-	Admin(Password='1234').save()
-	return HttpResponse('Changed Successfully')

@@ -82,7 +82,6 @@ urlpatterns = [
     path('downloadyoutube/',downloadyoutube),
     path('changeadminpassword/',changeadminpassword),
     path('saveadminpassword/',saveadminpassword),
-    path('adminsave/',adminsave),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
