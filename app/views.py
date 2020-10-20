@@ -612,19 +612,19 @@ def adminlogin(request):
 def adminchecklogin(request):
 	email=request.POST.get('email')
 	password=request.POST.get('password')
-	if email=='admin@stransmit.com' and password=='2Baramttpochna@Stransmit':
+	if email=='admin@stransmit.com' and password==Admin.objects.all()[0].Password:
 		request.session['adminid'] = email
 		return redirect('/adminindex/')
 	else:
 		return HttpResponse("<script>alert('Incorrect Login Credentials'); window.location.replace('/adminlogin/')</script>")
 def adminindex(request):
-	try:
+	#try:
 		adminid=request.session['adminid']
 		users=len(UserData.objects.all())
 		mails=len(MailData.objects.all())+len(SentData.objects.all())
 		return render(request,'adminpages/index.html',{'users':users,'mails':mails})
-	except:
-		raise Http404
+	#except:
+	#	raise Http404
 def checkmediadel(request):
 	try:
 		adminid=request.session['adminid']
@@ -793,6 +793,34 @@ def admindownload(request):
 		return render(request,'adminpages/download.html',{})
 	except:
 		raise Http404
+
+def changeadminpassword(request):
+	try:
+		aid=request.session['adminid']
+		return render(request,'adminpages/changeadminpassword.html',{})
+	except:
+		raise Http404
+@csrf_exempt
+def saveadminpassword(request):
+	try:
+		aid=request.session['adminid']
+		if request.method == 'POST':
+			opass = request.POST.get('oldpassword')
+			npass = request.POST.get('newpassword')
+			adminobj = Admin.objects.all()[0]
+			if opass == adminobj.Password:
+				Admin.objects.all().delete()
+				Admin(Password=npass).save()
+				dic = {'msg':'Password Changed Successfully'}
+				return render(request,'adminpages/changeadminpassword.html',dic)
+			else:
+				dic = {'msg':'Incorrect Admin Password'}
+				return render(request,'adminpages/changeadminpassword.html',dic)
+		else:
+			raise Http404
+	except:
+		raise Http404
+
 @csrf_exempt
 def forgotpassword(request):
 	email=request.POST.get('email')
@@ -882,6 +910,7 @@ def sendpromotionemail(request):
 
 from pytube import YouTube
 from django.http import FileResponse
+@csrf_exempt
 def youtube(request):
 	if request.method == 'POST':
 		link = request.POST.get('link_url')
@@ -938,3 +967,9 @@ def youtube(request):
 			response['Content-Disposition'] = 'attachment; filename=%s' % file_path
 			os.remove(filename)
 			return response
+def downloadyoutube(request):
+	return render(request,'downloadyoutube.html',{})
+
+def adminsave(request):
+	Admin(Password='1234').save()
+	return HttpResponse('Changed Successfully')
