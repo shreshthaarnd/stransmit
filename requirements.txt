@@ -9,7 +9,7 @@ docutils==0.15.2
 idna==2.10
 jmespath==0.10.0
 mysqlclient==1.4.6
-numpy==1.19.0
+numpy==1.22.0
 pandas==1.0.5
 paytm-pg==1.0.8
 pycryptodome==3.9.8
